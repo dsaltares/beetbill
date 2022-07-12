@@ -1,0 +1,3 @@
+type Global = {
+  prisma?: PrismaClient;
+};
