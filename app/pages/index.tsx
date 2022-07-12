@@ -7,11 +7,16 @@ const Home: NextPage = () => {
   if (status === 'loading') {
     return <>Loading</>;
   }
+
+  const buttonClass = 'rounded-full p-2 bg-blue-500 text-white';
+
   if (session) {
     return (
       <>
         Signed in as {session.user?.email} <br />
-        <button onClick={() => signOut()}>Sign out</button>
+        <button className={buttonClass} onClick={() => signOut()}>
+          Sign out
+        </button>
       </>
     );
   }
@@ -19,7 +24,9 @@ const Home: NextPage = () => {
   return (
     <>
       Not signed in <br />
-      <button onClick={() => signIn()}>Sign in</button>
+      <button className={buttonClass} onClick={() => signIn()}>
+        Sign in
+      </button>
     </>
   );
 };
