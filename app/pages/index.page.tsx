@@ -8,7 +8,7 @@ const Home: NextPage = () => {
     return <>Loading</>;
   }
 
-  const buttonClass = 'rounded-full p-2 bg-blue-500 text-white';
+  const buttonClass = 'rounded-full p-1 bg-blue-500 text-white';
 
   if (session) {
     return (
