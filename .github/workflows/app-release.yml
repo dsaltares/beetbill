@@ -20,5 +20,6 @@ jobs:
         with:
           vercel-args: '--prod'
           vercel-token: ${{ secrets.VERCEL_TOKEN }}
-          vercel-project-name: ${{ secrets.VERCEL_PROJECT_NAME}}
+          vercel-org-id: ${{ secrets.VERCEL_ORG_ID}}
+          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID}}
           scope: ${{ secrets.VERCEL_ORG_ID}}

@@ -105,3 +105,6 @@ dist
 
 # db
 database
+
+# vercel
+.vercel
