@@ -1,3 +1,5 @@
+import 'next';
+
 import { useSession } from 'next-auth/react';
 import { render, screen } from '@lib/testing';
 import IndexPage from './index.page';
