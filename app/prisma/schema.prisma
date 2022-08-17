@@ -81,11 +81,11 @@ model Company {
 model Product {
   id          String    @id @default(cuid())
   name        String
-  includesVat Boolean   @default(false)
-  price       Float     @default(0.0)
-  currency    String    @default("EUR")
-  vat         Float     @default(0.0)
-  unit        String    @default("unit")
+  includesVat Boolean
+  price       Float
+  currency    String
+  vat         Float
+  unit        String
   companyId   String
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
@@ -161,11 +161,11 @@ model InvoiceCompany {
 model InvoiceProduct {
   id          String    @id @default(cuid())
   name        String
-  includesVat Boolean   @default(false)
-  price       Float     @default(0.0)
-  currency    String    @default("EUR")
-  vat         Float     @default(0.0)
-  unit        String    @default("unit")
+  includesVat Boolean
+  price       Float
+  currency    String
+  vat         Float
+  unit        String
   invoiceId   String
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
