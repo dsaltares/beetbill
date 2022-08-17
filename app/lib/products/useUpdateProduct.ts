@@ -10,11 +10,11 @@ const useUpdateProduct = () =>
   useMutation<UpdateProductsInput, GetProductsOutput>({
     mutationFn: api.updateProduct.mutate,
     cacheKey: QueryKeys.products,
-    cacheUpdater: (cache, input) => {
-      const productIndex = cache.findIndex(({ id }) => id === input.id);
+    cacheUpdater: (products, input) => {
+      const productIndex = products.findIndex(({ id }) => id === input.id);
       if (productIndex !== -1) {
-        cache[productIndex] = {
-          ...cache[productIndex],
+        products[productIndex] = {
+          ...products[productIndex],
           ...input,
         };
       }

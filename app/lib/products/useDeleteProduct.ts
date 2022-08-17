@@ -10,10 +10,10 @@ const useDeleteProduct = () =>
   useMutation<DeleteProductsInput, GetProductsOutput>({
     mutationFn: api.deleteProduct.mutate,
     cacheKey: QueryKeys.products,
-    cacheUpdater: (cache, input) => {
-      const productIndex = cache.findIndex(({ id }) => id === input.id);
+    cacheUpdater: (products, input) => {
+      const productIndex = products.findIndex(({ id }) => id === input.id);
       if (productIndex !== -1) {
-        cache.splice(productIndex, 1);
+        products.splice(productIndex, 1);
       }
     },
   });

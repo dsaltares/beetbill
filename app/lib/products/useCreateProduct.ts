@@ -11,8 +11,8 @@ const useCreateProduct = () =>
   useMutation<CreateProductsInput, GetProductsOutput>({
     mutationFn: api.createProduct.mutate,
     cacheKey: QueryKeys.products,
-    cacheUpdater: (cache, input) => {
-      cache.push({
+    cacheUpdater: (products, input) => {
+      products.push({
         id: `new-product${cuid()}`,
         companyId: '',
         createdAt: new Date(),
