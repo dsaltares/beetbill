@@ -19,4 +19,13 @@ export default NextAuth({
     }),
   ],
   secret: process.env.NEXT_AUTH_SECRET,
+  callbacks: {
+    session: async ({ session, user }) => {
+      const company = await prisma.company.findUnique({
+        where: { userId: user.id },
+      });
+      session.company = company;
+      return session;
+    },
+  },
 });
