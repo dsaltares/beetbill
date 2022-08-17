@@ -1,12 +1,9 @@
 /* eslint-disable no-var */
 import 'next-auth';
-
-type Global = {
-  prisma?: PrismaClient;
-};
+import type { PrismaClient, Company } from '@prisma/client';
 
 declare global {
-  var prisma: PrismaClient | undefined;
+  var _prisma: PrismaClient | undefined;
 }
 
 declare module 'next-auth' {

@@ -1,4 +1,4 @@
-import prisma from '@lib/prisma';
+import prisma from '@server/prisma';
 
 describe('dummy', () => {
   it('should pass', () => {
