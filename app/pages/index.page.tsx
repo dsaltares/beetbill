@@ -4,7 +4,9 @@ import useHello from '@lib/useHello';
 
 const Home: NextPage = () => {
   const { data: session, status } = useSession();
-  const { data: greeting } = useHello();
+  const { data: greeting } = useHello({
+    text: session?.user?.email ?? 'Guest',
+  });
 
   if (status === 'loading') {
     return <>Loading</>;

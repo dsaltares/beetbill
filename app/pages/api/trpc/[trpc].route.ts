@@ -1,26 +1,9 @@
-import * as trpcNext from '@trpc/server/adapters/next';
-import { z } from 'zod';
-import createRouter from 'server/createRouter';
-import createContext from 'server/context';
+import { createNextApiHandler } from '@trpc/server/adapters/next';
+import router from '@server/router';
+import createContext from 'server/createContext';
 
-export const appRouter = createRouter().query('hello', {
-  input: z
-    .object({
-      text: z.string().nullish(),
-    })
-    .nullish(),
-  output: z.string(),
-  resolve({ ctx, input }) {
-    return `hello ${input?.text ?? 'world'} - ${
-      ctx.session?.user?.email ?? 'anonymous'
-    }`;
-  },
-});
-
-export type AppRouter = typeof appRouter;
-
-export default trpcNext.createNextApiHandler({
-  router: appRouter,
+export default createNextApiHandler({
+  router,
   createContext,
   batching: { enabled: true },
 });

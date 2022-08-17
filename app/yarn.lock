@@ -261,13 +261,6 @@
   dependencies:
     regenerator-runtime "^0.13.4"
 
-"@babel/runtime@^7.9.0":
-  version "7.18.9"
-  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.18.9.tgz#b4fcfce55db3d2e5e080d2490f608a3b9f407f4a"
-  integrity sha512-lkqXDcvlFT5rvEjiu6+QYO+1GXrEHRo2LOtS7E4GtX5ESIZOgepqsZBVIj6Pv+a6zqsya9VCgiK1KAK4BvJDAw==
-  dependencies:
-    regenerator-runtime "^0.13.4"
-
 "@babel/template@^7.18.6", "@babel/template@^7.3.3":
   version "7.18.6"
   resolved "https://registry.yarnpkg.com/@babel/template/-/template-7.18.6.tgz#1283f4993e00b929d6e2d3c72fdc9168a2977a31"
@@ -821,17 +814,15 @@
   resolved "https://registry.yarnpkg.com/@tootallnate/once/-/once-2.0.0.tgz#f544a148d3ab35801c1f633a7441fd87c2e484bf"
   integrity sha512-XCuKFP5PS55gnMVu3dty8KPatLqUoy/ZYzDzAGCQ8JNFCkLXzmI7vNHCR+XpbZaMWQK/vQubr7PkYq8g470J/A==
 
-"@trpc/client@^9.27.0":
-  version "9.27.0"
-  resolved "https://registry.yarnpkg.com/@trpc/client/-/client-9.27.0.tgz#6fb2af2df051dea834173e5b9f12e74c65662af2"
-  integrity sha512-Yh+oDBiANArjDx69bSnXqIK36wjlRm8iGLQkMmrvTTFwVRt3hgfreCzjyj4PgNEd4SNX4iGrhLLPIDHeH+qlJA==
-  dependencies:
-    "@babel/runtime" "^7.9.0"
+"@trpc/client@10.0.0-alpha.47":
+  version "10.0.0-alpha.47"
+  resolved "https://registry.yarnpkg.com/@trpc/client/-/client-10.0.0-alpha.47.tgz#830902922e42d7c16b60cc18a6bdf9b2d0b0dd15"
+  integrity sha512-yH7AdqsRCK0JF9JaGca9D4i/WFV0P+8ay8BoZtc4hnZHzf1inP/k/TBR+yMZZlzoS98GlJaBpKZ4/+//y5DKFA==
 
-"@trpc/server@^9.27.0":
-  version "9.27.0"
-  resolved "https://registry.yarnpkg.com/@trpc/server/-/server-9.27.0.tgz#08aef2d0b025442e93f0c6b1421ddd7e81ae0eb5"
-  integrity sha512-5A/d5U9Y8L6+4q46a9gLackTyMRUFyNubo6JlIpSxtea/wW8teR6Azux4gg/uKIM3+6+lgg/HxQHWvwkG0VOSg==
+"@trpc/server@10.0.0-alpha.47":
+  version "10.0.0-alpha.47"
+  resolved "https://registry.yarnpkg.com/@trpc/server/-/server-10.0.0-alpha.47.tgz#ae5c7a5b5f4f8ebcfe8f5ce868a762e7dea907ca"
+  integrity sha512-8LtY0N+xG/Nq1Tqi6PcOuguwiAnekJEpoXwqZxteUhSYxBOC76YzmARj1dwzWHHxrC6Z5bY25t4cU59aoL+fvg==
 
 "@types/aria-query@^4.2.0":
   version "4.2.2"

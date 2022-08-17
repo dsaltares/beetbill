@@ -1,5 +1,5 @@
-import { createTRPCClient } from '@trpc/client';
-import type { AppRouter } from '@pages/api/trpc/[trpc].route';
+import { createTRPCProxyClient } from '@trpc/client';
+import type { AppRouter } from '@server/router';
 
 const getBaseUrl = () => {
   if (typeof window !== 'undefined') {
@@ -15,7 +15,7 @@ const getBaseUrl = () => {
   return `http://localhost:${process.env.PORT ?? 3000}`;
 };
 
-const client = createTRPCClient<AppRouter>({
+const client = createTRPCProxyClient<AppRouter>({
   url: `${getBaseUrl()}/api/trpc`,
 });
 
