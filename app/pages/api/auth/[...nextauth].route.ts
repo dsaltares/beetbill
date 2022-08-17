@@ -1,6 +1,7 @@
 import { PrismaAdapter } from '@next-auth/prisma-adapter';
 import NextAuth from 'next-auth';
 import EmailProvider from 'next-auth/providers/email';
+import type { Company } from '@prisma/client';
 import prisma from '@server/prisma';
 
 export default NextAuth({
@@ -24,8 +25,27 @@ export default NextAuth({
       const company = await prisma.company.findUnique({
         where: { userId: user.id },
       });
-      session.company = company;
+      session.company = company as Company;
       return session;
+    },
+  },
+  events: {
+    createUser: async ({ user }) => {
+      await prisma.company.create({
+        data: {
+          userId: user.id,
+          name: '',
+          number: '',
+          vatNumber: '',
+          email: '',
+          website: '',
+          country: '',
+          address: '',
+          postCode: '',
+          city: '',
+          iban: '',
+        },
+      });
     },
   },
 });
