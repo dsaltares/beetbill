@@ -45,7 +45,7 @@ model User {
   image         String?
   accounts      Account[]
   sessions      Session[]
-  Company       Company?
+  company       Company?
 }
 
 model VerificationToken {
@@ -57,25 +57,28 @@ model VerificationToken {
 }
 
 model Company {
-  id        String   @id @default(cuid())
-  name      String
-  number    String
-  vatNumber String
-  email     String
-  website   String
-  country   String
-  address   String
-  postCode  String
-  city      String
-  iban      String
-  userId    String   @unique
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id         String   @id @default(cuid())
+  name       String
+  number     String
+  vatNumber  String
+  email      String
+  website    String
+  country    String
+  address    String
+  postCode   String
+  city       String
+  iban       String
+  userId     String   @unique
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  originalId String?
 
-  user     User       @relation(fields: [userId], references: [id], onDelete: Cascade)
-  Customer Customer[]
-  Product  Product[]
-  Invoice  Invoice[]
+  user             User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  original         Company?   @relation("InvoiceCompanies", fields: [originalId], references: [id], onDelete: SetNull)
+  invoiceCompanies Company[]  @relation("InvoiceCompanies")
+  products         Product[]
+  customers        Customer[]
+  invoice          Invoice?
 }
 
 model Product {
@@ -90,8 +93,12 @@ model Product {
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
   deletedAt   DateTime?
+  originalId  String?
 
-  company Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  company         Company          @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  original        Product?         @relation("InvoiceProducts", fields: [originalId], references: [id], onDelete: SetNull)
+  products        Product[]        @relation("InvoiceProducts")
+  invoiceProducts InvoiceProduct[]
 }
 
 model Customer {
@@ -111,8 +118,12 @@ model Customer {
   createdAt    DateTime  @default(now())
   updatedAt    DateTime  @updatedAt
   deletedAt    DateTime?
+  originalId   String?
 
-  company Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  company          Company    @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  original         Customer?  @relation("InvoiceCustomers", fields: [originalId], references: [id], onDelete: SetNull)
+  invoiceCustomers Customer[] @relation("InvoiceCustomers")
+  invoice          Invoice?
 }
 
 enum InvoiceStatus {
@@ -122,74 +133,31 @@ enum InvoiceStatus {
 }
 
 model Invoice {
-  id           String        @id @default(cuid())
-  status       InvoiceStatus @default(DRAFT)
-  prefix       String        @default("")
-  number       Int
-  date         DateTime
-  paymentTerms Int
-  companyId    String
-  createdAt    DateTime      @default(now())
-  updatedAt    DateTime      @updatedAt
-  deletedAt    DateTime?
+  id         String        @id @default(cuid())
+  status     InvoiceStatus @default(DRAFT)
+  prefix     String        @default("")
+  number     Int
+  date       DateTime
+  companyId  String        @unique
+  customerId String        @unique
+  createdAt  DateTime      @default(now())
+  updatedAt  DateTime      @updatedAt
+  deletedAt  DateTime?
 
-  company         Company           @relation(fields: [companyId], references: [id], onDelete: Cascade)
-  InvoiceCompany  InvoiceCompany?
-  InvoiceProduct  InvoiceProduct[]
-  InvoiceCustomer InvoiceCustomer[]
+  company         Company          @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  customer        Customer         @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  invoiceProducts InvoiceProduct[]
 }
 
-model InvoiceCompany {
-  id        String   @id @default(cuid())
-  name      String
-  number    String
-  vatNumber String
-  email     String
-  website   String
-  country   String
-  address   String
-  postCode  String
-  city      String
-  iban      String
-  invoiceId String   @unique
+model InvoiceProduct {
+  id        String @id @default(cuid())
+  invoiceId String
+  productId String
+  quantity  Float
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   invoice Invoice @relation(fields: [invoiceId], references: [id], onDelete: Cascade)
-}
-
-model InvoiceProduct {
-  id          String    @id @default(cuid())
-  name        String
-  includesVat Boolean
-  price       Float
-  currency    String
-  vat         Float
-  unit        String
-  invoiceId   String
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
-  deletedAt   DateTime?
-
-  invoice Invoice @relation(fields: [invoiceId], references: [id], onDelete: Cascade)
-}
-
-model InvoiceCustomer {
-  id        String    @id @default(cuid())
-  name      String
-  number    String
-  vatNumber String
-  firstName String
-  lastName  String
-  email     String
-  country   String
-  address   String
-  postCode  String
-  city      String
-  invoiceId String
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-  deletedAt DateTime?
-
-  invoice Invoice @relation(fields: [invoiceId], references: [id], onDelete: Cascade)
+  product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
 }
