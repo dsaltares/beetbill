@@ -1,3 +1,5 @@
+import getCompany from './company/getCompany';
+import updateCompany from './company/updateCompany';
 import createCustomer from './customers/createCustomer';
 import deleteCustomer from './customers/deleteCustomer';
 import getCustomers from './customers/getCustomers';
@@ -17,6 +19,8 @@ const router = trpc.router({
   createCustomer,
   updateCustomer,
   deleteCustomer,
+  getCompany,
+  updateCompany,
 });
 
 export default router;

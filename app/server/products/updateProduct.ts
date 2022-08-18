@@ -8,7 +8,7 @@ const updateProduct = procedure
   .output(UpdateProductOutput)
   .mutation(async ({ ctx: { session }, input: { id, ...data } }) => {
     const existingProduct = await prisma.product.findFirst({
-      where: { id, companyId: session?.company.id as string },
+      where: { id, companyId: session?.companyId as string },
     });
     if (!existingProduct) {
       throw new TRPCError({ code: 'NOT_FOUND' });

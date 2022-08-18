@@ -1,6 +1,6 @@
 /* eslint-disable no-var */
 import 'next-auth';
-import type { PrismaClient, Company } from '@prisma/client';
+import type { PrismaClient, Company, User } from '@prisma/client';
 
 declare global {
   var _prisma: PrismaClient | undefined;
@@ -8,6 +8,7 @@ declare global {
 
 declare module 'next-auth' {
   export interface Session {
-    company: Company;
+    userId: User['id'];
+    companyId: Company['id'];
   }
 }

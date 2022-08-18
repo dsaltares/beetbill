@@ -25,7 +25,8 @@ export default NextAuth({
       const company = await prisma.company.findUnique({
         where: { userId: user.id },
       });
-      session.company = company as Company;
+      session.userId = user.id;
+      session.companyId = company?.id as string;
       return session;
     },
   },

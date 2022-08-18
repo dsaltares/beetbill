@@ -12,7 +12,7 @@ const deleteCustomer = procedure
       include: { invoice: true },
       where: {
         originalId: id,
-        companyId: session?.company.id as string,
+        companyId: session?.companyId as string,
         invoice: { status: { not: InvoiceStatus.DRAFT } },
       },
     });
@@ -24,7 +24,7 @@ const deleteCustomer = procedure
     }
 
     const existingCustomer = await prisma.product.findFirst({
-      where: { id, companyId: session?.company.id as string, originalId: null },
+      where: { id, companyId: session?.companyId as string, originalId: null },
     });
 
     if (existingCustomer) {

@@ -7,7 +7,7 @@ const deleteProduct = procedure
   .output(DeleteProductOutput)
   .mutation(async ({ ctx: { session }, input: { id } }) => {
     const existingProduct = await prisma.product.findFirst({
-      where: { id, companyId: session?.company.id as string },
+      where: { id, companyId: session?.companyId as string },
     });
     if (existingProduct) {
       await prisma.product.update({

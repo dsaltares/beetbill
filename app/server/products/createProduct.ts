@@ -7,7 +7,7 @@ const createProduct = procedure
   .output(CreateProductOutput)
   .mutation(({ ctx: { session }, input }) =>
     prisma.product.create({
-      data: { companyId: session?.company.id as string, ...input },
+      data: { companyId: session?.companyId as string, ...input },
     })
   );
 
