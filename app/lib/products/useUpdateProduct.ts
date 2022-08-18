@@ -1,13 +1,13 @@
 import api from '@lib/api';
 import useMutation from '@lib/useMutation';
 import type {
-  UpdateProductsInput,
+  UpdateProductInput,
   GetProductsOutput,
 } from '@server/products/types';
 import QueryKeys from './queryKeys';
 
 const useUpdateProduct = () =>
-  useMutation<UpdateProductsInput, GetProductsOutput>({
+  useMutation<UpdateProductInput, GetProductsOutput>({
     mutationFn: api.updateProduct.mutate,
     cacheKey: QueryKeys.products,
     cacheUpdater: (products, input) => {

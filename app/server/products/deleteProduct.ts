@@ -1,9 +1,9 @@
 import prisma from '@server/prisma';
 import { procedure } from '@server/trpc';
-import { DeleteProductOutput, DeleteProductsInput } from './types';
+import { DeleteProductOutput, DeleteProductInput } from './types';
 
 const deleteProduct = procedure
-  .input(DeleteProductsInput)
+  .input(DeleteProductInput)
   .output(DeleteProductOutput)
   .mutation(async ({ ctx: { session }, input: { id } }) => {
     const existingProduct = await prisma.product.findFirst({

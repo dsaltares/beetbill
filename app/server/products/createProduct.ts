@@ -1,9 +1,9 @@
 import { procedure } from '@server/trpc';
 import prisma from '@server/prisma';
-import { CreateProductOutput, CreateProductsInput } from './types';
+import { CreateProductOutput, CreateProductInput } from './types';
 
 const createProduct = procedure
-  .input(CreateProductsInput)
+  .input(CreateProductInput)
   .output(CreateProductOutput)
   .mutation(({ ctx: { session }, input }) =>
     prisma.product.create({

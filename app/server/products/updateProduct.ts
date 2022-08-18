@@ -1,10 +1,10 @@
 import { TRPCError } from '@trpc/server';
 import { procedure } from '@server/trpc';
 import prisma from '@server/prisma';
-import { UpdateProductOutput, UpdateProductsInput } from './types';
+import { UpdateProductOutput, UpdateProductInput } from './types';
 
 const updateProduct = procedure
-  .input(UpdateProductsInput)
+  .input(UpdateProductInput)
   .output(UpdateProductOutput)
   .mutation(async ({ ctx: { session }, input: { id, ...data } }) => {
     const existingProduct = await prisma.product.findFirst({

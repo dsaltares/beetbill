@@ -2,13 +2,13 @@ import cuid from 'cuid';
 import api from '@lib/api';
 import useMutation from '@lib/useMutation';
 import type {
-  CreateProductsInput,
+  CreateProductInput,
   GetProductsOutput,
 } from '@server/products/types';
 import QueryKeys from './queryKeys';
 
 const useCreateProduct = () =>
-  useMutation<CreateProductsInput, GetProductsOutput>({
+  useMutation<CreateProductInput, GetProductsOutput>({
     mutationFn: api.createProduct.mutate,
     cacheKey: QueryKeys.products,
     cacheUpdater: (products, input) => {

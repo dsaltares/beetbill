@@ -13,16 +13,16 @@ export const Product = z.object({
   updatedAt: z.date(),
 });
 export const GetProductsOutput = Product.array();
-export const CreateProductsInput = Product.omit({
+export const CreateProductInput = Product.omit({
   id: true,
   companyId: true,
   createdAt: true,
   updatedAt: true,
 });
 export const CreateProductOutput = Product;
-export const DeleteProductsInput = z.object({ id: z.string() });
+export const DeleteProductInput = z.object({ id: z.string() });
 export const DeleteProductOutput = z.string();
-export const UpdateProductsInput = Product.omit({
+export const UpdateProductInput = Product.omit({
   companyId: true,
   createdAt: true,
   updatedAt: true,
@@ -31,9 +31,9 @@ export const UpdateProductOutput = Product;
 
 export type Product = z.infer<typeof Product>;
 export type GetProductsOutput = z.infer<typeof GetProductsOutput>;
-export type CreateProductsInput = z.infer<typeof CreateProductsInput>;
+export type CreateProductInput = z.infer<typeof CreateProductInput>;
 export type CreateProductOutput = z.infer<typeof CreateProductOutput>;
-export type DeleteProductsInput = z.infer<typeof DeleteProductsInput>;
+export type DeleteProductInput = z.infer<typeof DeleteProductInput>;
 export type DeleteProductOutput = z.infer<typeof DeleteProductOutput>;
-export type UpdateProductsInput = z.infer<typeof UpdateProductsInput>;
+export type UpdateProductInput = z.infer<typeof UpdateProductInput>;
 export type UpdateProductOutput = z.infer<typeof UpdateProductOutput>;
