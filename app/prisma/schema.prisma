@@ -147,6 +147,8 @@ model Invoice {
   company         Company          @relation(fields: [companyId], references: [id], onDelete: Cascade)
   customer        Customer         @relation(fields: [customerId], references: [id], onDelete: Cascade)
   invoiceProducts InvoiceProduct[]
+
+  @@unique([prefix, number, companyId])
 }
 
 model InvoiceProduct {
