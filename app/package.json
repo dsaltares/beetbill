@@ -23,7 +23,7 @@
     "@tanstack/react-query-devtools": "^4.0.10",
     "@trpc/client": "10.0.0-alpha.47",
     "@trpc/server": "10.0.0-alpha.47",
-    "next": "12.2.2",
+    "next": "12.2.5",
     "cuid": "^2.1.8",
     "immer": "^9.0.15",
     "next-auth": "^4.10.3",
