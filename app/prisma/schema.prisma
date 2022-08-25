@@ -152,10 +152,11 @@ model Invoice {
 }
 
 model InvoiceProduct {
-  id        String @id @default(cuid())
+  id        String   @id @default(cuid())
   invoiceId String
   productId String
   quantity  Float
+  date      DateTime
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
