@@ -1,14 +1,16 @@
-import { procedure } from '@server/trpc';
+import { type Procedure, procedure } from '@server/trpc';
 import prisma from '@server/prisma';
 import { CreateProductOutput, CreateProductInput } from './types';
 
-const createProduct = procedure
+export const createProduct: Procedure<
+  CreateProductInput,
+  CreateProductOutput
+> = ({ ctx: { session }, input }) =>
+  prisma.product.create({
+    data: { companyId: session?.companyId as string, ...input },
+  });
+
+export default procedure
   .input(CreateProductInput)
   .output(CreateProductOutput)
-  .mutation(({ ctx: { session }, input }) =>
-    prisma.product.create({
-      data: { companyId: session?.companyId as string, ...input },
-    })
-  );
-
-export default createProduct;
+  .mutation(createProduct);
