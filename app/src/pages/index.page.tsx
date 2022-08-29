@@ -1,34 +1,19 @@
 import type { NextPage } from 'next';
-import { useSession, signIn, signOut } from 'next-auth/react';
+import Link from 'next/link';
+import WithAuthentication from '@components/WithAuthentication';
 
-const Home: NextPage = () => {
-  const { data: session, status } = useSession();
+const Home: NextPage = () => (
+  <nav className="flex flex-col">
+    <Link href={'/products'}>
+      <a>Products</a>
+    </Link>
+    <Link href={'/customers'}>
+      <a>Customers</a>
+    </Link>
+    <Link href={'/invoices'}>
+      <a>Invoices</a>
+    </Link>
+  </nav>
+);
 
-  if (status === 'loading') {
-    return <>Loading</>;
-  }
-
-  const buttonClass = 'rounded-full p-1 bg-blue-500 text-white';
-
-  if (session) {
-    return (
-      <>
-        Signed in as {session.user?.email} <br />
-        <button className={buttonClass} onClick={() => signOut()}>
-          Sign out
-        </button>
-      </>
-    );
-  }
-
-  return (
-    <>
-      Not signed in <br />
-      <button className={buttonClass} onClick={() => signIn()}>
-        Sign in
-      </button>
-    </>
-  );
-};
-
-export default Home;
+export default WithAuthentication(Home);
