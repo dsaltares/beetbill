@@ -1,5 +1,6 @@
 import type { NextPage } from 'next';
 import Link from 'next/link';
+import { signOut } from 'next-auth/react';
 import WithAuthentication from '@components/WithAuthentication';
 
 const Home: NextPage = () => (
@@ -13,6 +14,7 @@ const Home: NextPage = () => (
     <Link href={'/invoices'}>
       <a>Invoices</a>
     </Link>
+    <button onClick={() => signOut()}>Sign out</button>
   </nav>
 );
 
