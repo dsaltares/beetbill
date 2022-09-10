@@ -108,3 +108,6 @@ database
 
 # vercel
 .vercel
+
+# mac
+.DS_Store
