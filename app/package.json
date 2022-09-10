@@ -46,7 +46,7 @@
     "comment-json": "^4.2.2",
     "dotenv-cli": "^6.0.0",
     "eslint": "^8.22.0",
-    "eslint-config-next": "^12.2.2",
+    "eslint-config-next": "^12.3.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-import-resolver-typescript": "^3.4.0",
     "eslint-plugin-import": "^2.26.0",
