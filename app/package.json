@@ -42,7 +42,7 @@
     "@types/react": "18.0.17",
     "@types/react-dom": "18.0.6",
     "@typescript-eslint/eslint-plugin": "^5.33.1",
-    "@typescript-eslint/parser": "^5.33.1",
+    "@typescript-eslint/parser": "^5.37.0",
     "autoprefixer": "^10.4.7",
     "comment-json": "^4.2.2",
     "dotenv-cli": "^6.0.0",
