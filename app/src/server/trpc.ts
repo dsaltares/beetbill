@@ -18,7 +18,7 @@ export type Procedure<TInput, TOutput> = (
   args: ProcedureArgs<TInput>
 ) => Promise<TOutput>;
 
-const trpc = initTRPC<{ ctx: Context; meta: Meta }>()();
+const trpc = initTRPC.context<Context>().meta<Meta>().create();
 
 const isAuthed = trpc.middleware(async ({ meta, next, ctx }) => {
   if (!meta?.withoutAuth && !ctx.session) {

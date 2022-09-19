@@ -1,7 +1,7 @@
-import { createTRPCProxyClient } from '@trpc/client';
+import { createTRPCProxyClient, httpBatchLink } from '@trpc/client';
 import type { AppRouter } from '@server/router';
 
-const getBaseUrl = () => {
+const getBaseUrl = (): string => {
   if (typeof window !== 'undefined') {
     return '';
   }
@@ -16,7 +16,12 @@ const getBaseUrl = () => {
 };
 
 const client = createTRPCProxyClient<AppRouter>({
-  url: `${getBaseUrl()}/api/trpc`,
+  links: [
+    httpBatchLink({
+      url: `${getBaseUrl()}/api/trpc`,
+      maxURLLength: 2083,
+    }),
+  ],
 });
 
 export default client;
