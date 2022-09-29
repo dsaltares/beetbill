@@ -43,7 +43,7 @@
     "@typescript-eslint/eslint-plugin": "^5.37.0",
     "@typescript-eslint/parser": "^5.37.0",
     "autoprefixer": "^10.4.7",
-    "comment-json": "^4.2.2",
+    "comment-json": "^4.2.3",
     "dotenv-cli": "^6.0.0",
     "eslint": "^8.23.1",
     "eslint-config-next": "^12.3.0",
