@@ -26,7 +26,7 @@ const Button = ({
   ...buttonProps
 }: ButtonProps) => (
   <button
-    className={cn('rounded-md', {
+    className={cn('rounded-md text-base', {
       'bg-violet-700 text-white':
         !disabled && variant === 'primary' && mode === 'default',
       'bg-violet-100 text-violet-900':
@@ -52,9 +52,9 @@ const Button = ({
     disabled={disabled}
     {...buttonProps}
   >
-    {startIcon && <FontAwesomeIcon className="mr-2" icon={startIcon} />}
+    {startIcon && <FontAwesomeIcon className="w-4 h-4 mr-2" icon={startIcon} />}
     {children}
-    {endIcon && <FontAwesomeIcon className="ml-2" icon={endIcon} />}
+    {endIcon && <FontAwesomeIcon className="w-4 h-4 ml-2" icon={endIcon} />}
   </button>
 );
 

@@ -39,4 +39,8 @@ Default.args = {
   variant: 'primary',
   mode: 'default',
   children: 'Button',
+  startIcon: faBriefcase,
+  disabled: false,
+  size: 'md',
+  fullWidth: false,
 };
