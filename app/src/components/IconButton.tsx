@@ -1,16 +1,25 @@
 import type { IconDefinition } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import cn from 'classnames';
+import type { ButtonHTMLAttributes } from 'react';
 
-type IconButtonProps = {
+type IconButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   label: string;
-  variant: 'primary' | 'secondary';
+  variant?: 'primary' | 'secondary';
   icon: IconDefinition;
-  onClick: () => void;
 };
 
-const IconButton = ({ label, variant, icon, onClick }: IconButtonProps) => (
-  <button className="w-10 h-10" aria-label={label} onClick={onClick}>
+const IconButton = ({
+  label,
+  variant = 'primary',
+  icon,
+  ...buttonProps
+}: IconButtonProps) => (
+  <button
+    className="flex items-center justify-center w-10 h-10"
+    aria-label={label}
+    {...buttonProps}
+  >
     <FontAwesomeIcon
       className={cn('text-2xl w-8 h-8', {
         'text-violet-700': variant === 'primary',
