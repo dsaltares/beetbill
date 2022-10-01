@@ -15,8 +15,8 @@
     "test": "yarn test:unit && yarn test:integration",
     "test:unit": "jest -c jest.unit.config.js",
     "test:integration": "dotenv -e .env.tests prisma migrate dev && jest -c jest.integration.config.js ",
-    "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook"
+    "storybook": "start-storybook -p 6006 -s ./.storybook/public",
+    "build-storybook": "build-storybook -s ./.storybook/public"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.2.0",
@@ -69,6 +69,8 @@
     "eslint-plugin-import": "^2.26.0",
     "jest": "^29.0.3",
     "jest-environment-jsdom": "^29.0.3",
+    "msw": "^0.47.3",
+    "msw-storybook-addon": "^1.6.3",
     "postcss": "^8.4.16",
     "prettier": "^2.7.1",
     "prisma": "^4.0.0",
@@ -76,5 +78,8 @@
     "tailwindcss": "^3.1.8",
     "tsconfig-paths-webpack-plugin": "^4.0.0",
     "typescript": "4.8.3"
+  },
+  "msw": {
+    "workerDirectory": ".storybook/public"
   }
 }
