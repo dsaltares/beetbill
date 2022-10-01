@@ -1,5 +1,7 @@
 import type { ButtonHTMLAttributes, PropsWithChildren } from 'react';
 import cn from 'classnames';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import type { IconDefinition } from '@fortawesome/free-solid-svg-icons';
 
 type ButtonProps = PropsWithChildren<
   ButtonHTMLAttributes<HTMLButtonElement> & {
@@ -7,6 +9,8 @@ type ButtonProps = PropsWithChildren<
     mode?: 'default' | 'light' | 'outlined' | 'borderless';
     size?: 'sm' | 'md' | 'lg';
     fullWidth?: boolean;
+    startIcon?: IconDefinition;
+    endIcon?: IconDefinition;
   }
 >;
 
@@ -17,6 +21,8 @@ const Button = ({
   fullWidth = false,
   children,
   disabled,
+  startIcon,
+  endIcon,
   ...buttonProps
 }: ButtonProps) => (
   <button
@@ -46,7 +52,9 @@ const Button = ({
     disabled={disabled}
     {...buttonProps}
   >
+    {startIcon && <FontAwesomeIcon className="mr-2" icon={startIcon} />}
     {children}
+    {endIcon && <FontAwesomeIcon className="ml-2" icon={endIcon} />}
   </button>
 );
 
