@@ -22,10 +22,10 @@ const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
       <aside
         ref={ref}
         className={cn(
-          'flex flex-col justify-between p-4 w-full h-full fixed z-20 top-0 md:w-[242px] bg-violet-900 gap-10',
+          'flex flex-col justify-between p-4 w-full h-full fixed z-20 top-0 md:w-[242px] bg-violet-900 gap-10 ease-in-out duration-300',
           {
-            hidden: !isOpen,
-            'md:flex': !isOpen,
+            '-translate-x-full': !isOpen,
+            'md:flex md:translate-x-0': !isOpen,
           }
         )}
       >
@@ -45,7 +45,10 @@ const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
         </div>
         <UserMenu />
       </aside>
-      <div className="hidden md:flex h-full" style={{ width }}></div>
+      <div
+        className="hidden md:flex h-full w-full"
+        style={{ maxWidth: width }}
+      ></div>
     </>
   );
 };

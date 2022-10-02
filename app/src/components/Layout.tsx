@@ -8,7 +8,7 @@ const Layout = ({ children }: PropsWithChildren) => {
   return (
     <div className="flex flex-row h-full w-full">
       <Sidebar isOpen={isOpen} onClose={onClose} />
-      <main className="flex flex-col p-4">
+      <main className="flex flex-col w-full p-4">
         <MobileSidebarOpenControls onOpenSidebar={onOpen} />
         {children}
       </main>
