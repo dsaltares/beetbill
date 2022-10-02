@@ -5,6 +5,9 @@ import NavLinks from './NavLinks';
 export default {
   title: 'NavLinks',
   component: NavLinks,
+  parameters: {
+    layout: 'centered',
+  },
 } as ComponentMeta<typeof NavLinks>;
 
 const Template: ComponentStory<typeof NavLinks> = () => <NavLinks />;

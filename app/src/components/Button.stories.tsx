@@ -30,6 +30,9 @@ export default {
     startIcon: IconInputType,
     endIcon: IconInputType,
   },
+  parameters: {
+    layout: 'centered',
+  },
 } as ComponentMeta<typeof Button>;
 
 const Template: ComponentStory<typeof Button> = (args) => <Button {...args} />;

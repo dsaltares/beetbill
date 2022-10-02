@@ -21,6 +21,9 @@ export default {
     onClick: { action: 'clicked' },
     icon: IconInputType,
   },
+  parameters: {
+    layout: 'centered',
+  },
 } as ComponentMeta<typeof IconButton>;
 
 const Template: ComponentStory<typeof IconButton> = (args) => (

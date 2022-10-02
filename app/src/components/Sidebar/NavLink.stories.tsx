@@ -25,6 +25,9 @@ export default {
       control: { type: 'select' },
     },
   },
+  parameters: {
+    layout: 'centered',
+  },
 } as ComponentMeta<typeof NavLink>;
 
 const Template: ComponentStory<typeof NavLink> = (args) => (
