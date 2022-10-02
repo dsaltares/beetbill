@@ -3,8 +3,25 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import type { Session } from 'next-auth';
 import { useSession } from 'next-auth/react';
 
-const getName = (user: NonNullable<Session['user']>) =>
-  user.name || user.email || '';
+const capitalizeFirstLetter = (string: string) =>
+  `${string.charAt(0).toUpperCase()}${string.slice(1)}`;
+
+const getName = (user: NonNullable<Session['user']>) => {
+  if (user.name) {
+    return user.name;
+  }
+  if (user.email) {
+    const [email] = user.email.split('@');
+    const [firstName, lastName] = email.split('.');
+    if (firstName && lastName) {
+      return `${capitalizeFirstLetter(firstName)} ${capitalizeFirstLetter(
+        lastName
+      )}`;
+    }
+    return firstName;
+  }
+  return '';
+};
 
 const UserMenu = () => {
   const { data } = useSession();
