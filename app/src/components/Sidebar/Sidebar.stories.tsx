@@ -23,28 +23,26 @@ const Template: ComponentStory<typeof Sidebar> = (args) => (
 
 export const Default = Template.bind({});
 Default.args = {};
-Default.story = {
-  parameters: {
-    nextRouter: {
-      pathname: '/company',
-      asPath: '/company',
-      query: {},
-    },
-    msw: {
-      handlers: [
-        rest.get('http://localhost:6006/api/auth/session', (_req, res, ctx) =>
-          res(
-            ctx.json({
-              user: {
-                name: 'David Saltares',
-                email: 'david.saltares@gmail.com',
-              },
-              userId: 'user_1',
-              companyId: 'company_1',
-            })
-          )
-        ),
-      ],
-    },
+Default.parameters = {
+  nextRouter: {
+    pathname: '/company',
+    asPath: '/company',
+    query: {},
+  },
+  msw: {
+    handlers: [
+      rest.get('http://localhost:6006/api/auth/session', (_req, res, ctx) =>
+        res(
+          ctx.json({
+            user: {
+              name: 'David Saltares',
+              email: 'david.saltares@gmail.com',
+            },
+            userId: 'user_1',
+            companyId: 'company_1',
+          })
+        )
+      ),
+    ],
   },
 };

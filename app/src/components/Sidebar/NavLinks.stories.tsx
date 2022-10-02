@@ -14,12 +14,10 @@ const Template: ComponentStory<typeof NavLinks> = () => <NavLinks />;
 
 export const Default = Template.bind({});
 Default.args = {};
-Default.story = {
-  parameters: {
-    nextRouter: {
-      pathname: '/company',
-      asPath: '/company',
-      query: {},
-    },
+Default.parameters = {
+  nextRouter: {
+    pathname: '/company',
+    asPath: '/company',
+    query: {},
   },
 };
