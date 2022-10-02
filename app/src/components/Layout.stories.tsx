@@ -2,21 +2,22 @@ import React from 'react';
 import type { ComponentStory, ComponentMeta } from '@storybook/react';
 import { rest } from 'msw';
 import Providers from '@components/Providers';
-import Sidebar from './Sidebar';
+import Layout from './Layout';
 
 export default {
-  title: 'Sidebar',
-  component: Sidebar,
+  title: 'Layout',
+  component: Layout,
   layout: 'fullscreen',
-  argTypes: {
-    onClose: { action: 'closed' },
-  },
-} as ComponentMeta<typeof Sidebar>;
+} as ComponentMeta<typeof Layout>;
 
-const Template: ComponentStory<typeof Sidebar> = (args) => (
+const Template: ComponentStory<typeof Layout> = (args) => (
   <Providers>
     <div className="h-screen">
-      <Sidebar {...args} />
+      <Layout {...args}>
+        <div>
+          <p className="text-xl font-semibold">Content goes here</p>
+        </div>
+      </Layout>
     </div>
   </Providers>
 );
