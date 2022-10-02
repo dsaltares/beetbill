@@ -2,14 +2,14 @@ import EmptyContent from '@components/EmptyContent';
 import Layout from '@components/Layout';
 import WithAuthentication from '@components/WithAuthentication';
 
-const ProductsPage = () => (
+const CompanyPage = () => (
   <Layout>
     <EmptyContent
-      message="You don't have any products yet"
-      actionLabel="Add products"
+      message="You don't have a company registered yet"
+      actionLabel="Register company"
       onClick={() => {}}
     />
   </Layout>
 );
 
-export default WithAuthentication(ProductsPage);
+export default WithAuthentication(CompanyPage);

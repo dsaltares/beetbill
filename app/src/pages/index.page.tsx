@@ -1,21 +1,13 @@
-import type { NextPage } from 'next';
-import Link from 'next/link';
-import { signOut } from 'next-auth/react';
-import WithAuthentication from '@components/WithAuthentication';
+import type { GetServerSideProps, NextPage } from 'next';
 
-const Home: NextPage = () => (
-  <nav className="flex flex-col">
-    <Link href={'/products'}>
-      <a>Products</a>
-    </Link>
-    <Link href={'/customers'}>
-      <a>Customers</a>
-    </Link>
-    <Link href={'/invoices'}>
-      <a>Invoices</a>
-    </Link>
-    <button onClick={() => signOut()}>Sign out</button>
-  </nav>
-);
+const Home: NextPage = () => null;
 
-export default WithAuthentication(Home);
+export default Home;
+
+export const getServerSideProps: GetServerSideProps = async () => ({
+  redirect: {
+    destination: '/invoices',
+    permantent: false,
+  },
+  props: {},
+});
