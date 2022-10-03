@@ -2,9 +2,7 @@ import { faUser } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import type { Session } from 'next-auth';
 import { useSession } from 'next-auth/react';
-
-const capitalizeFirstLetter = (string: string) =>
-  `${string.charAt(0).toUpperCase()}${string.slice(1)}`;
+import capitalizeFirstLetter from '@lib/capitalizeFirstLetter';
 
 const getName = (user: NonNullable<Session['user']>) => {
   if (user.name) {
