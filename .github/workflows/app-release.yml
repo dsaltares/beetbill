@@ -11,7 +11,7 @@ jobs:
   validate:
     uses: dsaltares/invoicing/.github/workflows/app-shared.yml@main
 
-  deployVercel:
+  deployAppVercel:
     runs-on: ubuntu-latest
     needs: [validate]
     steps:
@@ -22,4 +22,17 @@ jobs:
           vercel-token: ${{ secrets.VERCEL_TOKEN }}
           vercel-org-id: ${{ secrets.VERCEL_ORG_ID}}
           vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID}}
+          scope: ${{ secrets.VERCEL_ORG_ID}}
+
+  deployStorybookVercel:
+    runs-on: ubuntu-latest
+    needs: [validate]
+    steps:
+      - uses: actions/checkout@v2
+      - uses: amondnet/vercel-action@v20
+        with:
+          vercel-args: '--prod'
+          vercel-token: ${{ secrets.VERCEL_TOKEN }}
+          vercel-org-id: ${{ secrets.VERCEL_ORG_ID}}
+          vercel-project-id: ${{ secrets.VERCEL_STORYBOOK_PROJECT_ID}}
           scope: ${{ secrets.VERCEL_ORG_ID}}
