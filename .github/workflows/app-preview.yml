@@ -1,15 +1,13 @@
 name: App test and preview deployment
 
 on:
-  pull_request:
-    paths:
-      - "app/**"
+  pull_request
 
 jobs:
   validate:
     uses: dsaltares/invoicing/.github/workflows/app-shared.yml@main
 
-  deployVercel:
+  deployAppVercel:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -18,6 +16,19 @@ jobs:
           vercel-token: ${{ secrets.VERCEL_TOKEN }}
           vercel-org-id: ${{ secrets.VERCEL_ORG_ID}}
           vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID}}
+          github-comment: "true"
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          scope: ${{ secrets.VERCEL_ORG_ID}} 
+  
+  deployStorybookVercel:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: amondnet/vercel-action@v20
+        with:
+          vercel-token: ${{ secrets.VERCEL_TOKEN }}
+          vercel-org-id: ${{ secrets.VERCEL_ORG_ID}}
+          vercel-project-id: ${{ secrets.VERCEL_STORYBOOK_PROJECT_ID}}
           github-comment: "true"
           github-token: ${{ secrets.GITHUB_TOKEN }}
           scope: ${{ secrets.VERCEL_ORG_ID}} 
