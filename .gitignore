@@ -111,3 +111,6 @@ database
 
 # mac
 .DS_Store
+
+#storybook
+app/storybook-static
