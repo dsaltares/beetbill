@@ -2,15 +2,16 @@ import type { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import { getProviders } from 'next-auth/react';
 import SignInForm from '@components/SignInForm';
 import { withNoAuth } from '@lib/nextauth/decorators';
+import BlankLayout from '@components/BlankLayout';
 
 const SignIn = ({
   providers,
   callbackUrl,
   error,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => (
-  <div className="flex w-full h-screen items-end md:items-center justify-center bg-violet-50">
+  <BlankLayout>
     <SignInForm providers={providers} callbackUrl={callbackUrl} error={error} />
-  </div>
+  </BlankLayout>
 );
 
 export const getServerSideProps: GetServerSideProps = withNoAuth(

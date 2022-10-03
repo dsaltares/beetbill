@@ -9,6 +9,7 @@ import Button from './Button';
 import GoogleIcon from './Icons/GoogleIcon';
 import type { Icon } from './Icons/types';
 import Input from './Input';
+import Card from './Card';
 
 type SignInFormProps = {
   providers: Record<string, ClientSafeProvider>;
@@ -30,7 +31,7 @@ const SignInForm = ({ providers, callbackUrl, error }: SignInFormProps) => {
   const hasOauthAndEmail = hasEmail && nonEmailProviders.length > 0;
 
   return (
-    <div className="flex flex-col p-8 bg-white shadow-[0_-12px_50px_0px_rgb(0,0,0,0.25)] md:shadow-2xl rounded-t-xl md:rounded-xl w-full max-w-[402px] gap-10">
+    <Card>
       <h1 className="text-2xl font-bold text-center">Sign in to Invoicing</h1>
       <ErrorAlert error={error} />
       {hasOtherProviders && (
@@ -54,7 +55,7 @@ const SignInForm = ({ providers, callbackUrl, error }: SignInFormProps) => {
         </div>
       )}
       {hasEmail && <EmailForm callbackUrl={callbackUrl} />}
-    </div>
+    </Card>
   );
 };
 
