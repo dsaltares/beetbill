@@ -12,11 +12,11 @@
   }
 }
 
-
 .sb-show-main.sb-main-centered #root {
   display: flex;
   align-items: center;
   justify-content: center;
   width: 100%;
+  padding: 0;
 }
 
