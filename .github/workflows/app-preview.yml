@@ -1,9 +1,7 @@
 name: App test and preview deployment
 
 on:
-  pull_request:
-    paths:
-      - "app/**"
+  pull_request
 
 jobs:
   validate:
