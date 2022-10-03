@@ -71,7 +71,7 @@
     "jest-environment-jsdom": "^29.0.3",
     "msw": "^0.47.3",
     "msw-storybook-addon": "^1.6.3",
-    "postcss": "^8.4.16",
+    "postcss": "^8.4.17",
     "prettier": "^2.7.1",
     "prisma": "^4.4.0",
     "storybook-addon-next-router": "^4.0.0",
