@@ -2,6 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer utilities {
+  .focus-base {
+    @apply outline-none ring-0 border-violet-500;
+  }
+
+  .focus-ring {
+    @apply focus-visible:focus-base;
+  }
+}
+
 
 .sb-show-main.sb-main-centered #root {
   display: flex;
@@ -9,3 +19,4 @@
   justify-content: center;
   width: 100%;
 }
+
