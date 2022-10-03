@@ -2,11 +2,13 @@ import React from 'react';
 import type { ComponentStory, ComponentMeta } from '@storybook/react';
 import { faBars, faXmark } from '@fortawesome/free-solid-svg-icons';
 import IconButton from './IconButton';
+import GoogleIcon from './Icons/GoogleIcon';
 
 const Icons = {
   none: undefined,
   faBars,
   faXmark,
+  GoogleIcon,
 };
 const IconInputType = {
   options: Object.keys(Icons),

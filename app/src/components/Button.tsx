@@ -2,6 +2,9 @@ import type { ButtonHTMLAttributes, PropsWithChildren } from 'react';
 import cn from 'classnames';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import type { IconDefinition } from '@fortawesome/free-solid-svg-icons';
+import type { Icon } from './Icons/types';
+
+type IconProp = IconDefinition | Icon;
 
 type ButtonProps = PropsWithChildren<
   ButtonHTMLAttributes<HTMLButtonElement> & {
@@ -9,10 +12,21 @@ type ButtonProps = PropsWithChildren<
     mode?: 'default' | 'light' | 'outlined' | 'borderless';
     size?: 'sm' | 'md' | 'lg';
     fullWidth?: boolean;
-    startIcon?: IconDefinition;
-    endIcon?: IconDefinition;
+    startIcon?: IconProp;
+    endIcon?: IconProp;
   }
 >;
+
+const renderIcon = (Icon?: IconProp) => {
+  const className = 'w-4 h-4 mr-2';
+  if (!Icon) {
+    return null;
+  }
+  if (typeof Icon === 'function') {
+    return <Icon className={className} />;
+  }
+  return <FontAwesomeIcon icon={Icon} className={className} />;
+};
 
 const Button = ({
   variant = 'primary',
@@ -26,7 +40,7 @@ const Button = ({
   ...buttonProps
 }: ButtonProps) => (
   <button
-    className={cn('rounded-md text-base', {
+    className={cn('flex items-center justify-center rounded-md text-base', {
       'bg-violet-700 text-white':
         !disabled && variant === 'primary' && mode === 'default',
       'bg-violet-100 text-violet-900':
@@ -52,9 +66,9 @@ const Button = ({
     disabled={disabled}
     {...buttonProps}
   >
-    {startIcon && <FontAwesomeIcon className="w-4 h-4 mr-2" icon={startIcon} />}
+    {renderIcon(startIcon)}
     {children}
-    {endIcon && <FontAwesomeIcon className="w-4 h-4 ml-2" icon={endIcon} />}
+    {renderIcon(endIcon)}
   </button>
 );
 

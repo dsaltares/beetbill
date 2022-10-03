@@ -7,6 +7,7 @@ import {
   faUsers,
 } from '@fortawesome/free-solid-svg-icons';
 import Button from './Button';
+import GoogleIcon from './Icons/GoogleIcon';
 
 const Icons = {
   none: undefined,
@@ -14,6 +15,7 @@ const Icons = {
   faUsers,
   faBoxOpen,
   faFileInvoice,
+  GoogleIcon,
 };
 const IconInputType = {
   options: Object.keys(Icons),
