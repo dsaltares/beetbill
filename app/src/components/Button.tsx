@@ -17,15 +17,15 @@ type ButtonProps = PropsWithChildren<
   }
 >;
 
-const renderIcon = (Icon?: IconProp) => {
-  const className = 'w-4 h-4 mr-2';
+const renderIcon = (Icon: IconProp | undefined, className: string) => {
+  const finalClassName = cn('w-4 h-4', className);
   if (!Icon) {
     return null;
   }
   if (typeof Icon === 'function') {
-    return <Icon className={className} />;
+    return <Icon className={finalClassName} />;
   }
-  return <FontAwesomeIcon icon={Icon} className={className} />;
+  return <FontAwesomeIcon icon={Icon} className={finalClassName} />;
 };
 
 const Button = ({
@@ -66,9 +66,9 @@ const Button = ({
     disabled={disabled}
     {...buttonProps}
   >
-    {renderIcon(startIcon)}
+    {renderIcon(startIcon, 'mr-2')}
     {children}
-    {renderIcon(endIcon)}
+    {renderIcon(endIcon, 'ml-2')}
   </button>
 );
 
