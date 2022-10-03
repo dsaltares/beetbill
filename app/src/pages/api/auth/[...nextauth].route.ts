@@ -51,5 +51,6 @@ export default NextAuth({
   pages: {
     signIn: '/auth/signin',
     verifyRequest: '/auth/verify',
+    error: '/auth/error',
   },
 });
