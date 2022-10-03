@@ -30,9 +30,9 @@ const SignInForm = ({ providers, callbackUrl, error }: SignInFormProps) => {
   const hasOauthAndEmail = hasEmail && nonEmailProviders.length > 0;
 
   return (
-    <div className="flex flex-col p-8 shadow-[0_-12px_50px_0px_rgb(0,0,0,0.25)] md:shadow-2xl rounded-t-xl md:rounded-xl w-full max-w-[402px] gap-10">
-      <ErrorAlert error={error} />
+    <div className="flex flex-col p-8 bg-white shadow-[0_-12px_50px_0px_rgb(0,0,0,0.25)] md:shadow-2xl rounded-t-xl md:rounded-xl w-full max-w-[402px] gap-10">
       <h1 className="text-2xl font-bold text-center">Sign in to Invoicing</h1>
+      <ErrorAlert error={error} />
       {hasOtherProviders && (
         <div className="flex flex-col gap-2">
           {nonEmailProviders.map((provider) => (
@@ -118,7 +118,7 @@ type ErrorAlertProps = {
 
 const ErrorAlert = ({ error }: ErrorAlertProps) =>
   error ? (
-    <div className="my-4 max-w-prose rounded-md bg-red-200 p-2 text-black">
+    <div className="max-w-prose rounded-md bg-red-200 p-2 text-black">
       {ErrorMessages[error] || ErrorMessages['default']}
     </div>
   ) : null;
