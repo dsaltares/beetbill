@@ -78,12 +78,15 @@ const EmailForm = ({ callbackUrl }: EmailFormProps) => {
   } = useForm<EmailFormValues>({ mode: 'onBlur' });
   const onSubmit: SubmitHandler<EmailFormValues> = ({ email }) =>
     signIn('email', { email, callbackUrl });
+
   return (
     <form className="flex flex-col gap-4" onSubmit={handleSubmit(onSubmit)}>
       <Input
         placeholder="Email address..."
+        type="text"
         {...register('email', {
           pattern: EmailRegexp,
+          required: true,
         })}
         error={errors.email && 'Invalid email address'}
       />
