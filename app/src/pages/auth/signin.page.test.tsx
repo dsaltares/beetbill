@@ -1,8 +1,6 @@
 import 'next';
-import { signIn, type ClientSafeProvider } from 'next-auth/react';
+import { signIn, useSession, type ClientSafeProvider } from 'next-auth/react';
 import type { ProviderType } from 'next-auth/providers';
-import { rest } from 'msw';
-import { setupServer } from 'msw/node';
 import userEvent from '@testing-library/user-event';
 import { screen, render, act } from '@lib/testing';
 import SignInPage from './signin.page';
@@ -31,23 +29,18 @@ const allProviders = {
 };
 
 const callbackUrl = '/';
-
-const server = setupServer();
-
-beforeAll(() => server.listen());
-afterEach(() => {
-  server.resetHandlers(
-    rest.get('http://localhost/api/auth/session', (req, res, ctx) =>
-      res(ctx.json({}))
-    )
-  );
-  jest.resetAllMocks();
-});
-afterAll(() => server.close());
+const useSessionMock = useSession as jest.MockedFunction<typeof useSession>;
 
 describe('SignInPage', () => {
+  beforeEach(() => {
+    jest.resetAllMocks();
+    useSessionMock.mockReturnValue({ status: 'unauthenticated', data: null });
+  });
+
   it('displays the providers', async () => {
-    render(<SignInPage providers={allProviders} callbackUrl={callbackUrl} />);
+    render(<SignInPage providers={allProviders} callbackUrl={callbackUrl} />, {
+      session: null,
+    });
 
     screen.getByRole('button', { name: 'Sign in with Email' });
     screen.getByRole('button', { name: 'Sign in with Google' });

@@ -1,8 +1,8 @@
 import type { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import { getProviders } from 'next-auth/react';
 import SignInForm from '@components/SignInForm';
-import { withNoAuth } from '@lib/nextauth/decorators';
 import BlankLayout from '@components/BlankLayout';
+import WithNoAuthentication from '@components/WithNoAuthentication';
 
 const SignIn = ({
   providers,
@@ -14,18 +14,16 @@ const SignIn = ({
   </BlankLayout>
 );
 
-export const getServerSideProps: GetServerSideProps = withNoAuth(
-  async (context) => {
-    const providers = await getProviders();
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const providers = await getProviders();
 
-    return {
-      props: {
-        providers,
-        callbackUrl: context.query.callbackUrl || '',
-        error: context.query.error || '',
-      },
-    };
-  }
-);
+  return {
+    props: {
+      providers,
+      callbackUrl: context.query.callbackUrl || '',
+      error: context.query.error || '',
+    },
+  };
+};
 
-export default SignIn;
+export default WithNoAuthentication(SignIn);
