@@ -60,14 +60,14 @@ model Company {
   id         String   @id @default(cuid())
   name       String
   number     String
-  vatNumber  String
-  email      String
-  website    String
-  country    String
-  address    String
-  postCode   String
-  city       String
-  iban       String
+  vatNumber  String?
+  email      String?
+  website    String?
+  country    String?
+  address    String?
+  postCode   String?
+  city       String?
+  iban       String?
   userId     String   @unique
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
@@ -84,11 +84,11 @@ model Company {
 model Product {
   id          String    @id @default(cuid())
   name        String
-  includesVat Boolean
-  price       Float
-  currency    String
-  vat         Float
-  unit        String
+  includesVat Boolean   @default(false)
+  price       Float     @default(0)
+  currency    String    @default("EUR")
+  vat         Float     @default(0)
+  unit        String    @default("h")
   companyId   String
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
@@ -105,15 +105,15 @@ model Customer {
   id           String    @id @default(cuid())
   name         String
   number       String
-  vatNumber    String
-  firstName    String
-  lastName     String
-  email        String
-  country      String
-  address      String
-  postCode     String
-  city         String
-  paymentTerms Int
+  vatNumber    String?
+  firstName    String?
+  lastName     String?
+  email        String?
+  country      String?
+  address      String?
+  postCode     String?
+  city         String?
+  paymentTerms Int       @default(7)
   companyId    String
   createdAt    DateTime  @default(now())
   updatedAt    DateTime  @updatedAt
@@ -137,7 +137,7 @@ model Invoice {
   status     InvoiceStatus @default(DRAFT)
   prefix     String        @default("")
   number     Int
-  date       DateTime
+  date       DateTime      @default(now())
   companyId  String        @unique
   customerId String        @unique
   createdAt  DateTime      @default(now())
@@ -155,8 +155,8 @@ model InvoiceProduct {
   id        String   @id @default(cuid())
   invoiceId String
   productId String
-  quantity  Float
-  date      DateTime
+  quantity  Float    @default(1)
+  date      DateTime @default(now())
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
