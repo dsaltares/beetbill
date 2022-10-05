@@ -6,16 +6,16 @@ import { UpdateCompanyOutput, UpdateCompanyInput } from './types';
 export const updateCompany: Procedure<
   UpdateCompanyInput,
   UpdateCompanyOutput
-> = async ({ ctx: { session }, input: { id, ...data } }) => {
-  const existingCompany = await prisma.company.findFirst({
-    where: { id, userId: session?.userId as string },
+> = async ({ ctx: { session }, input }) => {
+  const existingCompany = await prisma.company.findUnique({
+    where: { id: session?.companyId as string },
   });
   if (!existingCompany) {
     throw new TRPCError({ code: 'NOT_FOUND' });
   }
   return prisma.company.update({
-    where: { id },
-    data,
+    where: { id: session?.companyId as string },
+    data: input,
   });
 };
 

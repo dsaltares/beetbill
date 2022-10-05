@@ -21,7 +21,7 @@ export const GetCompanyOutput = Company.nullish();
 export const UpdateCompanyInput = Company.omit({
   createdAt: true,
   updatedAt: true,
-});
+}).partial();
 export const UpdateCompanyOutput = Company;
 
 export type Company = z.infer<typeof Company>;
