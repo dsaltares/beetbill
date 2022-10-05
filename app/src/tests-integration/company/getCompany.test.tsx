@@ -1,28 +1,14 @@
 import type { Company, User } from '@prisma/client';
-import prisma from '@server/prisma';
 import { getCompany } from '@server/company/getCompany';
+import { createTestCompany, createTestUser } from '../testData';
 
 let user: User;
 let company: Company;
 
 describe('getCompany', () => {
   beforeEach(async () => {
-    user = await prisma.user.create({ data: {} });
-    company = await prisma.company.create({
-      data: {
-        name: 'company',
-        number: '123',
-        vatNumber: '123',
-        email: 'test@company.com',
-        website: 'company.com',
-        country: 'Romania',
-        address: 'street',
-        city: 'Cluj-Napoca',
-        postCode: '123',
-        iban: 'RO123',
-        userId: user.id,
-      },
-    });
+    user = await createTestUser();
+    company = await createTestCompany(user.id);
   });
 
   it('returns null when the company does not exist', async () => {

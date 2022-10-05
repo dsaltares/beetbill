@@ -1,6 +1,6 @@
 import prisma from '@server/prisma';
 
-beforeEach(async () =>
+beforeAll(async () =>
   Promise.all([
     prisma.account.deleteMany(),
     prisma.user.deleteMany(),
