@@ -6,4 +6,5 @@ module.exports = nextJest()({
   testRegex: 'tests-integration\\/.*\\.test\\.tsx?$',
   testPathIgnorePatterns: ['<rootDir>/node_modules/', '<rootDir>/.next/'],
   coverageDirectory: 'coverage/integration',
+  setupFilesAfterEnv: ['<rootDir>/src/tests-integration/setup.ts'],
 });
