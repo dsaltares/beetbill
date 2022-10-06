@@ -1,6 +1,5 @@
 import type { Company, User } from '@prisma/client';
 import type { Session } from 'next-auth';
-import cuid from 'cuid';
 import prisma from '@server/prisma';
 import { createTestCompany, createTestUser } from '../testData';
 import { createProduct } from '@server/products/createProduct';
