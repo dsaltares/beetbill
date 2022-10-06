@@ -1,7 +1,5 @@
 import type { Company, User } from '@prisma/client';
 import type { Session } from 'next-auth';
-import cuid from 'cuid';
-import prisma from '@server/prisma';
 import { getCustomers } from '@server/customers/getCustomers';
 import {
   createTestCompany,
