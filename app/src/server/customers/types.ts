@@ -42,7 +42,9 @@ export const UpdateCustomerInput = Customer.omit({
   companyId: true,
   createdAt: true,
   updatedAt: true,
-});
+})
+  .partial()
+  .merge(z.object({ id: z.string() }));
 export const UpdateCustomerOutput = Customer;
 
 export type Customer = z.infer<typeof Customer>;
