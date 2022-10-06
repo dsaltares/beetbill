@@ -30,12 +30,10 @@ export const deleteProduct: Procedure<
     });
   }
 
-  if (existingProduct) {
-    await prisma.product.update({
-      where: { id },
-      data: { deletedAt: new Date() },
-    });
-  }
+  await prisma.product.update({
+    where: { id },
+    data: { deletedAt: new Date() },
+  });
 
   return id;
 };

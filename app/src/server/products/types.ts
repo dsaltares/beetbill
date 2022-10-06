@@ -26,7 +26,9 @@ export const UpdateProductInput = Product.omit({
   companyId: true,
   createdAt: true,
   updatedAt: true,
-});
+})
+  .partial()
+  .merge(z.object({ id: z.string() }));
 export const UpdateProductOutput = Product;
 
 export type Product = z.infer<typeof Product>;

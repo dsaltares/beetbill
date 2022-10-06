@@ -1,4 +1,5 @@
 import { TRPCError } from '@trpc/server';
+import { InvoiceStatus } from '@prisma/client';
 import { type Procedure, procedure } from '@server/trpc';
 import prisma from '@server/prisma';
 import { UpdateProductOutput, UpdateProductInput } from './types';
@@ -13,6 +14,21 @@ export const updateProduct: Procedure<
   if (!existingProduct) {
     throw new TRPCError({ code: 'NOT_FOUND' });
   }
+
+  const productInNonDraftInvoice = await prisma.invoiceProduct.findFirst({
+    include: { invoice: true },
+    where: {
+      productId: id,
+      invoice: { status: { not: InvoiceStatus.DRAFT } },
+    },
+  });
+  if (productInNonDraftInvoice) {
+    throw new TRPCError({
+      code: 'PRECONDITION_FAILED',
+      message: 'Product is associated to an approved invoice',
+    });
+  }
+
   return prisma.product.update({
     where: { id },
     data,
