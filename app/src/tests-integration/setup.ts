@@ -1,6 +1,7 @@
+import 'tsconfig-paths/register';
 import prisma from '@server/prisma';
 
-beforeAll(async () =>
+const setup = async () =>
   Promise.all([
     prisma.account.deleteMany(),
     prisma.user.deleteMany(),
@@ -11,5 +12,6 @@ beforeAll(async () =>
     prisma.customer.deleteMany(),
     prisma.invoice.deleteMany(),
     prisma.invoiceProduct.deleteMany(),
-  ])
-);
+  ]);
+
+export default setup;
