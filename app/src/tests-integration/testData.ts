@@ -19,3 +19,11 @@ export const createTestCustomer = (companyId: string) =>
   prisma.customer.create({
     data: { companyId, name: 'Test customer', number: cuid() },
   });
+
+export const createTestProduct = (companyId: string) =>
+  prisma.product.create({
+    data: {
+      companyId,
+      name: 'Test product',
+    },
+  });
