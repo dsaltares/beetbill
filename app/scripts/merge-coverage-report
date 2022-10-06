@@ -1,0 +1,28 @@
+#!/bin/sh
+
+set -e
+
+COVERAGE_DIR="./coverage"
+
+if [ ! -d "$COVERAGE_DIR" ]; then
+  echo 'Missing coverage directory -- you need to have ran tests locally at least once before'
+  exit 1
+fi
+
+# Copy report files from integration and unit tests into a shared reports directory
+if [ -d "$COVERAGE_DIR/summary" ]; then
+  rm -rf "$COVERAGE_DIR/summary"
+fi
+
+mkdir "$COVERAGE_DIR/summary"
+
+cp "$COVERAGE_DIR/unit/coverage-final.json" "$COVERAGE_DIR/summary/unit-report.json"
+cp "$COVERAGE_DIR/integration/coverage-final.json" "$COVERAGE_DIR/summary/integration-report.json"
+
+nyc merge "$COVERAGE_DIR/summary" "$COVERAGE_DIR/summary/merged-report.json"
+nyc report --reporter html -t coverage/summary --report-dir coverage/summary
+
+# Unless told otherwise, try to open the coverage report: 
+if [ -z $MERGE_COVERAGE_SKIP_OPEN ]; then
+  open $COVERAGE_DIR/summary/index.html
+fi

@@ -1,4 +1,5 @@
 #!/bin/sh
+
 # Builds the NextJS application using `next build`, with additional setup
 # steps for Prisma.
 #

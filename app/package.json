@@ -15,6 +15,7 @@
     "test": "yarn test:unit && yarn test:integration",
     "test:unit": "jest -c jest.unit.config.js",
     "test:integration": "dotenv -e .env.tests prisma migrate dev && jest -c jest.integration.config.js ",
+    "test:coverage": "./scripts/merge-coverage-report",
     "storybook": "start-storybook -p 6006 -s ./.storybook/public",
     "build-storybook": "build-storybook -s ./.storybook/public"
   },
@@ -72,6 +73,7 @@
     "jest-environment-jsdom": "^29.0.3",
     "msw": "^0.47.3",
     "msw-storybook-addon": "^1.6.3",
+    "nyc": "^15.1.0",
     "postcss": "^8.4.17",
     "prettier": "^2.7.1",
     "prisma": "^4.4.0",
