@@ -1,9 +1,12 @@
 import type { Company, Customer, User } from '@prisma/client';
 import type { Session } from 'next-auth';
-import cuid from 'cuid';
 import { TRPCError } from '@trpc/server';
 import prisma from '@server/prisma';
-import { createTestCompany, createTestUser } from '../testData';
+import {
+  createTestCompany,
+  createTestUser,
+  createTestCustomer,
+} from '../testData';
 import { deleteCustomer } from '@server/customers/deleteCustomer';
 
 let user: User;
@@ -15,9 +18,7 @@ describe('deleteCustomer', () => {
   beforeEach(async () => {
     user = await createTestUser();
     company = await createTestCompany(user.id);
-    customer = await prisma.customer.create({
-      data: { companyId: company.id, name: 'Test customer', number: cuid() },
-    });
+    customer = await createTestCustomer(company.id);
     session = { userId: user.id, companyId: company.id, expires: '' };
   });
 

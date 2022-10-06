@@ -14,3 +14,8 @@ export const createTestCompany = (userId: string) =>
       userId,
     },
   });
+
+export const createTestCustomer = (companyId: string) =>
+  prisma.customer.create({
+    data: { companyId, name: 'Test customer', number: cuid() },
+  });
