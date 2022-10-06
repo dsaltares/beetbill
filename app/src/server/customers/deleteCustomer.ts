@@ -23,7 +23,7 @@ export const deleteCustomer: Procedure<
     });
   }
 
-  const existingCustomer = await prisma.product.findFirst({
+  const existingCustomer = await prisma.customer.findFirst({
     where: { id, companyId: session?.companyId as string, originalId: null },
   });
 
