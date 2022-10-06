@@ -8,7 +8,7 @@ export const updateCustomer: Procedure<
   UpdateCustomerOutput
 > = async ({ ctx: { session }, input: { id, ...data } }) => {
   const existingCustomer = await prisma.customer.findFirst({
-    where: { id, companyId: session?.companyId as string, originalId: null },
+    where: { id, companyId: session?.companyId as string },
   });
   if (!existingCustomer) {
     throw new TRPCError({ code: 'NOT_FOUND' });

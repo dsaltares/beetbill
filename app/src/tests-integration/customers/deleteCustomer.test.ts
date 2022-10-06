@@ -59,6 +59,34 @@ describe('deleteCustomer', () => {
     );
   });
 
+  it('throws when the customer has a non draft invoice and deleting the invoice one', async () => {
+    const invoiceCustomer = await prisma.customer.create({
+      data: {
+        companyId: company.id,
+        name: customer.name,
+        number: customer.number,
+        originalId: customer.id,
+      },
+    });
+    await prisma.invoice.create({
+      data: {
+        number: 1,
+        customerId: invoiceCustomer.id,
+        companyId: company.id,
+        status: 'SENT',
+      },
+    });
+
+    await expect(
+      deleteCustomer({ ctx: { session }, input: { id: invoiceCustomer.id } })
+    ).rejects.toEqual(
+      new TRPCError({
+        code: 'PRECONDITION_FAILED',
+        message: 'Customer is associated to approved invoices',
+      })
+    );
+  });
+
   it('soft deletes the customer', async () => {
     const invoiceCustomer = await prisma.customer.create({
       data: {

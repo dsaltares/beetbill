@@ -11,7 +11,7 @@ export const deleteCustomer: Procedure<
   const customerInNonDraftInvoice = await prisma.customer.findFirst({
     include: { invoice: true },
     where: {
-      originalId: id,
+      OR: [{ originalId: id }, { id }],
       companyId: session?.companyId as string,
       invoice: { status: { not: InvoiceStatus.DRAFT } },
     },
@@ -24,7 +24,7 @@ export const deleteCustomer: Procedure<
   }
 
   const existingCustomer = await prisma.customer.findFirst({
-    where: { id, companyId: session?.companyId as string, originalId: null },
+    where: { id, companyId: session?.companyId as string },
   });
 
   if (existingCustomer) {
