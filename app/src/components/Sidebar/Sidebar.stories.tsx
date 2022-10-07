@@ -15,9 +15,7 @@ export default {
 
 const Template: ComponentStory<typeof Sidebar> = (args) => (
   <Providers>
-    <div className="h-screen">
-      <Sidebar {...args} />
-    </div>
+    <Sidebar {...args} />
   </Providers>
 );
 

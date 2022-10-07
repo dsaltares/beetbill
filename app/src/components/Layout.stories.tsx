@@ -12,13 +12,11 @@ export default {
 
 const Template: ComponentStory<typeof Layout> = (args) => (
   <Providers>
-    <div className="h-screen">
-      <Layout {...args}>
-        <div>
-          <p className="text-xl font-semibold">Content goes here</p>
-        </div>
-      </Layout>
-    </div>
+    <Layout {...args}>
+      <div>
+        <p className="text-xl font-semibold">Content goes here</p>
+      </div>
+    </Layout>
   </Providers>
 );
 

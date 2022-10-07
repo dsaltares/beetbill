@@ -8,12 +8,13 @@ export default {
   argTypes: {
     onClick: { action: 'clicked' },
   },
+  parameters: {
+    layout: 'centered',
+  },
 } as ComponentMeta<typeof EmptyContent>;
 
 const Template: ComponentStory<typeof EmptyContent> = (args) => (
-  <div className="h-screen">
-    <EmptyContent {...args} />
-  </div>
+  <EmptyContent {...args} />
 );
 
 export const Default = Template.bind({});

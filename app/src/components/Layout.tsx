@@ -6,9 +6,9 @@ import MobileSidebarOpenControls from './Sidebar/MobileSidebarOpenControls';
 const Layout = ({ children }: PropsWithChildren) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   return (
-    <div className="flex flex-row min-h-screen w-full">
+    <div className="flex flex-row min-h-full w-full">
       <Sidebar isOpen={isOpen} onClose={onClose} />
-      <main className="flex flex-col w-full min-h-screen p-4">
+      <main className="flex flex-col w-full min-h-full p-4">
         <MobileSidebarOpenControls onOpenSidebar={onOpen} />
         {children}
       </main>

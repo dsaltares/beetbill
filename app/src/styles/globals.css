@@ -12,6 +12,18 @@
   }
 }
 
+html {
+  @apply h-full;
+}
+
+body {
+  @apply h-full;
+}
+
+#__next {
+  @apply h-full;
+}
+
 .sb-show-main.sb-main-centered #root {
   display: flex;
   align-items: center;
