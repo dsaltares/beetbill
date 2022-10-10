@@ -39,7 +39,7 @@ const isSelected = (href: string, pathname: string) => {
 const NavLinks = () => {
   const { pathname } = useRouter();
   return (
-    <ul>
+    <ul className="flex flex-col gap-1">
       {Links.map(({ label, href, icon }) => (
         <NavLink
           key={href}
