@@ -18,7 +18,7 @@ const NavLink = ({ label, icon, href, selected }: NavLinkProps) => (
           'flex items-center p-4 rounded-xl gap-4 text-white text-base',
           {
             'bg-violet-900': !selected,
-            'bg-violet-800': selected,
+            'bg-violet-700': selected,
           }
         )}
       >
