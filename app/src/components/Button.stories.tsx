@@ -31,6 +31,9 @@ export default {
     onClick: { action: 'clicked' },
     startIcon: IconInputType,
     endIcon: IconInputType,
+    color: {
+      control: { type: 'radio', options: ['primary', 'secondary'] },
+    },
   },
   parameters: {
     layout: 'centered',
@@ -41,8 +44,8 @@ const Template: ComponentStory<typeof Button> = (args) => <Button {...args} />;
 
 export const Default = Template.bind({});
 Default.args = {
-  variant: 'primary',
-  mode: 'default',
+  color: 'primary',
+  variant: 'solid',
   children: 'Button',
   startIcon: faBriefcase,
   disabled: false,
