@@ -8,8 +8,8 @@ type IconProp = IconDefinition | Icon;
 
 type ButtonProps = PropsWithChildren<
   ButtonHTMLAttributes<HTMLButtonElement> & {
-    variant?: 'primary' | 'secondary';
-    mode?: 'default' | 'light' | 'outlined' | 'borderless';
+    color?: 'primary' | 'secondary';
+    variant?: 'solid' | 'light' | 'outlined' | 'borderless';
     size?: 'sm' | 'md' | 'lg';
     fullWidth?: boolean;
     startIcon?: IconProp;
@@ -29,8 +29,8 @@ const renderIcon = (Icon: IconProp | undefined, className: string) => {
 };
 
 const Button = ({
-  variant = 'primary',
-  mode = 'default',
+  color = 'primary',
+  variant = 'solid',
   size = 'md',
   fullWidth = false,
   children,
@@ -41,22 +41,22 @@ const Button = ({
 }: ButtonProps) => (
   <button
     className={cn('flex items-center justify-center rounded-md text-base', {
-      'bg-violet-700 text-white':
-        !disabled && variant === 'primary' && mode === 'default',
-      'bg-violet-100 text-violet-900':
-        !disabled && variant === 'primary' && mode === 'light',
-      'bg-white text-violet-800 border border-violet-800':
-        !disabled && variant === 'primary' && mode === 'outlined',
-      'bg-white text-violet-800 border border-violet-50':
-        !disabled && variant === 'primary' && mode === 'borderless',
-      'bg-zinc-800 text-white':
-        !disabled && variant === 'secondary' && mode === 'default',
-      'bg-zinc-200 text-zinc-800':
-        !disabled && variant === 'secondary' && mode === 'light',
-      'bg-white text-zinc-800 border border-zinc-800':
-        !disabled && variant === 'secondary' && mode === 'outlined',
-      'bg-white text-zinc-800 border border-zinc-100':
-        !disabled && variant === 'secondary' && mode === 'borderless',
+      'bg-violet-700 text-white hover:bg-violet-900':
+        !disabled && color === 'primary' && variant === 'solid',
+      'bg-violet-100 text-violet-900 hover:bg-violet-300':
+        !disabled && color === 'primary' && variant === 'light',
+      'bg-white text-violet-800 border border-violet-800 hover:bg-violet-100':
+        !disabled && color === 'primary' && variant === 'outlined',
+      'bg-white text-violet-800 underline hover:bg-violet-100':
+        !disabled && color === 'primary' && variant === 'borderless',
+      'bg-zinc-800 text-white hover:bg-zinc-900':
+        !disabled && color === 'secondary' && variant === 'solid',
+      'bg-zinc-200 text-zinc-800 hover:bg-zinc-400':
+        !disabled && color === 'secondary' && variant === 'light',
+      'bg-white text-zinc-800 border border-zinc-800 hover:bg-zinc-200':
+        !disabled && color === 'secondary' && variant === 'outlined',
+      'bg-white text-zinc-800 underline hover:bg-zinc-200':
+        !disabled && color === 'secondary' && variant === 'borderless',
       'bg-zinc-100 text-zinc-400': !!disabled,
       'p-2': size === 'sm',
       'p-3': size === 'md',

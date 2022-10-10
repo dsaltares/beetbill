@@ -41,8 +41,8 @@ const SignInForm = ({ providers, callbackUrl, error }: SignInFormProps) => {
               key={provider}
               startIcon={ProviderIcons[provider]}
               onClick={() => signIn(provider, { callbackUrl })}
-              variant="secondary"
-              mode="borderless"
+              color="secondary"
+              variant="outlined"
             >{`Sign in with ${capitalizeFirstLetter(provider)}`}</Button>
           ))}
         </div>
