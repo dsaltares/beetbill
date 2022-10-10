@@ -8,7 +8,7 @@ import capitalizeFirstLetter from '@lib/capitalizeFirstLetter';
 import Button from './Button';
 import GoogleIcon from './Icons/GoogleIcon';
 import type { Icon } from './Icons/types';
-import Input from './Input';
+import TextField from './TextField';
 import Card from './Card';
 
 type SignInFormProps = {
@@ -81,7 +81,8 @@ const EmailForm = ({ callbackUrl }: EmailFormProps) => {
 
   return (
     <form className="flex flex-col gap-4" onSubmit={handleSubmit(onSubmit)}>
-      <Input
+      <TextField
+        id="signin-email"
         placeholder="Email address..."
         type="text"
         {...register('email', {

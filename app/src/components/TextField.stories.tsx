@@ -1,10 +1,10 @@
 import React from 'react';
 import type { ComponentStory, ComponentMeta } from '@storybook/react';
-import Input from './Input';
+import TextField from './TextField';
 
 export default {
-  title: 'Input',
-  component: Input,
+  title: 'TextField',
+  component: TextField,
   argTypes: {
     disabled: { control: 'boolean' },
     onFocus: { action: 'focus' },
@@ -13,13 +13,19 @@ export default {
   parameters: {
     layout: 'centered',
   },
-} as ComponentMeta<typeof Input>;
+} as ComponentMeta<typeof TextField>;
 
-const Template: ComponentStory<typeof Input> = (args) => <Input {...args} />;
+const Template: ComponentStory<typeof TextField> = (args) => (
+  <div>
+    <TextField id="text-field" {...args} />
+  </div>
+);
 
 export const Default = Template.bind({});
 Default.args = {
-  placeholder: 'Placeholder',
+  placeholder: 'Company number',
   disabled: false,
   error: '',
+  tip: 'This is a tip',
+  label: 'Company ID',
 };
