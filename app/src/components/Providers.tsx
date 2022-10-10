@@ -4,6 +4,7 @@ import type { Session } from 'next-auth';
 import { SessionProvider } from 'next-auth/react';
 import type { PropsWithChildren } from 'react';
 import { useState } from 'react';
+import { Toaster } from 'react-hot-toast';
 
 type ProvidersProps = {
   session?: Session;
@@ -34,6 +35,7 @@ const Providers = ({
       <QueryClientProvider client={queryClient}>
         {children}
         <ReactQueryDevtools initialIsOpen={false} />
+        <Toaster position="bottom-center" />
       </QueryClientProvider>
     </SessionProvider>
   );
