@@ -35,7 +35,7 @@ const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
           disabled={disabled}
           {...props}
           className={cn(
-            'border text-sm rounded-lg focus-ring block w-full p-2.5',
+            'border text-sm rounded-lg focus-ring block w-full p-2.5 placeholder:text-zinc-400',
             className,
             {
               'bg-gray-50': !disabled,
@@ -44,7 +44,7 @@ const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
               'border-red-600': !!error && !disabled,
               'text-zinc-900': !error && !disabled,
               'text-red-600': !!error && !disabled,
-              'text-zinc-400': !!disabled,
+              'text-zinc-400 cursor-not-allowed': !!disabled,
             }
           )}
         />
