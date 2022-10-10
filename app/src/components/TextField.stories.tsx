@@ -16,7 +16,7 @@ export default {
 } as ComponentMeta<typeof TextField>;
 
 const Template: ComponentStory<typeof TextField> = (args) => (
-  <div>
+  <div className="w-full p-8">
     <TextField id="text-field" {...args} />
   </div>
 );

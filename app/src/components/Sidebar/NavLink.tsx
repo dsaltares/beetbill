@@ -15,7 +15,7 @@ const NavLink = ({ label, icon, href, selected }: NavLinkProps) => (
     <Link href={href}>
       <a
         className={cn(
-          'flex items-center p-4 rounded-xl gap-4 text-white text-base',
+          'flex items-center p-4 rounded-xl gap-4 text-white text-base focus-ring',
           {
             'bg-violet-900': !selected,
             'bg-violet-700': selected,

@@ -24,7 +24,12 @@ const IconButton = ({
   });
   return (
     <button
-      className="flex items-center justify-center w-10 h-10"
+      className={cn(
+        'flex items-center justify-center w-10 h-10 rounded-lg focus-ring',
+        {
+          'hover:bg-violet-100': variant === 'primary',
+        }
+      )}
       aria-label={label}
       {...buttonProps}
     >
