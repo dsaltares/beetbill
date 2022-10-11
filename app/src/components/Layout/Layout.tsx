@@ -11,7 +11,7 @@ const Layout = ({ children }: PropsWithChildren) => {
   const { status } = useSession();
   const { pathname } = useRouter();
 
-  if (status !== 'authenticated') {
+  if (status === 'loading') {
     return (
       <div className="w-full h-full flex items-center justify-center">
         <Spinner />
@@ -19,9 +19,9 @@ const Layout = ({ children }: PropsWithChildren) => {
     );
   }
 
-  const hasBlankLayout = BlankLayoutPaths.some((path) =>
-    pathname.startsWith(path)
-  );
+  const hasBlankLayout =
+    status === 'unauthenticated' ||
+    BlankLayoutPaths.some((path) => pathname.startsWith(path));
 
   return hasBlankLayout ? (
     <BlankLayout>{children}</BlankLayout>

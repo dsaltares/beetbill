@@ -1,7 +1,6 @@
 import type { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import { getProviders } from 'next-auth/react';
 import SignInForm from '@components/SignInForm';
-import BlankLayout from '@components/BlankLayout';
 import WithNoAuthentication from '@components/WithNoAuthentication';
 
 const SignIn = ({
@@ -9,9 +8,7 @@ const SignIn = ({
   callbackUrl,
   error,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => (
-  <BlankLayout>
-    <SignInForm providers={providers} callbackUrl={callbackUrl} error={error} />
-  </BlankLayout>
+  <SignInForm providers={providers} callbackUrl={callbackUrl} error={error} />
 );
 
 export const getServerSideProps: GetServerSideProps = async (context) => {

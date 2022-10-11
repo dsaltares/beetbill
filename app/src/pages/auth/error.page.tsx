@@ -1,5 +1,4 @@
 import type { GetServerSideProps, InferGetServerSidePropsType } from 'next';
-import BlankLayout from '@components/BlankLayout';
 import Card from '@components/Card';
 import LinkButton from '@components/LinkButton';
 
@@ -16,15 +15,13 @@ const ErrorPage = ({
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const message = Messages[error] || Messages.Default;
   return (
-    <BlankLayout>
-      <Card>
-        <h1 className="text-2xl font-bold text-center">Unable to sign in</h1>
-        <div className="flex flex-col gap-4">
-          <p className="text-base">{message}</p>
-          <LinkButton href="/auth/signin">Sign in</LinkButton>
-        </div>
-      </Card>
-    </BlankLayout>
+    <Card>
+      <h1 className="text-2xl font-bold text-center">Unable to sign in</h1>
+      <div className="flex flex-col gap-4">
+        <p className="text-base">{message}</p>
+        <LinkButton href="/auth/signin">Sign in</LinkButton>
+      </div>
+    </Card>
   );
 };
 
