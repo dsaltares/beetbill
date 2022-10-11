@@ -15,11 +15,9 @@ describe('WithAuthentication', () => {
     jest.resetAllMocks();
   });
 
-  it('renders spinner when still loading', async () => {
+  it('renders nothing when still loading', async () => {
     useSessionMock.mockReturnValueOnce({ status: 'loading', data: null });
     render(<PageWithNoAuthentication />);
-
-    screen.getByText('Loading...');
   });
 
   it('renders the page when the user is not authenticated', async () => {

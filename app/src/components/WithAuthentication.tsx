@@ -1,7 +1,6 @@
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
-import Spinner from './Spinner';
 
 const WithAuthentication = <P extends object>(
   Component: React.ComponentType<P>
@@ -16,15 +15,7 @@ const WithAuthentication = <P extends object>(
       }
     }, [router, status]);
 
-    if (status !== 'authenticated') {
-      return (
-        <div className="w-full h-full flex items-center justify-center">
-          <Spinner />
-        </div>
-      );
-    }
-
-    return <Component {...props} />;
+    return status === 'authenticated' ? <Component {...props} /> : null;
   }
 
   return RequireAuthentication;

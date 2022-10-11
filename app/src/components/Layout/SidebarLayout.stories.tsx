@@ -2,21 +2,21 @@ import React from 'react';
 import type { ComponentStory, ComponentMeta } from '@storybook/react';
 import { rest } from 'msw';
 import Providers from '@components/Providers';
-import Layout from './Layout';
+import SidebarLayout from './SidebarLayout';
 
 export default {
-  title: 'Layout',
-  component: Layout,
+  title: 'SidebarLayout',
+  component: SidebarLayout,
   layout: 'fullscreen',
-} as ComponentMeta<typeof Layout>;
+} as ComponentMeta<typeof SidebarLayout>;
 
-const Template: ComponentStory<typeof Layout> = (args) => (
+const Template: ComponentStory<typeof SidebarLayout> = (args) => (
   <Providers>
-    <Layout {...args}>
+    <SidebarLayout {...args}>
       <div>
         <p className="text-xl font-semibold">Content goes here</p>
       </div>
-    </Layout>
+    </SidebarLayout>
   </Providers>
 );
 
