@@ -14,7 +14,7 @@ jobs:
     needs: [validate]
     steps:
       - uses: actions/checkout@v3
-      - uses: amondnet/vercel-action@v20
+      - uses: amondnet/vercel-action@v25
         with:
           vercel-args: '--prod'
           vercel-token: ${{ secrets.VERCEL_TOKEN }}
@@ -27,7 +27,7 @@ jobs:
     needs: [validate]
     steps:
       - uses: actions/checkout@v3
-      - uses: amondnet/vercel-action@v20
+      - uses: amondnet/vercel-action@v25
         with:
           vercel-args: '--prod'
           vercel-token: ${{ secrets.VERCEL_TOKEN }}
