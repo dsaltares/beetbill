@@ -6,7 +6,7 @@ jobs:
   lint:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - uses: ./.github/actions/app-setup
       - name: Lint
         run: cd app && yarn lint
@@ -14,7 +14,7 @@ jobs:
   unitTest:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - uses: ./.github/actions/app-setup
       - name: Unit Test
         run: cd app && yarn run test:unit
@@ -34,7 +34,7 @@ jobs:
             - 5432:5432
 
       steps:
-        - uses: actions/checkout@v2
+        - uses: actions/checkout@v3
         - uses: ./.github/actions/app-setup
         - name: Integration Test
           run: cd app && yarn run test:integration   

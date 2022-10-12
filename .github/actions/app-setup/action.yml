@@ -2,7 +2,7 @@ name: Setup app
 runs:
   using: composite
   steps:
-    - uses: actions/setup-node@v2.4.1
+    - uses: actions/setup-node@v3
       with:
         node-version: "16"
 
@@ -11,7 +11,7 @@ runs:
       run: echo "::set-output name=dir::$(yarn cache dir)"
       shell: bash
 
-    - uses: actions/cache@v2
+    - uses: actions/cache@v3
       id: yarn-cache
       with:
         path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
