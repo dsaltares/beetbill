@@ -7,7 +7,7 @@ type SpinnerProps = {
 const Spinner = ({ size = 'md' }: SpinnerProps) => (
   <div role="status">
     <svg
-      className={cn('inline text-zinc-100 animate-spin fill-violet-800', {
+      className={cn('inline text-[#D9D9D9] animate-spin fill-zinc-800', {
         'w-6 h-6': size === 'sm',
         'w-10 h-10': size === 'md',
         'w-16 h-16': size === 'lg',
