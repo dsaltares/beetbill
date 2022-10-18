@@ -35,7 +35,7 @@ const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
           disabled={disabled}
           {...props}
           className={cn(
-            'border text-sm rounded-lg focus-ring block w-full p-2.5 placeholder:text-zinc-400',
+            'border text-sm rounded-lg focus-ring block w-full p-2 placeholder:text-zinc-400',
             className,
             {
               'bg-gray-50': !disabled,
@@ -49,7 +49,7 @@ const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
           )}
         />
         {showTip && (
-          <div className="mt-2">
+          <div className="mt-1">
             <span
               className={cn('text-sm ', {
                 'text-zinc-900': !disabled,
@@ -61,7 +61,7 @@ const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
           </div>
         )}
         {showError && (
-          <div className="mt-2">
+          <div className="mt-1">
             <span role="alert" className="text-sm text-red-600">
               {error}
             </span>
