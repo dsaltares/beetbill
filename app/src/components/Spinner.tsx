@@ -1,7 +1,17 @@
-const Spinner = () => (
+import cn from 'classnames';
+
+type SpinnerProps = {
+  size?: 'sm' | 'md' | 'lg';
+};
+
+const Spinner = ({ size = 'md' }: SpinnerProps) => (
   <div role="status">
     <svg
-      className="inline w-16 h-16 text-zinc-100 animate-spin fill-violet-800"
+      className={cn('inline text-zinc-100 animate-spin fill-violet-800', {
+        'w-6 h-6': size === 'sm',
+        'w-10 h-10': size === 'md',
+        'w-16 h-16': size === 'lg',
+      })}
       viewBox="0 0 100 101"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
