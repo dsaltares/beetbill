@@ -3,6 +3,7 @@ import cn from 'classnames';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import type { IconDefinition } from '@fortawesome/free-solid-svg-icons';
 import type { Icon } from './Icons/types';
+import Spinner from './Spinner';
 
 type IconProp = IconDefinition | Icon;
 
@@ -14,6 +15,7 @@ type ButtonProps = PropsWithChildren<
     fullWidth?: boolean;
     startIcon?: IconProp;
     endIcon?: IconProp;
+    loading?: boolean;
   }
 >;
 
@@ -37,11 +39,12 @@ const Button = ({
   disabled,
   startIcon,
   endIcon,
+  loading = false,
   ...buttonProps
 }: ButtonProps) => (
   <button
     className={cn(
-      'flex items-center justify-center rounded-md text-base focus-ring',
+      'relative flex items-center justify-center rounded-md text-base focus-ring',
       {
         'bg-violet-700 text-white hover:bg-violet-900':
           !disabled && color === 'primary' && variant === 'solid',
@@ -60,15 +63,21 @@ const Button = ({
         'bg-white text-zinc-800 underline hover:bg-zinc-200':
           !disabled && color === 'secondary' && variant === 'borderless',
         'bg-zinc-100 text-zinc-400 cursor-not-allowed': !!disabled,
-        'p-1.5': size === 'sm',
-        'p-2': size === 'md',
-        'p-2.5': size === 'lg',
+        'text-transparent': !!loading,
+        'py-1.5 px-3': size === 'sm',
+        'py-2 px-4': size === 'md',
+        'py-2.5 px-5': size === 'lg',
         'w-full': fullWidth,
       }
     )}
     disabled={disabled}
     {...buttonProps}
   >
+    {loading && (
+      <div className="absolute flex items-center justify-center">
+        <Spinner size="sm" />
+      </div>
+    )}
     {renderIcon(startIcon, 'mr-2')}
     {children}
     {renderIcon(endIcon, 'ml-2')}

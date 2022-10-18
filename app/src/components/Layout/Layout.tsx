@@ -14,7 +14,7 @@ const Layout = ({ children }: PropsWithChildren) => {
   if (status === 'loading') {
     return (
       <div className="w-full h-full flex items-center justify-center">
-        <Spinner />
+        <Spinner size="lg" />
       </div>
     );
   }
