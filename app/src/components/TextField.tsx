@@ -9,7 +9,7 @@ type TextFieldProps = InputHTMLAttributes<HTMLInputElement> & {
 };
 
 const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
-  ({ label, tip, error, id, className, disabled, ...props }, ref) => {
+  ({ label, tip, error, id, className, disabled, required, ...props }, ref) => {
     const showError = !!error && !disabled;
     const showTip = !showError && !!tip;
 
@@ -23,6 +23,8 @@ const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
                 'text-zinc-900': !error && !disabled,
                 'text-red-600': !!error && !disabled,
                 'text-zinc-400': !!disabled,
+                "after:content-['*'] after:ml-0.5 after:text-red-500":
+                  !!required,
               })}
             >
               {label}
@@ -33,6 +35,7 @@ const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
           id={id}
           ref={ref}
           disabled={disabled}
+          required={required}
           {...props}
           className={cn(
             'border text-sm rounded-lg focus-ring block w-full p-2 placeholder:text-zinc-400',
