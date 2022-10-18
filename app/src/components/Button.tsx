@@ -60,9 +60,9 @@ const Button = ({
         'bg-white text-zinc-800 underline hover:bg-zinc-200':
           !disabled && color === 'secondary' && variant === 'borderless',
         'bg-zinc-100 text-zinc-400 cursor-not-allowed': !!disabled,
-        'p-2': size === 'sm',
-        'p-3': size === 'md',
-        'p-4': size === 'lg',
+        'p-1.5': size === 'sm',
+        'p-2': size === 'md',
+        'p-2.5': size === 'lg',
         'w-full': fullWidth,
       }
     )}

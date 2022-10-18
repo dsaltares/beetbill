@@ -55,7 +55,7 @@ function SelectField<Option>({
           <div className="relative">
             <Listbox.Button
               className={cn(
-                'relative w-full text-left text-base rounded-lg p-2.5 border focus-ring',
+                'relative w-full text-left text-base rounded-lg p-2 border focus-ring',
                 {
                   'bg-gray-50 cursor-default': !disabled,
                   'bg-gray-100 text-zinc-400 cursor-not-allowed': !!disabled,
@@ -117,7 +117,7 @@ function SelectField<Option>({
         )}
       </Listbox>
       {showTip && (
-        <div className="mt-2">
+        <div className="mt-1">
           <span
             className={cn('text-sm ', {
               'text-zinc-900': !disabled,
@@ -129,7 +129,7 @@ function SelectField<Option>({
         </div>
       )}
       {showError && (
-        <div className="mt-2">
+        <div className="mt-1">
           <span role="alert" className="text-sm text-red-600">
             {error}
           </span>
