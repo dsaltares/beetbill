@@ -4,7 +4,7 @@ version: '3.9'
 # The containers that compose the project
 services:
   db:
-    image: postgres:13
+    image: postgres:14
     restart: always
     environment:
       POSTGRES_USER: prisma
