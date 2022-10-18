@@ -19,7 +19,7 @@ const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
           <div className="mb-2">
             <label
               htmlFor={id}
-              className={cn('text-sm font-medium', {
+              className={cn('text-sm', {
                 'text-zinc-900': !error && !disabled,
                 'text-red-600': !!error && !disabled,
                 'text-zinc-400': !!disabled,
