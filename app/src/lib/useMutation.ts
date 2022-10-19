@@ -12,6 +12,7 @@ type UseMutationArgs<Input, Cache> = {
   mutationFn: (input: Input) => Promise<unknown>;
   cacheUpdater: (cache: Draft<Cache>, input: Input) => void;
   errorMessage?: (error: TRPCError) => string;
+  successMessage?: () => string;
 };
 
 const useMutation = <Input, Cache>({
@@ -19,6 +20,7 @@ const useMutation = <Input, Cache>({
   mutationFn,
   cacheUpdater,
   errorMessage,
+  successMessage,
 }: UseMutationArgs<Input, Cache>) => {
   const queryClient = useQueryClient();
   return useMutationBase(mutationFn, {
@@ -53,6 +55,15 @@ const useMutation = <Input, Cache>({
       });
     },
     onSettled: () => queryClient.invalidateQueries(cacheKey),
+    onSuccess: () => {
+      if (successMessage) {
+        toast({
+          message: successMessage(),
+          color: 'primary',
+          variant: 'light',
+        });
+      }
+    },
   });
 };
 
