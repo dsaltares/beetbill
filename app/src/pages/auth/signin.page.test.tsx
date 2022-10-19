@@ -107,13 +107,10 @@ describe('SignInPage', () => {
 
     const email = 'invalid-email';
     const emailInput = await screen.findByPlaceholderText('Email address...');
-    await act(() => userEvent.type(emailInput, email));
-    await screen.findByDisplayValue(email);
+    await userEvent.type(emailInput, email);
+    await userEvent.tab();
 
-    const button = await screen.findByRole('button', {
-      name: 'Sign in with Email',
-    });
-    await act(() => userEvent.click(button));
+    await screen.findByDisplayValue(email);
 
     await screen.findByText('Invalid email address');
     expect(signIn).not.toHaveBeenCalled();
