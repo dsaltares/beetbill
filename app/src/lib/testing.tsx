@@ -7,6 +7,9 @@ import type { NextRouter } from 'next/router';
 import { RouterContext } from 'next/dist/shared/lib/router-context';
 import type { Session } from 'next-auth';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { rest } from 'msw';
+import type { TRPCError } from '@trpc/server';
+import { Toaster } from 'react-hot-toast';
 
 const customRender = (
   ui: React.ReactElement,
@@ -27,6 +30,9 @@ const createProviders = ({ session, router }: ProviderData) => {
             queries: {
               retry: false,
             },
+            mutations: {
+              retry: false,
+            },
           },
           logger: {
             log: console.log,
@@ -37,10 +43,15 @@ const createProviders = ({ session, router }: ProviderData) => {
     );
     return (
       <RouterContext.Provider value={{ ...mockRouter, ...(router || {}) }}>
-        <QueryClientProvider client={queryClient}>
-          <SessionProvider session={session}>{children}</SessionProvider>
-          {children}
-        </QueryClientProvider>
+        <SessionProvider
+          session={session}
+          basePath="http://localhost:3000/api/auth"
+        >
+          <QueryClientProvider client={queryClient}>
+            {children}
+            <Toaster position="bottom-center" />
+          </QueryClientProvider>
+        </SessionProvider>
       </RouterContext.Provider>
     );
   };
@@ -72,6 +83,29 @@ export const mockRouter: NextRouter = {
   domainLocales: [],
   isPreview: false,
 };
+
+export const mockTrpcQuery = (name: string, result: object) =>
+  rest.get(`http://localhost:3000/api/trpc/${name}`, (_req, res, ctx) =>
+    res(ctx.json([{ result: { data: result } }]))
+  );
+
+export const mockTrpcMutation = (name: string, result: object) =>
+  rest.post(`http://localhost:3000/api/trpc/${name}`, (_req, res, ctx) =>
+    res(ctx.json([{ result: { data: result } }]))
+  );
+
+export const mockTrpcMutationError = (name: string, error: TRPCError) =>
+  rest.post(`http://localhost:3000/api/trpc/${name}`, (_req, res, ctx) =>
+    res(
+      ctx.status(500),
+      ctx.json([{ error: { code: error.code, message: error.message } }])
+    )
+  );
+
+export const mockSession = (session: Session | undefined | null) =>
+  rest.get('http://localhost:3000/api/auth/session', (_req, res, ctx) =>
+    session ? res(ctx.json(session)) : res(ctx.json({}))
+  );
 
 export * from '@testing-library/react';
 

@@ -16,6 +16,7 @@ type SelectFieldProps<Option> = {
   disabled?: boolean;
   id?: string;
   placeholder?: string;
+  required?: boolean;
 };
 
 function SelectField<Option>({
@@ -30,6 +31,7 @@ function SelectField<Option>({
   optionToLabel,
   optionToKey,
   placeholder,
+  required = false,
 }: SelectFieldProps<Option>) {
   const showError = !!error && !disabled;
   const showTip = !showError && !!tip;
@@ -65,6 +67,8 @@ function SelectField<Option>({
                   'text-zinc-900': !error && !disabled && !!value,
                   'text-zinc-400': !error && !disabled && !value,
                   'text-red-600': !!error && !disabled,
+                  "after:content-['*'] after:ml-0.5 after:text-red-500":
+                    !!required,
                 }
               )}
             >

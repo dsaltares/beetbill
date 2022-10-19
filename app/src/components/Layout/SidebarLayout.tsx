@@ -16,7 +16,7 @@ const SidebarLayout = ({ children }: PropsWithChildren) => {
   return (
     <div className="flex flex-row min-h-full w-full">
       <Sidebar isOpen={isOpen} onClose={onClose} />
-      <main className="flex flex-col w-full min-h-full p-4">
+      <main className="flex flex-col w-full min-h-full p-4 bg-violet-50">
         <MobileSidebarOpenControls onOpenSidebar={onOpen} />
         {children}
       </main>

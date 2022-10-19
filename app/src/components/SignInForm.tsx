@@ -5,6 +5,7 @@ import type { SubmitHandler } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
 import capitalizeFirstLetter from '@lib/capitalizeFirstLetter';
+import EmailRegexp from '@lib/emailRegexp';
 import Button from './Button';
 import GoogleIcon from './Icons/GoogleIcon';
 import type { Icon } from './Icons/types';
@@ -58,9 +59,6 @@ const SignInForm = ({ providers, callbackUrl, error }: SignInFormProps) => {
     </Card>
   );
 };
-
-const EmailRegexp =
-  /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
 type EmailFormValues = {
   email: string;

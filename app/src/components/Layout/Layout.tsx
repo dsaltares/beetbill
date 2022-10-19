@@ -1,9 +1,9 @@
 import type { PropsWithChildren } from 'react';
 import { useRouter } from 'next/router';
 import { useSession } from 'next-auth/react';
-import Spinner from '@components/Spinner';
 import BlankLayout from './BlankLayout';
 import SidebarLayout from './SidebarLayout';
+import FullScreenSpinner from './FullScreenSpinner';
 
 const BlankLayoutPaths = ['/auth'];
 
@@ -12,11 +12,7 @@ const Layout = ({ children }: PropsWithChildren) => {
   const { pathname } = useRouter();
 
   if (status === 'loading') {
-    return (
-      <div className="w-full h-full flex items-center justify-center">
-        <Spinner size="lg" />
-      </div>
-    );
+    return <FullScreenSpinner />;
   }
 
   const hasBlankLayout =

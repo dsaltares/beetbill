@@ -3,7 +3,7 @@ import type { AppRouter } from '@server/router';
 
 const getBaseUrl = (): string => {
   if (typeof window !== 'undefined') {
-    return '';
+    return 'http://localhost:3000';
   }
   if (process.env.VERCEL_URL) {
     return `https://${process.env.VERCEL_URL}`;

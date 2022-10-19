@@ -1,11 +1,17 @@
 import 'next';
-import { signIn, useSession, type ClientSafeProvider } from 'next-auth/react';
+import { signIn, type ClientSafeProvider } from 'next-auth/react';
 import type { ProviderType } from 'next-auth/providers';
 import userEvent from '@testing-library/user-event';
-import { screen, render, act } from '@lib/testing';
+import { setupServer } from 'msw/node';
+import { screen, render, act, mockSession } from '@lib/testing';
 import SignInPage from './signin.page';
 
-jest.mock('next-auth/react');
+jest.mock('next-auth/react', () => ({
+  ...jest.requireActual('next-auth/react'),
+  signIn: jest.fn(),
+}));
+
+const server = setupServer();
 
 const googleProvider: ClientSafeProvider = {
   id: 'google',
@@ -29,77 +35,64 @@ const allProviders = {
 };
 
 const callbackUrl = '/';
-const useSessionMock = useSession as jest.MockedFunction<typeof useSession>;
+const session = undefined;
+
+beforeAll(() => server.listen());
+afterEach(() => server.resetHandlers());
+afterAll(() => server.close());
 
 describe('SignInPage', () => {
   beforeEach(() => {
     jest.resetAllMocks();
-    useSessionMock.mockReturnValue({ status: 'unauthenticated', data: null });
   });
 
   it('displays the providers', async () => {
+    server.resetHandlers(mockSession(session));
     render(<SignInPage providers={allProviders} callbackUrl={callbackUrl} />, {
-      session: null,
+      session,
     });
 
-    screen.getByRole('button', { name: 'Sign in with Email' });
-    screen.getByRole('button', { name: 'Sign in with Google' });
+    await screen.findByRole('button', { name: 'Sign in with Email' });
+    await screen.findByRole('button', { name: 'Sign in with Google' });
   });
 
   it('does not display unavailable providers', async () => {
+    server.resetHandlers(mockSession(session));
     render(
       <SignInPage
         providers={{ email: emailProvider }}
         callbackUrl={callbackUrl}
-      />
+      />,
+      { session }
     );
 
-    screen.getByRole('button', { name: 'Sign in with Email' });
+    await screen.findByRole('button', { name: 'Sign in with Email' });
     expect(screen.queryByText('Sign in with Google')).not.toBeInTheDocument();
   });
 
   it('calls signIn with the right provider when trying to log in', async () => {
-    render(<SignInPage providers={allProviders} callbackUrl={callbackUrl} />);
+    server.resetHandlers(mockSession(session));
+    render(<SignInPage providers={allProviders} callbackUrl={callbackUrl} />, {
+      session,
+    });
 
-    await userEvent.click(
-      screen.getByRole('button', { name: 'Sign in with Google' })
-    );
+    const button = await screen.findByRole('button', {
+      name: 'Sign in with Google',
+    });
+    await userEvent.click(button);
 
     expect(signIn).toHaveBeenCalledWith('google', { callbackUrl });
   });
 
-  it('displays an error when trying to sign in with an empty email', async () => {
-    render(<SignInPage providers={allProviders} callbackUrl={callbackUrl} />);
-
-    await userEvent.click(
-      screen.getByRole('button', { name: 'Sign in with Email' })
-    );
-
-    await screen.findByText('Invalid email address');
-    expect(signIn).not.toHaveBeenCalled();
-  });
-
-  it('displays an error when trying to sign in with an invalid email', async () => {
-    render(<SignInPage providers={allProviders} callbackUrl={callbackUrl} />);
-
-    const email = 'invalid-email';
-    const emailInput = screen.getByPlaceholderText('Email address...');
-    await userEvent.type(emailInput, email);
-    await screen.findByDisplayValue(email);
-    await userEvent.click(
-      screen.getByRole('button', { name: 'Sign in with Email' })
-    );
-
-    await screen.findByText('Invalid email address');
-    expect(signIn).not.toHaveBeenCalled();
-  });
-
   it('calls signIn with the email provider', async () => {
-    render(<SignInPage providers={allProviders} callbackUrl={callbackUrl} />);
+    server.resetHandlers(mockSession(session));
+    render(<SignInPage providers={allProviders} callbackUrl={callbackUrl} />, {
+      session,
+    });
 
     const email = 'ada@lovelace.com';
 
-    const emailInput = screen.getByPlaceholderText('Email address...');
+    const emailInput = await screen.findByPlaceholderText('Email address...');
 
     await act(async () => userEvent.type(emailInput, `${email}{enter}`));
     await screen.findByDisplayValue(email);

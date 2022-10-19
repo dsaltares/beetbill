@@ -15,6 +15,8 @@ const useUpdateCompany = () =>
         Object.assign(company, input);
       }
     },
+    successMessage: () => 'Updated company',
+    errorMessage: () => 'Failed to update company',
   });
 
 export default useUpdateCompany;
