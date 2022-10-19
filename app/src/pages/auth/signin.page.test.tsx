@@ -99,7 +99,7 @@ describe('SignInPage', () => {
     expect(signIn).not.toHaveBeenCalled();
   });
 
-  it('displays an error when trying to sign in with an invalid email', async () => {
+  it('displays an error when entering an invalid email and tabbing', async () => {
     server.resetHandlers(mockSession(session));
     render(<SignInPage providers={allProviders} callbackUrl={callbackUrl} />, {
       session,
