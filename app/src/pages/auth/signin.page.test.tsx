@@ -107,7 +107,7 @@ describe('SignInPage', () => {
 
     const email = 'invalid-email';
     const emailInput = await screen.findByPlaceholderText('Email address...');
-    await userEvent.type(emailInput, email);
+    await act(() => userEvent.type(emailInput, email));
     await screen.findByDisplayValue(email);
 
     const button = await screen.findByRole('button', {
