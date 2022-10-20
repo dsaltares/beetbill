@@ -8,7 +8,7 @@ import EmailRegexp from '@lib/emailRegexp';
 import TextField from './TextField';
 import FullScreenForm from './FullScreenForm';
 
-type CompanyFormValues = {
+type EditCompanyFormValues = {
   name: Company['name'];
   number: Company['number'];
   email: Company['email'];
@@ -21,18 +21,21 @@ type CompanyFormValues = {
   iban: Company['iban'];
 };
 
-type CompanyFormProps = {
+type EditCompanyFormProps = {
   company: Company;
 };
 
-const CompanyForm = ({ company }: CompanyFormProps) => {
+const EditCompanyForm = ({ company }: EditCompanyFormProps) => {
   const { mutate: updateCompany, isLoading } = useUpdateCompany();
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<CompanyFormValues>({ mode: 'onBlur', defaultValues: company });
-  const onSubmit: SubmitHandler<CompanyFormValues> = (values) =>
+  } = useForm<EditCompanyFormValues>({
+    mode: 'onBlur',
+    defaultValues: company,
+  });
+  const onSubmit: SubmitHandler<EditCompanyFormValues> = (values) =>
     updateCompany(values);
   return (
     <FullScreenForm
@@ -136,4 +139,4 @@ const CompanyForm = ({ company }: CompanyFormProps) => {
   );
 };
 
-export default CompanyForm;
+export default EditCompanyForm;
