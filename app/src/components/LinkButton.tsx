@@ -1,16 +1,13 @@
 import type { AnchorHTMLAttributes, PropsWithChildren } from 'react';
 import cn from 'classnames';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import type { IconDefinition } from '@fortawesome/free-solid-svg-icons';
 import Link from 'next/link';
-import type { CustomIcon } from './Icons/types';
-
-type IconProp = IconDefinition | CustomIcon;
+import type { IconProp } from './Icons/types';
 
 type ButtonProps = PropsWithChildren<
   AnchorHTMLAttributes<HTMLAnchorElement> & {
-    variant?: 'primary' | 'secondary';
-    mode?: 'default' | 'light' | 'outlined' | 'borderless';
+    color?: 'primary' | 'secondary';
+    variant?: 'solid' | 'light' | 'outlined' | 'borderless';
     size?: 'sm' | 'md' | 'lg';
     fullWidth?: boolean;
     startIcon?: IconProp;
@@ -30,9 +27,9 @@ const renderIcon = (Icon: IconProp | undefined, className: string) => {
   return <FontAwesomeIcon icon={Icon} className={finalClassName} />;
 };
 
-const Button = ({
-  variant = 'primary',
-  mode = 'default',
+const LinkButton = ({
+  color = 'primary',
+  variant = 'solid',
   size = 'md',
   fullWidth = false,
   children,
@@ -43,26 +40,31 @@ const Button = ({
 }: ButtonProps) => (
   <Link href={href}>
     <a
-      className={cn('flex items-center justify-center rounded-md text-base', {
-        'bg-violet-700 text-white': variant === 'primary' && mode === 'default',
-        'bg-violet-100 text-violet-900':
-          variant === 'primary' && mode === 'light',
-        'bg-white text-violet-800 border border-violet-800':
-          variant === 'primary' && mode === 'outlined',
-        'bg-white text-violet-800 border border-violet-50':
-          variant === 'primary' && mode === 'borderless',
-        'bg-zinc-800 text-white': variant === 'secondary' && mode === 'default',
-        'bg-zinc-200 text-zinc-800':
-          variant === 'secondary' && mode === 'light',
-        'bg-white text-zinc-800 border border-zinc-800':
-          variant === 'secondary' && mode === 'outlined',
-        'bg-white text-zinc-800 border border-zinc-100':
-          variant === 'secondary' && mode === 'borderless',
-        'p-2': size === 'sm',
-        'p-3': size === 'md',
-        'p-4': size === 'lg',
-        'w-full': fullWidth,
-      })}
+      className={cn(
+        'relative flex items-center justify-center rounded-md text-base focus-ring text-left',
+        {
+          'bg-violet-700 text-zinc-50 hover:bg-violet-900':
+            color === 'primary' && variant === 'solid',
+          'bg-violet-100 text-violet-900 hover:bg-violet-300':
+            color === 'primary' && variant === 'light',
+          'bg-white text-violet-800 border border-violet-800 hover:bg-violet-100':
+            color === 'primary' && variant === 'outlined',
+          'bg-white text-violet-800 underline hover:bg-violet-100':
+            color === 'primary' && variant === 'borderless',
+          'bg-zinc-800 text-zinc-50 hover:bg-zinc-900':
+            color === 'secondary' && variant === 'solid',
+          'bg-zinc-200 text-zinc-800 hover:bg-zinc-400':
+            color === 'secondary' && variant === 'light',
+          'bg-white text-zinc-800 border border-zinc-800 hover:bg-zinc-200':
+            color === 'secondary' && variant === 'outlined',
+          'bg-white text-zinc-800 underline hover:bg-zinc-200':
+            color === 'secondary' && variant === 'borderless',
+          'py-1.5 px-3': size === 'sm',
+          'py-2 px-4': size === 'md',
+          'py-2.5 px-5': size === 'lg',
+          'w-full': fullWidth,
+        }
+      )}
       {...anchorProps}
     >
       {renderIcon(startIcon, 'mr-2')}
@@ -72,4 +74,4 @@ const Button = ({
   </Link>
 );
 
-export default Button;
+export default LinkButton;

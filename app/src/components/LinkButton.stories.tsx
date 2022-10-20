@@ -29,6 +29,9 @@ export default {
   argTypes: {
     startIcon: IconInputType,
     endIcon: IconInputType,
+    color: {
+      control: { type: 'radio', options: ['primary', 'secondary'] },
+    },
   },
   parameters: {
     layout: 'centered',
@@ -41,8 +44,8 @@ const Template: ComponentStory<typeof LinkButton> = (args) => (
 
 export const Default = Template.bind({});
 Default.args = {
-  variant: 'primary',
-  mode: 'default',
+  color: 'primary',
+  variant: 'solid',
   children: 'Button',
   startIcon: faBriefcase,
   size: 'md',
