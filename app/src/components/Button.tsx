@@ -40,6 +40,7 @@ const Button = ({
   startIcon,
   endIcon,
   loading = false,
+  onClick,
   ...buttonProps
 }: ButtonProps) => (
   <button
@@ -73,6 +74,11 @@ const Button = ({
       }
     )}
     disabled={disabled}
+    onClick={(e) => {
+      if (!loading && onClick) {
+        onClick(e);
+      }
+    }}
     {...buttonProps}
   >
     {loading && (
