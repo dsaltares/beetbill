@@ -23,7 +23,7 @@ const FullScreenForm = ({
 }: FullScreenFormProps) => (
   <FullScreenCard>
     <form className="flex flex-col w-full gap-16" onSubmit={onSubmit}>
-      <div className="flex justify-between">
+      <div className="flex justify-between gap-8">
         <div className="flex flex-col gap-2">
           <h1 className="text-4xl font-bold text-zinc-900">{title}</h1>
           <p className="text-base text-zinc-900">{description}</p>
