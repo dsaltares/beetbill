@@ -25,7 +25,7 @@ const Sidebar = ({ isOpen, onClose }: SidebarProps) => (
         <div className="flex items-center justify-between">
           <div className="block md:hidden">
             <IconButton
-              variant="secondary"
+              color="secondary"
               label="close menu"
               icon={faXmark}
               onClick={onClose}

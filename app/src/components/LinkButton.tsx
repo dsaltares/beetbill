@@ -1,8 +1,8 @@
 import type { AnchorHTMLAttributes, PropsWithChildren } from 'react';
 import cn from 'classnames';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Link from 'next/link';
 import type { IconProp } from './Icons/types';
+import Icon from './Icons/Icon';
 
 type ButtonProps = PropsWithChildren<
   AnchorHTMLAttributes<HTMLAnchorElement> & {
@@ -15,17 +15,6 @@ type ButtonProps = PropsWithChildren<
     href: string;
   }
 >;
-
-const renderIcon = (Icon: IconProp | undefined, className: string) => {
-  const finalClassName = cn('w-4 h-4', className);
-  if (!Icon) {
-    return null;
-  }
-  if (typeof Icon === 'function') {
-    return <Icon className={finalClassName} />;
-  }
-  return <FontAwesomeIcon icon={Icon} className={finalClassName} />;
-};
 
 const LinkButton = ({
   color = 'primary',
@@ -67,9 +56,9 @@ const LinkButton = ({
       )}
       {...anchorProps}
     >
-      {renderIcon(startIcon, 'mr-2')}
+      <Icon className="mr-2" icon={startIcon} />
       {children}
-      {renderIcon(endIcon, 'ml-2')}
+      <Icon className="ml-2" icon={endIcon} />
     </a>
   </Link>
 );

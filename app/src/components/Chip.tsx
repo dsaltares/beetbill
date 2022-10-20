@@ -1,6 +1,6 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import cn from 'classnames';
 import type { PropsWithChildren } from 'react';
+import Icon from './Icons/Icon';
 import type { IconProp } from './Icons/types';
 
 type ChipProps = PropsWithChildren<{
@@ -39,21 +39,10 @@ const Chip = ({
       }
     )}
   >
-    {renderIcon(startIcon)}
+    <Icon icon={startIcon} />
     {children}
-    {renderIcon(endIcon)}
+    <Icon icon={endIcon} />
   </div>
 );
-
-const renderIcon = (Icon: IconProp | undefined) => {
-  const finalClassName = cn('w-4 h-4');
-  if (!Icon) {
-    return null;
-  }
-  if (typeof Icon === 'function') {
-    return <Icon className={finalClassName} />;
-  }
-  return <FontAwesomeIcon icon={Icon} className={finalClassName} />;
-};
 
 export default Chip;

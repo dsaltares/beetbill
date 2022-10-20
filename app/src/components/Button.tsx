@@ -1,8 +1,8 @@
 import type { ButtonHTMLAttributes, PropsWithChildren } from 'react';
 import cn from 'classnames';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Spinner from './Spinner';
 import type { IconProp } from './Icons/types';
+import Icon from './Icons/Icon';
 
 type ButtonProps = PropsWithChildren<
   ButtonHTMLAttributes<HTMLButtonElement> & {
@@ -15,17 +15,6 @@ type ButtonProps = PropsWithChildren<
     loading?: boolean;
   }
 >;
-
-const renderIcon = (Icon: IconProp | undefined, className: string) => {
-  const finalClassName = cn('w-4 h-4', className);
-  if (!Icon) {
-    return null;
-  }
-  if (typeof Icon === 'function') {
-    return <Icon className={finalClassName} />;
-  }
-  return <FontAwesomeIcon icon={Icon} className={finalClassName} />;
-};
 
 const Button = ({
   color = 'primary',
@@ -83,9 +72,9 @@ const Button = ({
         <Spinner size="sm" />
       </div>
     )}
-    {renderIcon(startIcon, 'mr-2')}
+    <Icon className="mr-2" icon={startIcon} />
     {children}
-    {renderIcon(endIcon, 'ml-2')}
+    <Icon className="ml-2" icon={endIcon} />
   </button>
 );
 
