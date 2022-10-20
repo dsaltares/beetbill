@@ -83,7 +83,8 @@ function SelectField<Option>({
               </span>
             </Listbox.Button>
             <Transition
-              as={Fragment}
+              as={'div'}
+              className="relative z-10"
               leave="transition ease-in duration-100"
               leaveFrom="opacity-100"
               leaveTo="opacity-0"
