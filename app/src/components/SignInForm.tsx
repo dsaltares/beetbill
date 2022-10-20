@@ -8,7 +8,7 @@ import capitalizeFirstLetter from '@lib/capitalizeFirstLetter';
 import EmailRegexp from '@lib/emailRegexp';
 import Button from './Button';
 import GoogleIcon from './Icons/GoogleIcon';
-import type { Icon } from './Icons/types';
+import type { CustomIcon } from './Icons/types';
 import TextField from './TextField';
 import Card from './Card';
 
@@ -18,7 +18,7 @@ type SignInFormProps = {
   error?: string;
 };
 
-const ProviderIcons: Record<string, Icon> = {
+const ProviderIcons: Record<string, CustomIcon> = {
   google: GoogleIcon,
 };
 

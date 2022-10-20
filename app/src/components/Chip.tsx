@@ -1,10 +1,7 @@
-import type { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import cn from 'classnames';
 import type { PropsWithChildren } from 'react';
-import type { Icon } from './Icons/types';
-
-type IconProp = IconDefinition | Icon;
+import type { IconProp } from './Icons/types';
 
 type ChipProps = PropsWithChildren<{
   color?: 'primary' | 'secondary';

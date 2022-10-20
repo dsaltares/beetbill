@@ -1,11 +1,8 @@
 import type { ButtonHTMLAttributes, PropsWithChildren } from 'react';
 import cn from 'classnames';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import type { IconDefinition } from '@fortawesome/free-solid-svg-icons';
-import type { Icon } from './Icons/types';
 import Spinner from './Spinner';
-
-type IconProp = IconDefinition | Icon;
+import type { IconProp } from './Icons/types';
 
 type ButtonProps = PropsWithChildren<
   ButtonHTMLAttributes<HTMLButtonElement> & {

@@ -1,6 +1,6 @@
 import React from 'react';
 import type { ComponentStory, ComponentMeta } from '@storybook/react';
-import type { Icon } from './types';
+import type { CustomIcon } from './types';
 import GoogleIcon from './GoogleIcon';
 
 export default {
@@ -8,9 +8,9 @@ export default {
   parameters: {
     layout: 'centered',
   },
-} as ComponentMeta<Icon>;
+} as ComponentMeta<CustomIcon>;
 
-const Template: ComponentStory<Icon> = () => {
+const Template: ComponentStory<CustomIcon> = () => {
   const className = 'w-6 h-6';
   return (
     <div className="grid grid-cols-4 gap-4">

@@ -1,6 +1,6 @@
-import type { Icon } from './types';
+import type { CustomIcon } from './types';
 
-const GoogleIcon: Icon = ({ className }) => (
+const GoogleIcon: CustomIcon = ({ className }) => (
   <svg
     className={className}
     viewBox="0 0 16 18"

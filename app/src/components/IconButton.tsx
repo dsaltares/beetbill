@@ -1,11 +1,8 @@
-import type { IconDefinition } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import cn from 'classnames';
 import type { ButtonHTMLAttributes } from 'react';
-import type { Icon } from './Icons/types';
+import type { IconProp } from './Icons/types';
 import Spinner from './Spinner';
-
-type IconProp = IconDefinition | Icon;
 
 type IconButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   label: string;

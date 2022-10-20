@@ -1,5 +1,9 @@
+import type { IconDefinition } from '@fortawesome/free-solid-svg-icons';
+
 export type IconProps = {
   className: string;
 };
 
-export type Icon = (props: IconProps) => JSX.Element;
+export type CustomIcon = (props: IconProps) => JSX.Element;
+
+export type IconProp = IconDefinition | CustomIcon;

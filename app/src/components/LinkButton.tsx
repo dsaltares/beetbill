@@ -3,9 +3,9 @@ import cn from 'classnames';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import type { IconDefinition } from '@fortawesome/free-solid-svg-icons';
 import Link from 'next/link';
-import type { Icon } from './Icons/types';
+import type { CustomIcon } from './Icons/types';
 
-type IconProp = IconDefinition | Icon;
+type IconProp = IconDefinition | CustomIcon;
 
 type ButtonProps = PropsWithChildren<
   AnchorHTMLAttributes<HTMLAnchorElement> & {
