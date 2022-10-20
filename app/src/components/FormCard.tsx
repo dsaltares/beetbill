@@ -3,7 +3,7 @@ import Button from './Button';
 import FullScreenCard from './FullscreenCard';
 import type { IconProp } from './Icons/types';
 
-type FullScreenFormProps = PropsWithChildren<{
+type FormCard = PropsWithChildren<{
   title: string;
   description: string;
   submitButton: {
@@ -14,13 +14,13 @@ type FullScreenFormProps = PropsWithChildren<{
   onSubmit: DOMAttributes<HTMLFormElement>['onSubmit'];
 }>;
 
-const FullScreenForm = ({
+const FormCard = ({
   title,
   description,
   submitButton,
   onSubmit,
   children,
-}: FullScreenFormProps) => (
+}: FormCard) => (
   <FullScreenCard>
     <form className="flex flex-col w-full gap-16" onSubmit={onSubmit}>
       <div className="flex justify-between gap-8">
@@ -43,4 +43,4 @@ const FullScreenForm = ({
   </FullScreenCard>
 );
 
-export default FullScreenForm;
+export default FormCard;

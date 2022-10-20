@@ -6,7 +6,7 @@ import useUpdateCompany from '@lib/companies/useUpdateCompany';
 import type { Company } from '@server/company/types';
 import EmailRegexp from '@lib/emailRegexp';
 import TextField from './TextField';
-import FullScreenForm from './FullScreenForm';
+import FormCard from './FormCard';
 
 type EditCompanyFormValues = {
   name: Company['name'];
@@ -38,7 +38,7 @@ const EditCompanyForm = ({ company }: EditCompanyFormProps) => {
   const onSubmit: SubmitHandler<EditCompanyFormValues> = (values) =>
     updateCompany(values);
   return (
-    <FullScreenForm
+    <FormCard
       title={company.name || 'Company details'}
       description="Add the details of your company below"
       onSubmit={handleSubmit(onSubmit)}
@@ -135,7 +135,7 @@ const EditCompanyForm = ({ company }: EditCompanyFormProps) => {
         label="IBAN"
         error={errors.iban && 'Invalid IBAN'}
       />
-    </FullScreenForm>
+    </FormCard>
   );
 };
 
