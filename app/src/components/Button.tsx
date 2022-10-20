@@ -9,7 +9,7 @@ type IconProp = IconDefinition | Icon;
 
 type ButtonProps = PropsWithChildren<
   ButtonHTMLAttributes<HTMLButtonElement> & {
-    color?: 'primary' | 'secondary';
+    color?: 'primary' | 'secondary' | 'danger';
     variant?: 'solid' | 'light' | 'outlined' | 'borderless';
     size?: 'sm' | 'md' | 'lg';
     fullWidth?: boolean;
@@ -46,7 +46,7 @@ const Button = ({
     className={cn(
       'relative flex items-center justify-center rounded-md text-base focus-ring',
       {
-        'bg-violet-700 text-white hover:bg-violet-900':
+        'bg-violet-700 text-zinc-50 hover:bg-violet-900':
           !disabled && color === 'primary' && variant === 'solid',
         'bg-violet-100 text-violet-900 hover:bg-violet-300':
           !disabled && color === 'primary' && variant === 'light',
@@ -54,7 +54,7 @@ const Button = ({
           !disabled && color === 'primary' && variant === 'outlined',
         'bg-white text-violet-800 underline hover:bg-violet-100':
           !disabled && color === 'primary' && variant === 'borderless',
-        'bg-zinc-800 text-white hover:bg-zinc-900':
+        'bg-zinc-800 text-zinc-50 hover:bg-zinc-900':
           !disabled && color === 'secondary' && variant === 'solid',
         'bg-zinc-200 text-zinc-800 hover:bg-zinc-400':
           !disabled && color === 'secondary' && variant === 'light',
@@ -62,6 +62,8 @@ const Button = ({
           !disabled && color === 'secondary' && variant === 'outlined',
         'bg-white text-zinc-800 underline hover:bg-zinc-200':
           !disabled && color === 'secondary' && variant === 'borderless',
+        'bg-red-700 text-zinc-50 hover:bg-red-800':
+          !disabled && color === 'danger',
         'bg-zinc-100 text-zinc-400 cursor-not-allowed': !!disabled,
         'text-transparent': !!loading,
         'py-1.5 px-3': size === 'sm',
