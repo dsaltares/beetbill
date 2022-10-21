@@ -9,6 +9,8 @@ export default {
     disabled: { control: 'boolean' },
     onFocus: { action: 'focus' },
     onBlur: { action: 'onBlur' },
+    endAdornment: { control: 'text' },
+    startAdornment: { control: 'text' },
   },
   parameters: {
     layout: 'centered',
@@ -28,4 +30,6 @@ Default.args = {
   error: '',
   tip: 'This is a tip',
   label: 'Company ID',
+  startAdornment: undefined,
+  endAdornment: '%',
 };

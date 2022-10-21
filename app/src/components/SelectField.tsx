@@ -59,8 +59,8 @@ function SelectField<Option>({
               className={cn(
                 'relative w-full text-left text-base rounded-lg p-2 border focus-ring',
                 {
-                  'bg-gray-50 cursor-default': !disabled,
-                  'bg-gray-100 text-zinc-400 cursor-not-allowed': !!disabled,
+                  'bg-zinc-50 cursor-default': !disabled,
+                  'bg-zinc-100 text-zinc-400 cursor-not-allowed': !!disabled,
                   'border-zinc-300': (!error || !!disabled) && !open,
                   'border-violet-500': open,
                   'border-red-600': !!error && !disabled,
