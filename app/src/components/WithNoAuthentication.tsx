@@ -1,6 +1,7 @@
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
+import Routes from '@lib/routes';
 
 const WithNoAuthentication = <P extends object>(
   Component: React.ComponentType<P>
@@ -11,7 +12,7 @@ const WithNoAuthentication = <P extends object>(
 
     useEffect(() => {
       if (status === 'authenticated') {
-        void router.push('/');
+        void router.push(Routes.home);
       }
     }, [router, status]);
 

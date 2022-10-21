@@ -1,6 +1,7 @@
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
+import Routes from '@lib/routes';
 
 const WithAuthentication = <P extends object>(
   Component: React.ComponentType<P>
@@ -11,7 +12,7 @@ const WithAuthentication = <P extends object>(
 
     useEffect(() => {
       if (status === 'unauthenticated') {
-        void router.push('/api/auth/signin');
+        void router.push(Routes.signIn);
       }
     }, [router, status]);
 

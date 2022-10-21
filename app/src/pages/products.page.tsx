@@ -1,11 +1,12 @@
 import EmptyContent from '@components/EmptyContent';
 import WithAuthentication from '@components/WithAuthentication';
+import Routes from '@lib/routes';
 
 const ProductsPage = () => (
   <EmptyContent
     message="You don't have any products yet"
-    actionLabel="Add products"
-    onClick={() => {}}
+    createLabel="Add products"
+    createHref={Routes.createProduct}
   />
 );
 

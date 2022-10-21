@@ -20,5 +20,6 @@ const Template: ComponentStory<typeof EmptyContent> = (args) => (
 export const Default = Template.bind({});
 Default.args = {
   message: "You don't have any invoices yet",
-  actionLabel: 'Add invoices',
+  createLabel: 'Add invoices',
+  createHref: '/',
 };

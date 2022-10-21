@@ -5,27 +5,28 @@ import {
   faUsers,
 } from '@fortawesome/free-solid-svg-icons';
 import { useRouter } from 'next/router';
+import Routes from '@lib/routes';
 import NavLink from './NavLink';
 
 const Links = [
   {
     label: 'Company',
-    href: '/company',
+    href: Routes.company,
     icon: faBriefcase,
   },
   {
     label: 'Clients',
-    href: '/clients',
+    href: Routes.clients,
     icon: faUsers,
   },
   {
     label: 'Products',
-    href: '/products',
+    href: Routes.products,
     icon: faBoxOpen,
   },
   {
     label: 'Invoices',
-    href: '/invoices',
+    href: Routes.invoices,
     icon: faFileInvoice,
   },
 ];

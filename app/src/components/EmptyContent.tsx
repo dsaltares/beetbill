@@ -1,18 +1,22 @@
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
-import Button from './Button';
+import LinkButton from './LinkButton';
 
 type EmptyContentProps = {
   message: string;
-  actionLabel: string;
-  onClick: () => void;
+  createLabel: string;
+  createHref: string;
 };
 
-const EmptyContent = ({ message, actionLabel, onClick }: EmptyContentProps) => (
+const EmptyContent = ({
+  message,
+  createLabel,
+  createHref,
+}: EmptyContentProps) => (
   <div className="h-full w-full flex flex-col items-center justify-center gap-10">
     <h2 className="text-3xl text-center">{message}</h2>
-    <Button onClick={onClick} endIcon={faArrowRight}>
-      {actionLabel}
-    </Button>
+    <LinkButton href={createHref} endIcon={faArrowRight}>
+      {createLabel}
+    </LinkButton>
   </div>
 );
 
