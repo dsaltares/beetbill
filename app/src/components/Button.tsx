@@ -39,7 +39,7 @@ const Button = ({
           !disabled && color === 'primary' && variant === 'light',
         'bg-white text-violet-800 border border-violet-800 hover:bg-violet-100':
           !disabled && color === 'primary' && variant === 'outlined',
-        'bg-white text-violet-800 underline hover:bg-violet-100':
+        'bg-transparent text-violet-800 underline hover:bg-violet-100':
           !disabled && color === 'primary' && variant === 'borderless',
         'bg-zinc-800 text-zinc-50 hover:bg-zinc-900':
           !disabled && color === 'secondary' && variant === 'solid',
@@ -47,7 +47,7 @@ const Button = ({
           !disabled && color === 'secondary' && variant === 'light',
         'bg-white text-zinc-800 border border-zinc-800 hover:bg-zinc-200':
           !disabled && color === 'secondary' && variant === 'outlined',
-        'bg-white text-zinc-800 underline hover:bg-zinc-200':
+        'bg-transparent text-zinc-800 underline hover:bg-zinc-200':
           !disabled && color === 'secondary' && variant === 'borderless',
         'bg-red-700 text-zinc-50 hover:bg-red-800':
           !disabled && color === 'danger',
