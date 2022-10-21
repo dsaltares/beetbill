@@ -3,11 +3,18 @@ import useMutation from '@lib/useMutation';
 import type {
   UpdateProductInput,
   GetProductsOutput,
+  Product,
 } from '@server/products/types';
 import QueryKeys from './queryKeys';
 
-const useUpdateProduct = () =>
-  useMutation<UpdateProductInput, GetProductsOutput>({
+type UseUpdateProductArgs =
+  | {
+      onSuccess?: (data: Product) => void;
+    }
+  | undefined;
+
+const useUpdateProduct = ({ onSuccess }: UseUpdateProductArgs = {}) =>
+  useMutation<UpdateProductInput, GetProductsOutput, Product>({
     mutationFn: api.updateProduct.mutate,
     cacheKey: QueryKeys.products,
     cacheUpdater: (products, input) => {
@@ -19,6 +26,7 @@ const useUpdateProduct = () =>
         };
       }
     },
+    onSuccess,
   });
 
 export default useUpdateProduct;

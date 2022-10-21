@@ -7,21 +7,23 @@ import type { TRPCError } from '@trpc/server';
 import { type Draft, produce } from 'immer';
 import toast from '@components/Toast';
 
-type UseMutationArgs<Input, Cache> = {
+type UseMutationArgs<Input, Cache, Data> = {
   cacheKey: QueryKey;
   mutationFn: (input: Input) => Promise<unknown>;
   cacheUpdater: (cache: Draft<Cache>, input: Input) => void;
   errorMessage?: (error: TRPCError) => string;
+  onSuccess?: (data: Data) => void;
   successMessage?: () => string;
 };
 
-const useMutation = <Input, Cache>({
+const useMutation = <Input, Cache, Data = unknown>({
   cacheKey,
   mutationFn,
   cacheUpdater,
   errorMessage,
   successMessage,
-}: UseMutationArgs<Input, Cache>) => {
+  onSuccess,
+}: UseMutationArgs<Input, Cache, Data>) => {
   const queryClient = useQueryClient();
   return useMutationBase(mutationFn, {
     onMutate: async (input) => {
@@ -55,13 +57,16 @@ const useMutation = <Input, Cache>({
       });
     },
     onSettled: () => queryClient.invalidateQueries(cacheKey),
-    onSuccess: () => {
+    onSuccess: (data) => {
       if (successMessage) {
         toast({
           message: successMessage(),
           color: 'primary',
           variant: 'light',
         });
+      }
+      if (onSuccess) {
+        onSuccess(data as Data);
       }
     },
   });
