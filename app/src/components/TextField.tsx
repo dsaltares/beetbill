@@ -70,12 +70,16 @@ const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
             required={required}
             {...props}
             className={cn(
-              'w-full placeholder:text-zinc-400 rounded-lg focus-ring p-2',
-              className
+              'w-full bg-transparent placeholder:text-zinc-400 focus-ring p-2',
+              className,
+              {
+                'rounded-l-lg': !startAdornment,
+                'rounded-r-lg': !endAdornment,
+              }
             )}
           />
           {endAdornment && (
-            <div className="text-zinc-500 border-l border-zinc-300 p-2">
+            <div className="text-zinc-500 border-l border-zinc-300 p-2 ml-[1px]">
               {endAdornment}
             </div>
           )}
