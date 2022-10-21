@@ -38,7 +38,7 @@ const LinkButton = ({
             color === 'primary' && variant === 'light',
           'bg-white text-violet-800 border border-violet-800 hover:bg-violet-100':
             color === 'primary' && variant === 'outlined',
-          'bg-white text-violet-800 underline hover:bg-violet-100':
+          'bg-transparent text-violet-800 underline hover:bg-violet-100':
             color === 'primary' && variant === 'borderless',
           'bg-zinc-800 text-zinc-50 hover:bg-zinc-900':
             color === 'secondary' && variant === 'solid',
@@ -46,7 +46,7 @@ const LinkButton = ({
             color === 'secondary' && variant === 'light',
           'bg-white text-zinc-800 border border-zinc-800 hover:bg-zinc-200':
             color === 'secondary' && variant === 'outlined',
-          'bg-white text-zinc-800 underline hover:bg-zinc-200':
+          'bg-transparent text-zinc-800 underline hover:bg-zinc-200':
             color === 'secondary' && variant === 'borderless',
           'py-1.5 px-3': size === 'sm',
           'py-2 px-4': size === 'md',
