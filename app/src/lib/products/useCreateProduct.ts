@@ -27,6 +27,8 @@ const useCreateProduct = ({ onSuccess }: UseCreateProductArgs = {}) =>
         ...input,
       });
     },
+    successMessage: () => 'Product created',
+    errorMessage: () => 'Failed to create product',
     onSuccess,
   });
 
