@@ -67,7 +67,6 @@ const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
             id={id}
             ref={ref}
             disabled={disabled}
-            required={required}
             {...props}
             className={cn(
               'w-full bg-transparent placeholder:text-zinc-400 focus-ring p-2',
