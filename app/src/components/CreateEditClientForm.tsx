@@ -3,29 +3,29 @@ import { type SubmitHandler, useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 import { useCallback } from 'react';
 import Routes from '@lib/routes';
-import type { Customer } from '@server/customers/types';
-import useCreateCustomer from '@lib/customers/useCreateCustomer';
-import useUpdateCustomer from '@lib/customers/useUpdateCustomer';
+import type { Client } from '@server/clients/types';
+import useCreateClient from '@lib/clients/useCreateClient';
+import useUpdateClient from '@lib/clients/useUpdateClient';
 import EmailRegexp from '@lib/emailRegexp';
 import TextField from './TextField';
 import FormCard from './FormCard';
 
 type ClientFormValues = {
-  name: Customer['name'];
-  number: Customer['number'];
-  vatNumber: Customer['vatNumber'];
-  firstName: Customer['firstName'];
-  lastName: Customer['lastName'];
-  email: Customer['email'];
-  country: Customer['country'];
-  address: Customer['address'];
-  postCode: Customer['postCode'];
-  city: Customer['city'];
+  name: Client['name'];
+  number: Client['number'];
+  vatNumber: Client['vatNumber'];
+  firstName: Client['firstName'];
+  lastName: Client['lastName'];
+  email: Client['email'];
+  country: Client['country'];
+  address: Client['address'];
+  postCode: Client['postCode'];
+  city: Client['city'];
   paymentTerms: string;
 };
 
 type CreateEditClientFormProps = {
-  client?: Customer;
+  client?: Client;
 };
 
 const CreateEditClientForm = ({ client }: CreateEditClientFormProps) => {
@@ -34,10 +34,10 @@ const CreateEditClientForm = ({ client }: CreateEditClientFormProps) => {
     () => router.push(Routes.clients),
     [router]
   );
-  const { mutate: createCustomer, isLoading: isCreating } = useCreateCustomer({
+  const { mutate: createClient, isLoading: isCreating } = useCreateClient({
     onSuccess: handleSuccess,
   });
-  const { mutate: updateCustomer, isLoading: isUpdating } = useUpdateCustomer({
+  const { mutate: updateClient, isLoading: isUpdating } = useUpdateClient({
     onSuccess: handleSuccess,
   });
   const isLoading = isCreating || isUpdating;
@@ -62,10 +62,10 @@ const CreateEditClientForm = ({ client }: CreateEditClientFormProps) => {
           : 7,
       };
       return !client
-        ? createCustomer(data)
-        : updateCustomer({ id: client.id, ...data });
+        ? createClient(data)
+        : updateClient({ id: client.id, ...data });
     },
-    [createCustomer, updateCustomer, client]
+    [createClient, updateClient, client]
   );
 
   return (

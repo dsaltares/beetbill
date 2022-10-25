@@ -17,7 +17,7 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import useDisclosureForId from '@lib/useDisclosureForId';
 import Routes from '@lib/routes';
-import type { Customer } from '@server/customers/types';
+import type { Client } from '@server/clients/types';
 import {
   Body,
   BodyCell,
@@ -33,16 +33,16 @@ import TextField from './TextField';
 import ConfirmationDialog from './ConfirmationDialog';
 import LinkButton from './LinkButton';
 
-const columnHelper = createColumnHelper<Customer>();
+const columnHelper = createColumnHelper<Client>();
 
-const fuzzyFilter: FilterFn<Customer> = (row, columnId, value, addMeta) => {
+const fuzzyFilter: FilterFn<Client> = (row, columnId, value, addMeta) => {
   const itemRank = rankItem(row.getValue(columnId), value);
   addMeta({ itemRank });
   return itemRank.passed;
 };
 
 type ClientsTableProps = {
-  clients: Customer[];
+  clients: Client[];
   onDelete: (id: string) => void;
 };
 

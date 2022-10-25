@@ -11,7 +11,7 @@ import {
   screen,
   fireEvent,
 } from '@lib/testing';
-import type { Customer } from '@server/customers/types';
+import type { Client } from '@server/clients/types';
 import Routes from '@lib/routes';
 import NewClientPage from './new.page';
 
@@ -31,7 +31,7 @@ const session: Session = {
 const router = {
   pathname: Routes.createClient,
 };
-const client: Customer = {
+const client: Client = {
   id: 'client_id',
   name: 'client_name',
   number: 'client_number',
@@ -92,8 +92,8 @@ describe('NewClientPage', () => {
     });
 
     server.resetHandlers(
-      mockTrpcMutation('createCustomer', client),
-      mockTrpcQuery('getCustomers', [client])
+      mockTrpcMutation('createClient', client),
+      mockTrpcQuery('getClients', [client])
     );
 
     await fireEvent.click(screen.getByRole('button', { name: 'Add client' }));
@@ -122,7 +122,7 @@ describe('NewClientPage', () => {
 
     server.resetHandlers(
       mockTrpcMutationError(
-        'createCustomer',
+        'createClient',
         new TRPCError({ code: 'INTERNAL_SERVER_ERROR' })
       )
     );

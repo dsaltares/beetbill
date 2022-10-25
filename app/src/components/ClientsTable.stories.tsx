@@ -1,6 +1,6 @@
 import React from 'react';
 import type { ComponentStory, ComponentMeta } from '@storybook/react';
-import type { Customer } from '@server/customers/types';
+import type { Client } from '@server/clients/types';
 import ClientsTable from './ClientsTable';
 export default {
   title: 'ClientsTable',
@@ -13,7 +13,7 @@ export default {
   },
 } as ComponentMeta<typeof ClientsTable>;
 
-const clients: Customer[] = [
+const clients: Client[] = [
   {
     id: 'client_1',
     name: 'Client 1',

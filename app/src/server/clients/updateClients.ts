@@ -2,38 +2,38 @@ import { TRPCError } from '@trpc/server';
 import { InvoiceStatus } from '@prisma/client';
 import { type Procedure, procedure } from '@server/trpc';
 import prisma from '@server/prisma';
-import { UpdateCustomerOutput, UpdateCustomerInput } from './types';
+import { UpdateClientOutput, UpdateClientInput } from './types';
 
-export const updateCustomer: Procedure<
-  UpdateCustomerInput,
-  UpdateCustomerOutput
+export const updateClient: Procedure<
+  UpdateClientInput,
+  UpdateClientOutput
 > = async ({ ctx: { session }, input: { id, ...data } }) => {
-  const existingCustomer = await prisma.customer.findFirst({
+  const existingClient = await prisma.client.findFirst({
     where: { id, companyId: session?.companyId as string },
   });
-  if (!existingCustomer) {
+  if (!existingClient) {
     throw new TRPCError({ code: 'NOT_FOUND' });
   }
-  const customerInNonDraftInvoice = await prisma.customer.findFirst({
+  const clientInNonDraftInvoice = await prisma.client.findFirst({
     include: { invoice: true },
     where: {
       id,
       invoice: { status: { not: InvoiceStatus.DRAFT } },
     },
   });
-  if (customerInNonDraftInvoice) {
+  if (clientInNonDraftInvoice) {
     throw new TRPCError({
       code: 'PRECONDITION_FAILED',
-      message: 'Customer is associated to approved invoices',
+      message: 'Client is associated to approved invoices',
     });
   }
-  return prisma.customer.update({
+  return prisma.client.update({
     where: { id },
     data,
   });
 };
 
 export default procedure
-  .input(UpdateCustomerInput)
-  .output(UpdateCustomerOutput)
-  .mutation(updateCustomer);
+  .input(UpdateClientInput)
+  .output(UpdateClientOutput)
+  .mutation(updateClient);

@@ -16,7 +16,7 @@ import {
   waitFor,
 } from '@lib/testing';
 import Routes from '@lib/routes';
-import type { Customer } from '@server/customers/types';
+import type { Client } from '@server/clients/types';
 import ClientPage from './[clientId].page';
 
 const server = setupServer();
@@ -37,7 +37,7 @@ const router = {
   pathname: '/clients/[clientId]',
   query: { clientId },
 };
-const client: Customer = {
+const client: Client = {
   id: 'client_1',
   name: 'Client 1',
   number: '1',
@@ -62,8 +62,8 @@ describe('ClientPage', () => {
 
   it('allows the user to edit the client', async () => {
     server.resetHandlers(
-      mockTrpcQuery('getCustomer', client),
-      mockTrpcMutation('updateCustomer', client)
+      mockTrpcQuery('getClient', client),
+      mockTrpcMutation('updateClient', client)
     );
 
     render(<ClientPage />, { session, router });
@@ -82,9 +82,9 @@ describe('ClientPage', () => {
 
   it('shows error message when failing to update a client', async () => {
     server.resetHandlers(
-      mockTrpcQuery('getCustomer', client),
+      mockTrpcQuery('getClient', client),
       mockTrpcMutationError(
-        'updateCustomer',
+        'updateClient',
         new TRPCError({ code: 'INTERNAL_SERVER_ERROR' })
       )
     );
@@ -104,7 +104,7 @@ describe('ClientPage', () => {
 
   it('redirects to the 404 page when the client is not found', async () => {
     server.resetHandlers(
-      mockTrpcQueryError('getCustomer', new TRPCError({ code: 'NOT_FOUND' }))
+      mockTrpcQueryError('getClient', new TRPCError({ code: 'NOT_FOUND' }))
     );
 
     render(<ClientPage />, { session, router });

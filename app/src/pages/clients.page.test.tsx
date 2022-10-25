@@ -15,7 +15,7 @@ import {
   waitFor,
 } from '@lib/testing';
 import Routes from '@lib/routes';
-import type { Customer } from '@server/customers/types';
+import type { Client } from '@server/clients/types';
 import ClientsPage from './clients.page';
 
 const server = setupServer();
@@ -33,7 +33,7 @@ const session: Session = {
 const router = {
   pathname: '/products',
 };
-const client1: Customer = {
+const client1: Client = {
   id: 'client_1',
   name: 'Client 1',
   number: '1',
@@ -50,7 +50,7 @@ const client1: Customer = {
   createdAt: new Date(),
   updatedAt: new Date(),
 };
-const client2: Customer = {
+const client2: Client = {
   id: 'client_2',
   name: 'Client 2',
   number: '2',
@@ -67,7 +67,7 @@ const client2: Customer = {
   createdAt: new Date(),
   updatedAt: new Date(),
 };
-const client3: Customer = {
+const client3: Client = {
   id: 'client_3',
   name: 'Client 3',
   number: '3',
@@ -84,7 +84,7 @@ const client3: Customer = {
   createdAt: new Date(),
   updatedAt: new Date(),
 };
-const clients: Customer[] = [client1, client2, client3];
+const clients: Client[] = [client1, client2, client3];
 
 describe('ClientsPage', () => {
   beforeEach(() => {
@@ -92,7 +92,7 @@ describe('ClientsPage', () => {
   });
 
   it('renders empty screen when there are no clients', async () => {
-    server.resetHandlers(mockTrpcQuery('getCustomers', []));
+    server.resetHandlers(mockTrpcQuery('getClients', []));
 
     render(<ClientsPage />, { session, router });
 
@@ -109,7 +109,7 @@ describe('ClientsPage', () => {
   });
 
   it('renders the list of clients, can sort and can filter', async () => {
-    server.resetHandlers(mockTrpcQuery('getCustomers', clients));
+    server.resetHandlers(mockTrpcQuery('getClients', clients));
 
     render(<ClientsPage />, { session, router });
 
@@ -142,7 +142,7 @@ describe('ClientsPage', () => {
   });
 
   it('redirects to client page clicking edit', async () => {
-    server.resetHandlers(mockTrpcQuery('getCustomers', [client1]));
+    server.resetHandlers(mockTrpcQuery('getClients', [client1]));
 
     render(<ClientsPage />, { session, router });
 
@@ -162,7 +162,7 @@ describe('ClientsPage', () => {
   });
 
   it('allows the user to delete a client', async () => {
-    server.resetHandlers(mockTrpcQuery('getCustomers', [client1]));
+    server.resetHandlers(mockTrpcQuery('getClients', [client1]));
 
     render(<ClientsPage />, { session, router });
 
@@ -171,8 +171,8 @@ describe('ClientsPage', () => {
     );
 
     server.resetHandlers(
-      mockTrpcMutation('deleteCustomer', client1.id),
-      mockTrpcQuery('getCustomers', [])
+      mockTrpcMutation('deleteClient', client1.id),
+      mockTrpcQuery('getClients', [])
     );
 
     await screen.findByText('Are you sure you want to delete the client?');
@@ -188,7 +188,7 @@ describe('ClientsPage', () => {
   });
 
   it('handles deletion errors', async () => {
-    server.resetHandlers(mockTrpcQuery('getCustomers', [client1]));
+    server.resetHandlers(mockTrpcQuery('getClients', [client1]));
 
     render(<ClientsPage />, { session, router });
 
@@ -203,10 +203,10 @@ describe('ClientsPage', () => {
 
     server.resetHandlers(
       mockTrpcMutationError(
-        'deleteCustomer',
+        'deleteClient',
         new TRPCError({ code: 'INTERNAL_SERVER_ERROR' })
       ),
-      mockTrpcQuery('getCustomers', [client1])
+      mockTrpcQuery('getClients', [client1])
     );
 
     await act(async () => {

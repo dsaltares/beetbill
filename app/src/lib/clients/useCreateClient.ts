@@ -2,25 +2,25 @@ import cuid from 'cuid';
 import api from '@lib/api';
 import useMutation from '@lib/useMutation';
 import type {
-  CreateCustomerInput,
-  Customer,
-  GetCustomersOutput,
-} from '@server/customers/types';
+  CreateClientInput,
+  Client,
+  GetClientsOutput,
+} from '@server/clients/types';
 import QueryKeys from './queryKeys';
 
-type UseCreateCustomerArgs =
+type UseCreateClientArgs =
   | {
-      onSuccess?: (customer: Customer) => void;
+      onSuccess?: (client: Client) => void;
     }
   | undefined;
 
-const useCreateCustomer = ({ onSuccess }: UseCreateCustomerArgs = {}) =>
-  useMutation<CreateCustomerInput, GetCustomersOutput, Customer>({
-    mutationFn: api.createCustomer.mutate,
-    cacheKey: QueryKeys.customers,
-    cacheUpdater: (customers, input) => {
-      customers.push({
-        id: `new-customer${cuid()}`,
+const useCreateClient = ({ onSuccess }: UseCreateClientArgs = {}) =>
+  useMutation<CreateClientInput, GetClientsOutput, Client>({
+    mutationFn: api.createClient.mutate,
+    cacheKey: QueryKeys.clients,
+    cacheUpdater: (clients, input) => {
+      clients.push({
+        id: `new-client${cuid()}`,
         companyId: '',
         createdAt: new Date(),
         updatedAt: new Date(),
@@ -41,4 +41,4 @@ const useCreateCustomer = ({ onSuccess }: UseCreateCustomerArgs = {}) =>
     onSuccess,
   });
 
-export default useCreateCustomer;
+export default useCreateClient;
