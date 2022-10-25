@@ -3259,6 +3259,13 @@
   dependencies:
     remove-accents "0.4.2"
 
+"@tanstack/match-sorter-utils@^8.5.14":
+  version "8.5.14"
+  resolved "https://registry.yarnpkg.com/@tanstack/match-sorter-utils/-/match-sorter-utils-8.5.14.tgz#12efcd536abe491d09521e0242bc4d51442f8a8a"
+  integrity sha512-lVNhzTcOJ2bZ4IU+PeCPQ36vowBHvviJb2ZfdRFX5uhy7G0jM8N34zAMbmS5ZmVH8D2B7oU82OWo0e/5ZFzQrw==
+  dependencies:
+    remove-accents "0.4.2"
+
 "@tanstack/query-core@4.7.2":
   version "4.7.2"
   resolved "https://registry.yarnpkg.com/@tanstack/query-core/-/query-core-4.7.2.tgz#5e8f0bc632b9c5423e5c5ca6d147c386b64dfec7"
@@ -3279,6 +3286,18 @@
   dependencies:
     "@tanstack/query-core" "4.7.2"
     use-sync-external-store "^1.2.0"
+
+"@tanstack/react-table@^8.5.15":
+  version "8.5.15"
+  resolved "https://registry.yarnpkg.com/@tanstack/react-table/-/react-table-8.5.15.tgz#8179d24d7fdf909799a517e8897501c44e51284d"
+  integrity sha512-9rSvhIFeMpfXksFgQNTWnVoJbkae/U8CkHnHYGWAIB/O0Ca51IKap0Rjp5WkIUVBWxJ7Wfl2y13oY+aWcyM6Rg==
+  dependencies:
+    "@tanstack/table-core" "8.5.15"
+
+"@tanstack/table-core@8.5.15":
+  version "8.5.15"
+  resolved "https://registry.yarnpkg.com/@tanstack/table-core/-/table-core-8.5.15.tgz#e1e674135cd6c36f29a1562a2b846f824861149b"
+  integrity sha512-k+BcCOAYD610Cij6p1BPyEqjMQjZIdAnVDoIUKVnA/tfHbF4JlDP7pKAftXPBxyyX5Z1yQPurPnOdEY007Snyg==
 
 "@testing-library/dom@^8.3.0":
   version "8.18.1"
