@@ -16,6 +16,8 @@ const useDeleteCustomer = () =>
         customers.splice(customerIndex, 1);
       }
     },
+    successMessage: () => 'Client deleted',
+    errorMessage: () => 'Failed to delete client',
   });
 
 export default useDeleteCustomer;
