@@ -27,6 +27,8 @@ const useUpdateProduct = ({ onSuccess }: UseUpdateProductArgs = {}) =>
       }
     },
     onSuccess,
+    successMessage: () => 'Product updated',
+    errorMessage: () => 'Failed to update product',
   });
 
 export default useUpdateProduct;

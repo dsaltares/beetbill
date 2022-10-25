@@ -1,5 +1,6 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import { TRPCError } from '@trpc/server';
 import type { Session } from 'next-auth';
 import { SessionProvider } from 'next-auth/react';
 import type { PropsWithChildren } from 'react';
@@ -9,6 +10,14 @@ import { Toaster } from 'react-hot-toast';
 type ProvidersProps = {
   session?: Session;
 };
+
+const RetriableErrors = new Set([
+  'INTERNAL_SERVER_ERROR',
+  'TIMEOUT',
+  'CONFLICT',
+  'TOO_MANY_REQUESTS',
+  'CLIENT_CLOSED_REQUEST',
+]);
 
 const Providers = ({
   session,
@@ -25,6 +34,12 @@ const Providers = ({
             refetchOnReconnect: 'always',
             refetchOnMount: true,
             keepPreviousData: true,
+            retry: (_count, error) => {
+              if (error instanceof TRPCError) {
+                return RetriableErrors.has(error.code);
+              }
+              return false;
+            },
           },
         },
       })

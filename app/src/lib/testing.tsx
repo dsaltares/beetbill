@@ -89,6 +89,14 @@ export const mockTrpcQuery = (name: string, result: unknown) =>
     res(ctx.json([{ result: { data: result } }]))
   );
 
+export const mockTrpcQueryError = (name: string, error: TRPCError) =>
+  rest.get(`http://localhost:3000/api/trpc/${name}`, (_req, res, ctx) =>
+    res(
+      ctx.status(500),
+      ctx.json([{ error: { code: error.code, message: error.message } }])
+    )
+  );
+
 export const mockTrpcMutation = (name: string, result: unknown) =>
   rest.post(`http://localhost:3000/api/trpc/${name}`, (_req, res, ctx) =>
     res(ctx.json([{ result: { data: result } }]))
