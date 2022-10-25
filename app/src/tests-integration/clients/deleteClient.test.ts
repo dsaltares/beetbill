@@ -1,4 +1,4 @@
-import type { Company, Client, User } from '@prisma/client';
+import type { User } from '@prisma/client';
 import type { Session } from 'next-auth';
 import { TRPCError } from '@trpc/server';
 import prisma from '@server/prisma';
@@ -10,9 +10,9 @@ import {
 import { deleteClient } from '@server/clients/deleteClient';
 
 let user: User;
-let company: Company;
+let company: Awaited<ReturnType<typeof createTestCompany>>;
 let session: Session;
-let client: Client;
+let client: Awaited<ReturnType<typeof createTestClient>>;
 
 describe('deleteClient', () => {
   beforeEach(async () => {
@@ -32,20 +32,12 @@ describe('deleteClient', () => {
   });
 
   it('throws when the client has a non draft invoice', async () => {
-    const invoiceClient = await prisma.client.create({
-      data: {
-        companyId: company.id,
-        name: client.name,
-        number: client.number,
-        originalId: client.id,
-      },
-    });
     await prisma.invoice.create({
       data: {
         number: 1,
-        clientId: invoiceClient.id,
-        companyId: company.id,
         status: 'SENT',
+        clientStateId: client.states[0].id,
+        companyStateId: company.states[0].id,
       },
     });
 
@@ -59,49 +51,13 @@ describe('deleteClient', () => {
     );
   });
 
-  it('throws when the client has a non draft invoice and deleting the invoice one', async () => {
-    const invoiceClient = await prisma.client.create({
-      data: {
-        companyId: company.id,
-        name: client.name,
-        number: client.number,
-        originalId: client.id,
-      },
-    });
-    await prisma.invoice.create({
-      data: {
-        number: 1,
-        clientId: invoiceClient.id,
-        companyId: company.id,
-        status: 'SENT',
-      },
-    });
-
-    await expect(
-      deleteClient({ ctx: { session }, input: { id: invoiceClient.id } })
-    ).rejects.toEqual(
-      new TRPCError({
-        code: 'PRECONDITION_FAILED',
-        message: 'Client is associated to approved invoices',
-      })
-    );
-  });
-
   it('soft deletes the client', async () => {
-    const invoiceClient = await prisma.client.create({
-      data: {
-        companyId: company.id,
-        name: client.name,
-        number: client.number,
-        originalId: client.id,
-      },
-    });
     await prisma.invoice.create({
       data: {
         number: 1,
-        clientId: invoiceClient.id,
-        companyId: company.id,
         status: 'DRAFT',
+        clientStateId: client.states[0].id,
+        companyStateId: company.states[0].id,
       },
     });
 

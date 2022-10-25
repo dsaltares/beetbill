@@ -1,5 +1,6 @@
-import type { Company, User } from '@prisma/client';
+import type { User } from '@prisma/client';
 import type { Session } from 'next-auth';
+import omit from 'lodash.omit';
 import { TRPCError } from '@trpc/server';
 import { getClient } from '@server/clients/getClient';
 import {
@@ -10,8 +11,8 @@ import {
 
 let user1: User;
 let user2: User;
-let company1: Company;
-let company2: Company;
+let company1: Awaited<ReturnType<typeof createTestCompany>>;
+let company2: Awaited<ReturnType<typeof createTestCompany>>;
 let session: Session;
 
 describe('getClient', () => {
@@ -31,7 +32,7 @@ describe('getClient', () => {
       ctx: { session },
       input: { id: dbClient.id },
     });
-    expect(client).toEqual(dbClient);
+    expect(client).toMatchObject(omit(dbClient.states[0], 'id', 'createdAt'));
   });
 
   it('throws a NOT_FOUND error when the client does not exist', async () => {

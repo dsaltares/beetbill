@@ -9,21 +9,35 @@ export const createTestUser = () =>
 export const createTestCompany = (userId: string) =>
   prisma.company.create({
     data: {
-      name: 'Lovelace LLC',
-      number: cuid(),
       userId,
+      states: {
+        create: {
+          name: 'Lovelace LLC',
+          number: cuid(),
+        },
+      },
     },
+    include: { states: true },
   });
 
 export const createTestClient = (companyId: string) =>
   prisma.client.create({
-    data: { companyId, name: 'Test client', number: cuid() },
+    data: {
+      companyId,
+      states: { create: { name: 'Test client', number: cuid() } },
+    },
+    include: { states: true },
   });
 
 export const createTestProduct = (companyId: string) =>
   prisma.product.create({
     data: {
       companyId,
-      name: 'Test product',
+      states: {
+        create: {
+          name: 'Test product',
+        },
+      },
     },
+    include: { states: true },
   });

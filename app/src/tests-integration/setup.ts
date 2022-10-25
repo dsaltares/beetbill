@@ -11,7 +11,6 @@ const setup = async () =>
     prisma.product.deleteMany(),
     prisma.client.deleteMany(),
     prisma.invoice.deleteMany(),
-    prisma.invoiceProduct.deleteMany(),
   ]);
 
 export default setup;

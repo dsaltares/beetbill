@@ -14,13 +14,13 @@ export const Company = z.object({
   iban: z.string().nullable(),
   userId: z.string(),
   createdAt: z.date(),
-  updatedAt: z.date(),
 });
 
 export const GetCompanyOutput = Company.nullish();
 export const UpdateCompanyInput = Company.omit({
   createdAt: true,
   updatedAt: true,
+  userId: true,
 }).partial();
 export const UpdateCompanyOutput = Company;
 

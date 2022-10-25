@@ -9,11 +9,14 @@ export const deleteClient: Procedure<
   DeleteClientOutput
 > = async ({ ctx: { session }, input: { id } }) => {
   const clientInNonDraftInvoice = await prisma.client.findFirst({
-    include: { invoice: true },
     where: {
-      OR: [{ originalId: id }, { id }],
+      id,
       companyId: session?.companyId as string,
-      invoice: { status: { not: InvoiceStatus.DRAFT } },
+      states: {
+        some: {
+          invoice: { status: { not: InvoiceStatus.DRAFT } },
+        },
+      },
     },
   });
   if (clientInNonDraftInvoice) {

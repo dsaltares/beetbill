@@ -1,6 +1,7 @@
 import type { Company, User } from '@prisma/client';
 import type { Session } from 'next-auth';
 import cuid from 'cuid';
+import omit from 'lodash.omit';
 import prisma from '@server/prisma';
 import { createTestCompany, createTestUser } from '../testData';
 import { createClient } from '@server/clients/createClient';
@@ -25,11 +26,12 @@ describe('createClient', () => {
       ctx: { session },
       input,
     });
-    const dbClient = await prisma.client.findUnique({
+    const dbClient = await prisma.client.findUniqueOrThrow({
       where: { id: result.id },
+      include: { states: { orderBy: { createdAt: 'desc' }, take: 1 } },
     });
     expect(result).toMatchObject(input);
-    expect(result).toEqual(dbClient);
+    expect(result).toMatchObject(omit(dbClient.states[0], 'id', 'createdAt'));
   });
 
   it('throws when the company does not exist', async () => {

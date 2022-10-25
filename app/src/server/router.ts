@@ -4,7 +4,7 @@ import createClient from './clients/createClient';
 import deleteClient from './clients/deleteClient';
 import getClient from './clients/getClient';
 import getClients from './clients/getClients';
-import updateClient from './clients/updateClients';
+import updateClient from './clients/updateClient';
 import createProduct from './products/createProduct';
 import deleteProduct from './products/deleteProduct';
 import getProduct from './products/getProduct';

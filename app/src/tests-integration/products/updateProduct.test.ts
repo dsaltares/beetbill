@@ -1,6 +1,7 @@
-import type { Company, User } from '@prisma/client';
+import type { User } from '@prisma/client';
 import type { Session } from 'next-auth';
 import { TRPCError } from '@trpc/server';
+import omit from 'lodash.omit';
 import { updateProduct } from '@server/products/updateProduct';
 import {
   createTestCompany,
@@ -11,7 +12,7 @@ import {
 import prisma from '@server/prisma';
 
 let user: User;
-let company: Company;
+let company: Awaited<ReturnType<typeof createTestCompany>>;
 let session: Session;
 
 describe('updateProduct', () => {
@@ -38,16 +39,18 @@ describe('updateProduct', () => {
       createTestClient(company.id),
       createTestProduct(company.id),
     ]);
-    const invoice = await prisma.invoice.create({
+    await prisma.invoice.create({
       data: {
         number: 1,
-        clientId: client.id,
-        companyId: company.id,
         status: 'SENT',
+        clientStateId: client.states[0].id,
+        companyStateId: company.states[0].id,
+        items: {
+          create: {
+            productStateId: product.states[0].id,
+          },
+        },
       },
-    });
-    await prisma.invoiceProduct.create({
-      data: { invoiceId: invoice.id, productId: product.id },
     });
     await expect(
       updateProduct({
@@ -75,6 +78,6 @@ describe('updateProduct', () => {
     });
 
     expect(updatedProduct.name).toEqual(newName);
-    expect(updatedProduct).toEqual(dbProduct);
+    expect(updatedProduct).toMatchObject(omit(dbProduct, 'id', 'createdAt'));
   });
 });

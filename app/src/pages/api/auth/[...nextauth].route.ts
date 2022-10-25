@@ -34,16 +34,20 @@ export default NextAuth({
       await prisma.company.create({
         data: {
           userId: user.id,
-          name: '',
-          number: '',
-          vatNumber: '',
-          email: '',
-          website: '',
-          country: '',
-          address: '',
-          postCode: '',
-          city: '',
-          iban: '',
+          states: {
+            create: {
+              name: '',
+              number: '',
+              vatNumber: '',
+              email: '',
+              website: '',
+              country: '',
+              address: '',
+              postCode: '',
+              city: '',
+              iban: '',
+            },
+          },
         },
       });
     },
