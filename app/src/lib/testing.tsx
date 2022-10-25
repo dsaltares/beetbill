@@ -84,12 +84,12 @@ export const mockRouter: NextRouter = {
   isPreview: false,
 };
 
-export const mockTrpcQuery = (name: string, result: object) =>
+export const mockTrpcQuery = (name: string, result: unknown) =>
   rest.get(`http://localhost:3000/api/trpc/${name}`, (_req, res, ctx) =>
     res(ctx.json([{ result: { data: result } }]))
   );
 
-export const mockTrpcMutation = (name: string, result: object) =>
+export const mockTrpcMutation = (name: string, result: unknown) =>
   rest.post(`http://localhost:3000/api/trpc/${name}`, (_req, res, ctx) =>
     res(ctx.json([{ result: { data: result } }]))
   );
