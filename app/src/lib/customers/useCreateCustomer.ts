@@ -3,12 +3,19 @@ import api from '@lib/api';
 import useMutation from '@lib/useMutation';
 import type {
   CreateCustomerInput,
+  Customer,
   GetCustomersOutput,
 } from '@server/customers/types';
 import QueryKeys from './queryKeys';
 
-const useCreateCustomer = () =>
-  useMutation<CreateCustomerInput, GetCustomersOutput>({
+type UseCreateCustomerArgs =
+  | {
+      onSuccess?: (customer: Customer) => void;
+    }
+  | undefined;
+
+const useCreateCustomer = ({ onSuccess }: UseCreateCustomerArgs = {}) =>
+  useMutation<CreateCustomerInput, GetCustomersOutput, Customer>({
     mutationFn: api.createCustomer.mutate,
     cacheKey: QueryKeys.customers,
     cacheUpdater: (customers, input) => {
@@ -29,6 +36,9 @@ const useCreateCustomer = () =>
         ...input,
       });
     },
+    successMessage: () => 'Client created',
+    errorMessage: () => 'Failed to create client',
+    onSuccess,
   });
 
 export default useCreateCustomer;
