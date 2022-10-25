@@ -16,6 +16,8 @@ const useDeleteProduct = () =>
         products.splice(productIndex, 1);
       }
     },
+    successMessage: () => 'Product deleted',
+    errorMessage: () => 'Failed to delete product',
   });
 
 export default useDeleteProduct;

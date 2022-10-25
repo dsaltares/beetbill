@@ -14,3 +14,12 @@ Object.defineProperty(window, 'matchMedia', {
     dispatchEvent: jest.fn(),
   })),
 });
+
+// https://github.com/tailwindlabs/headlessui/blob/main/packages/%40headlessui-vue/src/components/dialog/dialog.test.ts#L37
+class FakeInteractionObserver {
+  observe() {}
+  unobserve() {}
+  disconnect() {}
+}
+window.IntersectionObserver = FakeInteractionObserver;
+global.IntersectionObserver = FakeInteractionObserver;
