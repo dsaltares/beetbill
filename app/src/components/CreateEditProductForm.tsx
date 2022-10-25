@@ -42,8 +42,8 @@ const CreateEditProductForm = ({ product }: CreateEditProductFormProps) => {
     unit: 'h',
     currency: 'EUR',
     ...(product || {}),
-    price: product?.price?.toString() || '0',
-    vat: product?.vat?.toString() || '0',
+    price: product?.price.toString() || '0',
+    vat: product?.vat.toString() || '0',
   };
   const {
     register,

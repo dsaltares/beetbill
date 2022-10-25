@@ -57,13 +57,13 @@ describe('NewProductPage', () => {
     await fireEvent.click(screen.getByLabelText('Includes VAT'));
     await userEvent.type(
       screen.getByLabelText('Price'),
-      product.price?.toString() as string
+      product.price.toString() as string
     );
     await fireEvent.click(screen.getByRole('button', { name: 'EUR' }));
     await fireEvent.click(await screen.findByText(product.currency!));
     await userEvent.type(
       screen.getByLabelText('VAT'),
-      product.vat?.toString() as string
+      product.vat.toString() as string
     );
     await fireEvent.click(screen.getByRole('button', { name: 'h' }));
     await fireEvent.click(await screen.findByText(product.unit!));

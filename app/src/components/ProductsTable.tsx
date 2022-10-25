@@ -63,11 +63,11 @@ const ProductsTable = ({ products, onDelete }: ProductsTableProps) => {
       columnHelper.accessor('price', {
         header: () => 'Price',
         cell: (info) =>
-          `${info.getValue()?.toFixed(2)} ${info.row.original.currency}`,
+          `${info.getValue().toFixed(2)} ${info.row.original.currency}`,
       }),
       columnHelper.accessor('vat', {
         header: () => 'VAT',
-        cell: (info) => `${info.getValue()?.toFixed(2)}%`,
+        cell: (info) => `${info.getValue().toFixed(2)}%`,
       }),
       columnHelper.accessor(
         (row) =>
@@ -76,7 +76,7 @@ const ProductsTable = ({ products, onDelete }: ProductsTableProps) => {
           id: 'includingVAT',
           header: () => 'Including VAT',
           cell: (info) =>
-            `${info.getValue()?.toFixed(2)} ${info.row.original.currency}`,
+            `${info.getValue().toFixed(2)} ${info.row.original.currency}`,
         }
       ),
       columnHelper.display({
