@@ -12,6 +12,10 @@ export const Product = z.object({
   createdAt: z.date(),
   updatedAt: z.date(),
 });
+export const GetProductInput = z.object({
+  id: z.string(),
+});
+export const GetProductOutput = Product;
 export const GetProductsOutput = Product.array();
 export const CreateProductInput = Product.omit({
   id: true,
@@ -32,6 +36,8 @@ export const UpdateProductInput = Product.omit({
 export const UpdateProductOutput = Product;
 
 export type Product = z.infer<typeof Product>;
+export type GetProductInput = z.infer<typeof GetProductInput>;
+export type GetProductOutput = z.infer<typeof GetProductOutput>;
 export type GetProductsOutput = z.infer<typeof GetProductsOutput>;
 export type CreateProductInput = z.infer<typeof CreateProductInput>;
 export type CreateProductOutput = z.infer<typeof CreateProductOutput>;

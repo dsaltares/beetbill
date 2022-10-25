@@ -10,6 +10,7 @@ const Routes = {
   invoices: '/invoices',
   createInvoice: '/invoices/new',
   signIn: '/api/auth/signin',
+  notFound: '/404',
 };
 
 export default Routes;
