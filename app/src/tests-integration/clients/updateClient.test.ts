@@ -1,14 +1,14 @@
 import type { User } from '@prisma/client';
 import type { Session } from 'next-auth';
 import { TRPCError } from '@trpc/server';
-import { updateClient } from '@server/clients/updateClients';
+import omit from 'lodash.omit';
+import { updateClient } from '@server/clients/updateClient';
 import {
   createTestCompany,
   createTestClient,
   createTestUser,
 } from '../testData';
 import prisma from '@server/prisma';
-import omit from 'lodash.omit';
 
 let user: User;
 let company: Awaited<ReturnType<typeof createTestCompany>>;
