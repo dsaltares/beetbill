@@ -34,7 +34,7 @@ const ProductsPage = () => {
   return (
     <div className="flex flex-col w-full gap-16">
       <div className="flex items-center justify-between">
-        <h1 className="text-4xl font-bold">Your projects</h1>
+        <h1 className="text-4xl font-bold">Your products</h1>
         <LinkButton href={Routes.createProduct} endIcon={faAdd}>
           Add product
         </LinkButton>
