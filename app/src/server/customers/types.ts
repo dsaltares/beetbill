@@ -18,6 +18,10 @@ export const Customer = z.object({
   updatedAt: z.date(),
 });
 
+export const GetCustomerInput = z.object({
+  id: z.string(),
+});
+export const GetCustomerOutput = Customer;
 export const GetCustomersOutput = Customer.array();
 export const CreateCustomerInput = Customer.omit({
   id: true,
@@ -48,6 +52,8 @@ export const UpdateCustomerInput = Customer.omit({
 export const UpdateCustomerOutput = Customer;
 
 export type Customer = z.infer<typeof Customer>;
+export type GetCustomerInput = z.infer<typeof GetCustomerInput>;
+export type GetCustomerOutput = z.infer<typeof GetCustomerOutput>;
 export type GetCustomersOutput = z.infer<typeof GetCustomersOutput>;
 export type CreateCustomerInput = z.infer<typeof CreateCustomerInput>;
 export type CreateCustomerOutput = z.infer<typeof CreateCustomerOutput>;
