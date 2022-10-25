@@ -77,24 +77,32 @@ const ClientsTable = ({ clients, onDelete }: ClientsTableProps) => {
       }),
       columnHelper.display({
         id: 'actions',
-        cell: (info) => (
-          <div className="flex gap-4 justify-end">
-            <Button
-              color="danger"
-              endIcon={faTrash}
-              onClick={() => onOpen(info.row.original.id)}
-            >
-              Delete
-            </Button>
-            <LinkButton
-              color="secondary"
-              endIcon={faPencil}
-              href={Routes.client(info.row.original.id)}
-            >
-              Edit
-            </LinkButton>
-          </div>
-        ),
+        cell: (info) => {
+          const beingCreated = info.row.original.id.startsWith('new-');
+          return (
+            <div className="flex gap-4 justify-end">
+              <Button
+                color="danger"
+                endIcon={faTrash}
+                onClick={() => onOpen(info.row.original.id)}
+                disabled={beingCreated}
+              >
+                Delete
+              </Button>
+              <LinkButton
+                color="secondary"
+                endIcon={faPencil}
+                href={
+                  beingCreated
+                    ? Routes.clients
+                    : Routes.client(info.row.original.id)
+                }
+              >
+                Edit
+              </LinkButton>
+            </div>
+          );
+        },
       }),
     ],
     [onOpen]
