@@ -1,4 +1,4 @@
-import type { Company, User } from '@prisma/client';
+import type { User } from '@prisma/client';
 import type { Session } from 'next-auth';
 import { TRPCError } from '@trpc/server';
 import { updateClient } from '@server/clients/updateClients';
@@ -8,9 +8,10 @@ import {
   createTestUser,
 } from '../testData';
 import prisma from '@server/prisma';
+import omit from 'lodash.omit';
 
 let user: User;
-let company: Company;
+let company: Awaited<ReturnType<typeof createTestCompany>>;
 let session: Session;
 
 describe('updateClient', () => {
@@ -33,20 +34,20 @@ describe('updateClient', () => {
   });
 
   it('throws when trying to update an invoice client of a non draft invoice', async () => {
-    const invoiceClient = await createTestClient(company.id);
+    const client = await createTestClient(company.id);
     await prisma.invoice.create({
       data: {
         number: 1,
-        clientId: invoiceClient.id,
-        companyId: company.id,
         status: 'SENT',
+        clientStateId: client.states[0].id,
+        companyStateId: company.states[0].id,
       },
     });
     await expect(
       updateClient({
         ctx: { session },
         input: {
-          id: invoiceClient.id,
+          id: client.id,
           name: 'Test Client',
         },
       })
@@ -63,11 +64,19 @@ describe('updateClient', () => {
         name: newName,
       },
     });
-    const dbClient = await prisma.client.findUnique({
+    const dbClient = await prisma.client.findUniqueOrThrow({
       where: { id: client.id },
+      include: {
+        states: {
+          orderBy: { createdAt: 'desc' },
+          take: 1,
+        },
+      },
     });
 
     expect(updatedClient.name).toEqual(newName);
-    expect(updatedClient).toEqual(dbClient);
+    expect(updatedClient).toMatchObject(
+      omit(dbClient.states[0], 'id', 'createdAt')
+    );
   });
 });

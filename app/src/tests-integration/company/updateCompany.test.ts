@@ -1,11 +1,12 @@
-import type { Company, User } from '@prisma/client';
+import type { User } from '@prisma/client';
 import { TRPCError } from '@trpc/server';
+import omit from 'lodash.omit';
 import prisma from '@server/prisma';
 import { updateCompany } from '@server/company/updateCompany';
 import { createTestCompany, createTestUser } from '../testData';
 
 let user: User;
-let company: Company;
+let company: Awaited<ReturnType<typeof createTestCompany>>;
 
 describe('updateCompany', () => {
   beforeEach(async () => {
@@ -21,11 +22,17 @@ describe('updateCompany', () => {
         name: newName,
       },
     });
-    const dbCompany = await prisma.company.findUnique({
+    const dbCompany = await prisma.company.findUniqueOrThrow({
       where: { id: company.id },
+      include: {
+        states: {
+          orderBy: { createdAt: 'desc' },
+          take: 1,
+        },
+      },
     });
     expect(result.name).toEqual(newName);
-    expect(result).toEqual(dbCompany);
+    expect(result).toMatchObject(omit(dbCompany.states[0], 'id', 'createdAt'));
   });
 
   it('throws when the company does not exist', async () => {

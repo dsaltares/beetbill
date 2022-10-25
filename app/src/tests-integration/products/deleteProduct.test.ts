@@ -1,4 +1,4 @@
-import type { Company, User } from '@prisma/client';
+import type { User } from '@prisma/client';
 import type { Session } from 'next-auth';
 import { TRPCError } from '@trpc/server';
 import prisma from '@server/prisma';
@@ -11,7 +11,7 @@ import {
 import { deleteProduct } from '@server/products/deleteProduct';
 
 let user: User;
-let company: Company;
+let company: Awaited<ReturnType<typeof createTestCompany>>;
 let session: Session;
 
 describe('deleteProduct', () => {
@@ -31,24 +31,26 @@ describe('deleteProduct', () => {
   });
 
   it('throws when the product has a non draft invoice', async () => {
-    const [productWithInvoice, client] = await Promise.all([
+    const [product, client] = await Promise.all([
       createTestProduct(company.id),
       createTestClient(company.id),
     ]);
-    const invoice = await prisma.invoice.create({
+    await prisma.invoice.create({
       data: {
         number: 1,
-        clientId: client.id,
-        companyId: company.id,
         status: 'SENT',
+        clientStateId: client.states[0].id,
+        companyStateId: company.states[0].id,
+        items: {
+          create: {
+            productStateId: product.states[0].id,
+          },
+        },
       },
-    });
-    await prisma.invoiceProduct.create({
-      data: { invoiceId: invoice.id, productId: productWithInvoice.id },
     });
 
     await expect(
-      deleteProduct({ ctx: { session }, input: { id: productWithInvoice.id } })
+      deleteProduct({ ctx: { session }, input: { id: product.id } })
     ).rejects.toEqual(
       new TRPCError({
         code: 'PRECONDITION_FAILED',

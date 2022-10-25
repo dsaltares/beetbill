@@ -57,52 +57,76 @@ model VerificationToken {
 }
 
 model Company {
-  id         String   @id @default(cuid())
-  name       String
-  number     String
-  vatNumber  String?
-  email      String?
-  website    String?
-  country    String?
-  address    String?
-  postCode   String?
-  city       String?
-  iban       String?
-  userId     String   @unique
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
-  originalId String?
+  id        String   @id @default(cuid())
+  userId    String   @unique
+  createdAt DateTime @default(now())
 
-  user             User      @relation(fields: [userId], references: [id], onDelete: Cascade)
-  original         Company?  @relation("InvoiceCompanies", fields: [originalId], references: [id], onDelete: SetNull)
-  invoiceCompanies Company[] @relation("InvoiceCompanies")
-  products         Product[]
-  clients          Client[]
-  invoice          Invoice?
+  user      User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  products  Product[]
+  clients   Client[]
+  states    CompanyState[]
+  invoiceId String?
+}
+
+model CompanyState {
+  id        String   @id @default(cuid())
+  name      String
+  number    String
+  vatNumber String?
+  email     String?
+  website   String?
+  country   String?
+  address   String?
+  postCode  String?
+  city      String?
+  iban      String?
+  companyId String
+  createdAt DateTime @default(now())
+
+  company Company  @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  Invoice Invoice?
 }
 
 model Product {
-  id          String    @id @default(cuid())
-  name        String
-  includesVat Boolean   @default(false)
-  price       Float     @default(0)
-  currency    String    @default("EUR")
-  vat         Float     @default(0)
-  unit        String    @default("h")
-  companyId   String
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
-  deletedAt   DateTime?
-  originalId  String?
+  id        String    @id @default(cuid())
+  companyId String
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
 
-  company         Company          @relation(fields: [companyId], references: [id], onDelete: Cascade)
-  original        Product?         @relation("InvoiceProducts", fields: [originalId], references: [id], onDelete: SetNull)
-  products        Product[]        @relation("InvoiceProducts")
-  invoiceProducts InvoiceProduct[]
+  company Company        @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  states  ProductState[]
+}
+
+model ProductState {
+  id          String   @id @default(cuid())
+  name        String
+  includesVat Boolean  @default(false)
+  price       Float    @default(0)
+  currency    String   @default("EUR")
+  vat         Float    @default(0)
+  unit        String   @default("h")
+  createdAt   DateTime @default(now())
+  productId   String
+
+  product   Product    @relation(fields: [productId], references: [id], onDelete: Cascade)
+  lineItems LineItem[]
 }
 
 model Client {
-  id           String    @id @default(cuid())
+  id        String    @id @default(cuid())
+  companyId String
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+
+  company   Company       @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  states    ClientState[]
+  invoiceId String?
+}
+
+model ClientState {
+  id           String   @id @default(cuid())
   name         String
   number       String
   vatNumber    String?
@@ -113,17 +137,12 @@ model Client {
   address      String?
   postCode     String?
   city         String?
-  paymentTerms Int       @default(7)
-  companyId    String
-  createdAt    DateTime  @default(now())
-  updatedAt    DateTime  @updatedAt
-  deletedAt    DateTime?
-  originalId   String?
+  paymentTerms Int      @default(7)
+  createdAt    DateTime @default(now())
+  clientId     String
 
-  company        Company  @relation(fields: [companyId], references: [id], onDelete: Cascade)
-  original       Client?  @relation("InvoiceClients", fields: [originalId], references: [id], onDelete: SetNull)
-  invoiceClients Client[] @relation("InvoiceClients")
-  invoice        Invoice?
+  client  Client   @relation(fields: [clientId], references: [id], onDelete: Cascade)
+  invoice Invoice?
 }
 
 enum InvoiceStatus {
@@ -133,36 +152,35 @@ enum InvoiceStatus {
 }
 
 model Invoice {
-  id        String        @id @default(cuid())
-  status    InvoiceStatus @default(DRAFT)
-  prefix    String        @default("")
-  number    Int
-  date      DateTime      @default(now())
-  companyId String        @unique
-  clientId  String        @unique
-  createdAt DateTime      @default(now())
-  updatedAt DateTime      @updatedAt
-  deletedAt DateTime?
+  id     String        @id @default(cuid())
+  status InvoiceStatus @default(DRAFT)
+  prefix String        @default("")
+  number Int
+  date   DateTime      @default(now())
 
-  company         Company          @relation(fields: [companyId], references: [id], onDelete: Cascade)
-  client          Client           @relation(fields: [clientId], references: [id], onDelete: Cascade)
-  invoiceProducts InvoiceProduct[]
+  companyStateId String    @unique
+  clientStateId  String    @unique
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+  deletedAt      DateTime?
 
-  @@unique([prefix, number, companyId])
+  companyState CompanyState @relation(fields: [companyStateId], references: [id], onDelete: Cascade)
+  clientState  ClientState  @relation(fields: [clientStateId], references: [id], onDelete: Cascade)
+  items        LineItem[]
+
+  @@unique([prefix, number, companyStateId])
 }
 
-model InvoiceProduct {
-  id        String   @id @default(cuid())
-  invoiceId String
-  productId String
-  quantity  Float    @default(1)
-  date      DateTime @default(now())
+model LineItem {
+  id             String   @id @default(cuid())
+  invoiceId      String
+  productStateId String
+  quantity       Float    @default(1)
+  date           DateTime @default(now())
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  invoice Invoice @relation(fields: [invoiceId], references: [id], onDelete: Cascade)
-  product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
-
-  @@unique([invoiceId, productId])
+  invoice      Invoice      @relation(fields: [invoiceId], references: [id], onDelete: Cascade)
+  productState ProductState @relation(fields: [productStateId], references: [id], onDelete: Cascade)
 }

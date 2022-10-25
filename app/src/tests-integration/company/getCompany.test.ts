@@ -1,9 +1,10 @@
-import type { Company, User } from '@prisma/client';
+import type { User } from '@prisma/client';
+import omit from 'lodash.omit';
 import { getCompany } from '@server/company/getCompany';
 import { createTestCompany, createTestUser } from '../testData';
 
 let user: User;
-let company: Company;
+let company: Awaited<ReturnType<typeof createTestCompany>>;
 
 describe('getCompany', () => {
   beforeEach(async () => {
@@ -11,18 +12,19 @@ describe('getCompany', () => {
     company = await createTestCompany(user.id);
   });
 
-  it('returns null when the company does not exist', async () => {
-    const result = await getCompany({
-      ctx: {
-        session: {
-          userId: 'invalid_user',
-          companyId: 'invalid_company',
-          expires: '',
+  it('throws when the company does not exist', async () => {
+    await expect(
+      getCompany({
+        ctx: {
+          session: {
+            userId: 'invalid_user',
+            companyId: 'invalid_company',
+            expires: '',
+          },
         },
-      },
-      input: {},
-    });
-    expect(result).toBeNull();
+        input: {},
+      })
+    ).rejects.toThrow();
   });
 
   it('returns the company for the user in the session', async () => {
@@ -36,6 +38,6 @@ describe('getCompany', () => {
       },
       input: {},
     });
-    expect(result).toEqual(company);
+    expect(result).toMatchObject(omit(company.states[0], 'id', 'createdAt'));
   });
 });

@@ -1,5 +1,6 @@
-import type { Company, User } from '@prisma/client';
+import type { User } from '@prisma/client';
 import type { Session } from 'next-auth';
+import omit from 'lodash.omit';
 import { getProducts } from '@server/products/getProducts';
 import {
   createTestCompany,
@@ -9,8 +10,8 @@ import {
 
 let user1: User;
 let user2: User;
-let company1: Company;
-let company2: Company;
+let company1: Awaited<ReturnType<typeof createTestCompany>>;
+let company2: Awaited<ReturnType<typeof createTestCompany>>;
 let session: Session;
 
 describe('getProducts', () => {
@@ -36,6 +37,11 @@ describe('getProducts', () => {
     const product2 = await createTestProduct(company1.id);
 
     const products = await getProducts({ ctx: { session }, input: {} });
-    expect(products).toEqual([product1, product2]);
+    expect(products[0]).toMatchObject(
+      omit(product1.states[0], 'id', 'createdAt')
+    );
+    expect(products[1]).toMatchObject(
+      omit(product2.states[0], 'id', 'createdAt')
+    );
   });
 });

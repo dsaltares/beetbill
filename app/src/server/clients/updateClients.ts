@@ -1,8 +1,10 @@
 import { TRPCError } from '@trpc/server';
 import { InvoiceStatus } from '@prisma/client';
+import omit from 'lodash.omit';
 import { type Procedure, procedure } from '@server/trpc';
 import prisma from '@server/prisma';
 import { UpdateClientOutput, UpdateClientInput } from './types';
+import mapClientEntity from './mapClientEntity';
 
 export const updateClient: Procedure<
   UpdateClientInput,
@@ -10,15 +12,25 @@ export const updateClient: Procedure<
 > = async ({ ctx: { session }, input: { id, ...data } }) => {
   const existingClient = await prisma.client.findFirst({
     where: { id, companyId: session?.companyId as string },
+    include: {
+      states: {
+        orderBy: { createdAt: 'desc' },
+        take: 1,
+      },
+    },
   });
   if (!existingClient) {
     throw new TRPCError({ code: 'NOT_FOUND' });
   }
   const clientInNonDraftInvoice = await prisma.client.findFirst({
-    include: { invoice: true },
     where: {
       id,
-      invoice: { status: { not: InvoiceStatus.DRAFT } },
+      companyId: session?.companyId as string,
+      states: {
+        some: {
+          invoice: { status: { not: InvoiceStatus.DRAFT } },
+        },
+      },
     },
   });
   if (clientInNonDraftInvoice) {
@@ -27,9 +39,15 @@ export const updateClient: Procedure<
       message: 'Client is associated to approved invoices',
     });
   }
-  return prisma.client.update({
-    where: { id },
-    data,
+  const stateData = {
+    ...omit(existingClient.states[0], 'id', 'createdAt'),
+    ...data,
+    clientId: id,
+  };
+  const newState = await prisma.clientState.create({ data: stateData });
+  return mapClientEntity({
+    ...existingClient,
+    states: [newState],
   });
 };
 

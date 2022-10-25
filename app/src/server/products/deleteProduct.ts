@@ -8,19 +8,19 @@ export const deleteProduct: Procedure<
   DeleteProductInput,
   DeleteProductOutput
 > = async ({ ctx: { session }, input: { id } }) => {
-  const existingProduct = await prisma.product.findFirst({
-    where: { id, companyId: session?.companyId as string },
-  });
-
-  if (!existingProduct) {
-    return id;
-  }
-
-  const productInNonDraftInvoice = await prisma.invoiceProduct.findFirst({
-    include: { invoice: true },
+  const productInNonDraftInvoice = await prisma.product.findFirst({
     where: {
-      productId: id,
-      invoice: { status: { not: InvoiceStatus.DRAFT } },
+      id,
+      companyId: session?.companyId as string,
+      states: {
+        some: {
+          lineItems: {
+            some: {
+              invoice: { status: { not: InvoiceStatus.DRAFT } },
+            },
+          },
+        },
+      },
     },
   });
   if (productInNonDraftInvoice) {
@@ -28,6 +28,14 @@ export const deleteProduct: Procedure<
       code: 'PRECONDITION_FAILED',
       message: 'Product is associated to an approved invoice',
     });
+  }
+
+  const existingProduct = await prisma.product.findFirst({
+    where: { id, companyId: session?.companyId as string },
+  });
+
+  if (!existingProduct) {
+    return id;
   }
 
   await prisma.product.update({

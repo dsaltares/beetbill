@@ -1,11 +1,12 @@
-import type { Company, User } from '@prisma/client';
+import type { User } from '@prisma/client';
 import type { Session } from 'next-auth';
+import omit from 'lodash.omit';
 import prisma from '@server/prisma';
 import { createTestCompany, createTestUser } from '../testData';
 import { createProduct } from '@server/products/createProduct';
 
 let user: User;
-let company: Company;
+let company: Awaited<ReturnType<typeof createTestCompany>>;
 let session: Session;
 
 describe('createProduct', () => {
@@ -25,9 +26,12 @@ describe('createProduct', () => {
     });
     const dbClient = await prisma.product.findUnique({
       where: { id: result.id },
+      include: {
+        states: true,
+      },
     });
     expect(result).toMatchObject(input);
-    expect(result).toEqual(dbClient);
+    expect(result).toMatchObject(omit(dbClient.states[0], 'id', 'createdAt'));
   });
 
   it('throws when the company does not exist', async () => {
