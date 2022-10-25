@@ -31,7 +31,7 @@ const Button = ({
 }: ButtonProps) => (
   <button
     className={cn(
-      'relative flex items-center justify-center rounded-md text-base focus-ring text-left',
+      'relative flex items-center justify-center rounded-md text-base font-normal focus-ring text-left',
       {
         'bg-violet-700 text-zinc-50 hover:bg-violet-900':
           !disabled && color === 'primary' && variant === 'solid',
