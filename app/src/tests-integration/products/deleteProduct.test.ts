@@ -6,7 +6,7 @@ import {
   createTestCompany,
   createTestUser,
   createTestProduct,
-  createTestCustomer,
+  createTestClient,
 } from '../testData';
 import { deleteProduct } from '@server/products/deleteProduct';
 
@@ -31,14 +31,14 @@ describe('deleteProduct', () => {
   });
 
   it('throws when the product has a non draft invoice', async () => {
-    const [productWithInvoice, customer] = await Promise.all([
+    const [productWithInvoice, client] = await Promise.all([
       createTestProduct(company.id),
-      createTestCustomer(company.id),
+      createTestClient(company.id),
     ]);
     const invoice = await prisma.invoice.create({
       data: {
         number: 1,
-        customerId: customer.id,
+        clientId: client.id,
         companyId: company.id,
         status: 'SENT',
       },

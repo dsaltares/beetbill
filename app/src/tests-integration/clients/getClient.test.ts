@@ -1,10 +1,10 @@
 import type { Company, User } from '@prisma/client';
 import type { Session } from 'next-auth';
 import { TRPCError } from '@trpc/server';
-import { getCustomer } from '@server/customers/getCustomer';
+import { getClient } from '@server/clients/getClient';
 import {
   createTestCompany,
-  createTestCustomer,
+  createTestClient,
   createTestUser,
 } from '../testData';
 
@@ -14,7 +14,7 @@ let company1: Company;
 let company2: Company;
 let session: Session;
 
-describe('getCustomer', () => {
+describe('getClient', () => {
   beforeEach(async () => {
     [user1, user2] = await Promise.all([createTestUser(), createTestUser()]);
     [company1, company2] = await Promise.all([
@@ -24,27 +24,27 @@ describe('getCustomer', () => {
     session = { userId: user1.id, companyId: company1.id, expires: '' };
   });
 
-  it('returns the customer', async () => {
-    const dbCustomer = await createTestCustomer(company1.id);
+  it('returns the client', async () => {
+    const dbClient = await createTestClient(company1.id);
 
-    const customer = await getCustomer({
+    const client = await getClient({
       ctx: { session },
-      input: { id: dbCustomer.id },
+      input: { id: dbClient.id },
     });
-    expect(customer).toEqual(dbCustomer);
+    expect(client).toEqual(dbClient);
   });
 
-  it('throws a NOT_FOUND error when the customer does not exist', async () => {
+  it('throws a NOT_FOUND error when the client does not exist', async () => {
     await expect(
-      getCustomer({ ctx: { session }, input: { id: 'invalid' } })
+      getClient({ ctx: { session }, input: { id: 'invalid' } })
     ).rejects.toEqual(new TRPCError({ code: 'NOT_FOUND' }));
   });
 
-  it('throws a NOT_FOUND error when the customer belongs to a different user', async () => {
-    const dbCustomer = await createTestCustomer(company2.id);
+  it('throws a NOT_FOUND error when the client belongs to a different user', async () => {
+    const dbClient = await createTestClient(company2.id);
 
     await expect(
-      getCustomer({ ctx: { session }, input: { id: dbCustomer.id } })
+      getClient({ ctx: { session }, input: { id: dbClient.id } })
     ).rejects.toEqual(new TRPCError({ code: 'NOT_FOUND' }));
   });
 });

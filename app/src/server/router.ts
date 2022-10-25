@@ -1,10 +1,10 @@
 import getCompany from './company/getCompany';
 import updateCompany from './company/updateCompany';
-import createCustomer from './customers/createCustomer';
-import deleteCustomer from './customers/deleteCustomer';
-import getCustomer from './customers/getCustomer';
-import getCustomers from './customers/getCustomers';
-import updateCustomer from './customers/updateCustomer';
+import createClient from './clients/createClient';
+import deleteClient from './clients/deleteClient';
+import getClient from './clients/getClient';
+import getClients from './clients/getClients';
+import updateClient from './clients/updateClients';
 import createProduct from './products/createProduct';
 import deleteProduct from './products/deleteProduct';
 import getProduct from './products/getProduct';
@@ -18,11 +18,11 @@ const router = trpc.router({
   createProduct,
   updateProduct,
   deleteProduct,
-  getCustomer,
-  getCustomers,
-  createCustomer,
-  updateCustomer,
-  deleteCustomer,
+  getClient,
+  getClients,
+  createClient,
+  updateClient,
+  deleteClient,
   getCompany,
   updateCompany,
 });

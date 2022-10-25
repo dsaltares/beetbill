@@ -23,11 +23,11 @@ describe('createProduct', () => {
       ctx: { session },
       input,
     });
-    const dbCustomer = await prisma.product.findUnique({
+    const dbClient = await prisma.product.findUnique({
       where: { id: result.id },
     });
     expect(result).toMatchObject(input);
-    expect(result).toEqual(dbCustomer);
+    expect(result).toEqual(dbClient);
   });
 
   it('throws when the company does not exist', async () => {

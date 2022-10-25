@@ -5,16 +5,16 @@ import WithAuthentication from '@components/WithAuthentication';
 import Routes from '@lib/routes';
 import FullScreenSpinner from '@components/Layout/FullScreenSpinner';
 import LinkButton from '@components/LinkButton';
-import useCustomers from '@lib/customers/useCustomers';
-import useDeleteCustomer from '@lib/customers/useDeleteCustomer';
+import useClients from '@lib/clients/useClients';
+import useDeleteClient from '@lib/clients/useDeleteClient';
 import ClientsTable from '@components/ClientsTable';
 
 const ClientsPage = () => {
-  const { data: clients, isLoading } = useCustomers();
-  const { mutate: deleteCustomer } = useDeleteCustomer();
+  const { data: clients, isLoading } = useClients();
+  const { mutate: deleteClient } = useDeleteClient();
   const handleDelete = useCallback(
-    (clientId: string) => deleteCustomer({ id: clientId }),
-    [deleteCustomer]
+    (clientId: string) => deleteClient({ id: clientId }),
+    [deleteClient]
   );
 
   if (isLoading) {

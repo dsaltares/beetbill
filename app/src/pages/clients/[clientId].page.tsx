@@ -4,13 +4,11 @@ import FullScreenSpinner from '@components/Layout/FullScreenSpinner';
 import WithAuthentication from '@components/WithAuthentication';
 import Routes from '@lib/routes';
 import CreateEditClientForm from '@components/CreateEditClientForm';
-import useCustomer from '@lib/customers/useCustomer';
+import useClient from '@lib/clients/useClient';
 
 const EditClientPage = () => {
   const router = useRouter();
-  const { data: client, isError } = useCustomer(
-    router.query.clientId as string
-  );
+  const { data: client, isError } = useClient(router.query.clientId as string);
 
   useEffect(() => {
     if (isError) {

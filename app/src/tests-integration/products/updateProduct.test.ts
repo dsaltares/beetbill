@@ -4,7 +4,7 @@ import { TRPCError } from '@trpc/server';
 import { updateProduct } from '@server/products/updateProduct';
 import {
   createTestCompany,
-  createTestCustomer,
+  createTestClient,
   createTestProduct,
   createTestUser,
 } from '../testData';
@@ -34,14 +34,14 @@ describe('updateProduct', () => {
   });
 
   it('throws when trying to update an invoice product of a non draft invoice', async () => {
-    const [customer, product] = await Promise.all([
-      createTestCustomer(company.id),
+    const [client, product] = await Promise.all([
+      createTestClient(company.id),
       createTestProduct(company.id),
     ]);
     const invoice = await prisma.invoice.create({
       data: {
         number: 1,
-        customerId: customer.id,
+        clientId: client.id,
         companyId: company.id,
         status: 'SENT',
       },

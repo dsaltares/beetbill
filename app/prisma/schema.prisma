@@ -73,11 +73,11 @@ model Company {
   updatedAt  DateTime @updatedAt
   originalId String?
 
-  user             User       @relation(fields: [userId], references: [id], onDelete: Cascade)
-  original         Company?   @relation("InvoiceCompanies", fields: [originalId], references: [id], onDelete: SetNull)
-  invoiceCompanies Company[]  @relation("InvoiceCompanies")
+  user             User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  original         Company?  @relation("InvoiceCompanies", fields: [originalId], references: [id], onDelete: SetNull)
+  invoiceCompanies Company[] @relation("InvoiceCompanies")
   products         Product[]
-  customers        Customer[]
+  clients          Client[]
   invoice          Invoice?
 }
 
@@ -101,7 +101,7 @@ model Product {
   invoiceProducts InvoiceProduct[]
 }
 
-model Customer {
+model Client {
   id           String    @id @default(cuid())
   name         String
   number       String
@@ -120,10 +120,10 @@ model Customer {
   deletedAt    DateTime?
   originalId   String?
 
-  company          Company    @relation(fields: [companyId], references: [id], onDelete: Cascade)
-  original         Customer?  @relation("InvoiceCustomers", fields: [originalId], references: [id], onDelete: SetNull)
-  invoiceCustomers Customer[] @relation("InvoiceCustomers")
-  invoice          Invoice?
+  company        Company  @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  original       Client?  @relation("InvoiceClients", fields: [originalId], references: [id], onDelete: SetNull)
+  invoiceClients Client[] @relation("InvoiceClients")
+  invoice        Invoice?
 }
 
 enum InvoiceStatus {
@@ -133,19 +133,19 @@ enum InvoiceStatus {
 }
 
 model Invoice {
-  id         String        @id @default(cuid())
-  status     InvoiceStatus @default(DRAFT)
-  prefix     String        @default("")
-  number     Int
-  date       DateTime      @default(now())
-  companyId  String        @unique
-  customerId String        @unique
-  createdAt  DateTime      @default(now())
-  updatedAt  DateTime      @updatedAt
-  deletedAt  DateTime?
+  id        String        @id @default(cuid())
+  status    InvoiceStatus @default(DRAFT)
+  prefix    String        @default("")
+  number    Int
+  date      DateTime      @default(now())
+  companyId String        @unique
+  clientId  String        @unique
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
+  deletedAt DateTime?
 
   company         Company          @relation(fields: [companyId], references: [id], onDelete: Cascade)
-  customer        Customer         @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  client          Client           @relation(fields: [clientId], references: [id], onDelete: Cascade)
   invoiceProducts InvoiceProduct[]
 
   @@unique([prefix, number, companyId])

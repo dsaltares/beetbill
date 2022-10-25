@@ -9,7 +9,7 @@ const setup = async () =>
     prisma.verificationToken.deleteMany(),
     prisma.company.deleteMany(),
     prisma.product.deleteMany(),
-    prisma.customer.deleteMany(),
+    prisma.client.deleteMany(),
     prisma.invoice.deleteMany(),
     prisma.invoiceProduct.deleteMany(),
   ]);

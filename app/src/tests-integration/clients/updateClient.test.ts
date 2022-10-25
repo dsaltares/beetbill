@@ -1,10 +1,10 @@
 import type { Company, User } from '@prisma/client';
 import type { Session } from 'next-auth';
 import { TRPCError } from '@trpc/server';
-import { updateCustomer } from '@server/customers/updateCustomer';
+import { updateClient } from '@server/clients/updateClients';
 import {
   createTestCompany,
-  createTestCustomer,
+  createTestClient,
   createTestUser,
 } from '../testData';
 import prisma from '@server/prisma';
@@ -13,61 +13,61 @@ let user: User;
 let company: Company;
 let session: Session;
 
-describe('updateCustomer', () => {
+describe('updateClient', () => {
   beforeEach(async () => {
     user = await createTestUser();
     company = await createTestCompany(user.id);
     session = { userId: user.id, companyId: company.id, expires: '' };
   });
 
-  it('throws when trying to update a non existing customer', async () => {
+  it('throws when trying to update a non existing client', async () => {
     await expect(
-      updateCustomer({
+      updateClient({
         ctx: { session },
         input: {
-          id: 'invalid_customer',
-          name: 'Test Customer',
+          id: 'invalid_client',
+          name: 'Test Client',
         },
       })
     ).rejects.toEqual(new TRPCError({ code: 'NOT_FOUND' }));
   });
 
-  it('throws when trying to update an invoice customer of a non draft invoice', async () => {
-    const invoiceCustomer = await createTestCustomer(company.id);
+  it('throws when trying to update an invoice client of a non draft invoice', async () => {
+    const invoiceClient = await createTestClient(company.id);
     await prisma.invoice.create({
       data: {
         number: 1,
-        customerId: invoiceCustomer.id,
+        clientId: invoiceClient.id,
         companyId: company.id,
         status: 'SENT',
       },
     });
     await expect(
-      updateCustomer({
+      updateClient({
         ctx: { session },
         input: {
-          id: invoiceCustomer.id,
-          name: 'Test Customer',
+          id: invoiceClient.id,
+          name: 'Test Client',
         },
       })
     ).rejects.toThrowError();
   });
 
-  it('updates the customer', async () => {
-    const customer = await createTestCustomer(company.id);
-    const newName = 'Updated Customer';
-    const updatedCustomer = await updateCustomer({
+  it('updates the client', async () => {
+    const client = await createTestClient(company.id);
+    const newName = 'Updated Client';
+    const updatedClient = await updateClient({
       ctx: { session },
       input: {
-        id: customer.id,
+        id: client.id,
         name: newName,
       },
     });
-    const dbCustomer = await prisma.customer.findUnique({
-      where: { id: customer.id },
+    const dbClient = await prisma.client.findUnique({
+      where: { id: client.id },
     });
 
-    expect(updatedCustomer.name).toEqual(newName);
-    expect(updatedCustomer).toEqual(dbCustomer);
+    expect(updatedClient.name).toEqual(newName);
+    expect(updatedClient).toEqual(dbClient);
   });
 });

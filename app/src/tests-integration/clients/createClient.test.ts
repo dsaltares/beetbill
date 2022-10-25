@@ -3,41 +3,41 @@ import type { Session } from 'next-auth';
 import cuid from 'cuid';
 import prisma from '@server/prisma';
 import { createTestCompany, createTestUser } from '../testData';
-import { createCustomer } from '@server/customers/createCustomer';
+import { createClient } from '@server/clients/createClient';
 
 let user: User;
 let company: Company;
 let session: Session;
 
-describe('createCustomer', () => {
+describe('createClient', () => {
   beforeEach(async () => {
     user = await createTestUser();
     company = await createTestCompany(user.id);
     session = { userId: user.id, companyId: company.id, expires: '' };
   });
 
-  it('creates a customer for the company in the session', async () => {
+  it('creates a client for the company in the session', async () => {
     const input = {
-      name: 'Test Customer',
+      name: 'Test Client',
       number: cuid(),
     };
-    const result = await createCustomer({
+    const result = await createClient({
       ctx: { session },
       input,
     });
-    const dbCustomer = await prisma.customer.findUnique({
+    const dbClient = await prisma.client.findUnique({
       where: { id: result.id },
     });
     expect(result).toMatchObject(input);
-    expect(result).toEqual(dbCustomer);
+    expect(result).toEqual(dbClient);
   });
 
   it('throws when the company does not exist', async () => {
     await expect(
-      createCustomer({
+      createClient({
         ctx: { session: { ...session, companyId: 'invalid_company' } },
         input: {
-          name: 'Test Customer',
+          name: 'Test Client',
           number: cuid(),
         },
       })

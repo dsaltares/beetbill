@@ -2,13 +2,13 @@ import { InvoiceStatus } from '@prisma/client';
 import { TRPCError } from '@trpc/server';
 import prisma from '@server/prisma';
 import { type Procedure, procedure } from '@server/trpc';
-import { DeleteCustomerOutput, DeleteCustomerInput } from './types';
+import { DeleteClientOutput, DeleteClientInput } from './types';
 
-export const deleteCustomer: Procedure<
-  DeleteCustomerInput,
-  DeleteCustomerOutput
+export const deleteClient: Procedure<
+  DeleteClientInput,
+  DeleteClientOutput
 > = async ({ ctx: { session }, input: { id } }) => {
-  const customerInNonDraftInvoice = await prisma.customer.findFirst({
+  const clientInNonDraftInvoice = await prisma.client.findFirst({
     include: { invoice: true },
     where: {
       OR: [{ originalId: id }, { id }],
@@ -16,19 +16,19 @@ export const deleteCustomer: Procedure<
       invoice: { status: { not: InvoiceStatus.DRAFT } },
     },
   });
-  if (customerInNonDraftInvoice) {
+  if (clientInNonDraftInvoice) {
     throw new TRPCError({
       code: 'PRECONDITION_FAILED',
-      message: 'Customer is associated to approved invoices',
+      message: 'Client is associated to approved invoices',
     });
   }
 
-  const existingCustomer = await prisma.customer.findFirst({
+  const existingClient = await prisma.client.findFirst({
     where: { id, companyId: session?.companyId as string },
   });
 
-  if (existingCustomer) {
-    await prisma.customer.update({
+  if (existingClient) {
+    await prisma.client.update({
       where: { id },
       data: { deletedAt: new Date() },
     });
@@ -38,6 +38,6 @@ export const deleteCustomer: Procedure<
 };
 
 export default procedure
-  .input(DeleteCustomerInput)
-  .output(DeleteCustomerOutput)
-  .mutation(deleteCustomer);
+  .input(DeleteClientInput)
+  .output(DeleteClientOutput)
+  .mutation(deleteClient);
