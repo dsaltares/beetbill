@@ -13,7 +13,11 @@ export const deleteClient: Procedure<
       companyId: session?.companyId as string,
       states: {
         some: {
-          invoice: { deletedAt: null },
+          invoices: {
+            some: {
+              deletedAt: null,
+            },
+          },
         },
       },
     },
