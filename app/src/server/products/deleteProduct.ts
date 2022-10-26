@@ -1,4 +1,3 @@
-import { InvoiceStatus } from '@prisma/client';
 import { TRPCError } from '@trpc/server';
 import prisma from '@server/prisma';
 import { type Procedure, procedure } from '@server/trpc';
@@ -16,7 +15,7 @@ export const deleteProduct: Procedure<
         some: {
           lineItems: {
             some: {
-              invoice: { status: { not: InvoiceStatus.DRAFT } },
+              invoice: { deletedAt: null },
             },
           },
         },
