@@ -83,8 +83,8 @@ model CompanyState {
   companyId String
   createdAt DateTime @default(now())
 
-  company Company  @relation(fields: [companyId], references: [id], onDelete: Cascade)
-  Invoice Invoice?
+  company  Company   @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  invoices Invoice[]
 }
 
 model Product {
@@ -120,9 +120,8 @@ model Client {
   updatedAt DateTime  @updatedAt
   deletedAt DateTime?
 
-  company   Company       @relation(fields: [companyId], references: [id], onDelete: Cascade)
-  states    ClientState[]
-  invoiceId String?
+  company Company       @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  states  ClientState[]
 }
 
 model ClientState {
@@ -141,8 +140,8 @@ model ClientState {
   createdAt    DateTime @default(now())
   clientId     String
 
-  client  Client   @relation(fields: [clientId], references: [id], onDelete: Cascade)
-  invoice Invoice?
+  client   Client    @relation(fields: [clientId], references: [id], onDelete: Cascade)
+  invoices Invoice[]
 }
 
 enum InvoiceStatus {
@@ -158,14 +157,14 @@ model Invoice {
   number Int
   date   DateTime      @default(now())
 
-  companyStateId String    @unique
-  clientStateId  String    @unique
+  companyStateId String
+  clientStateId  String
   createdAt      DateTime  @default(now())
   updatedAt      DateTime  @updatedAt
   deletedAt      DateTime?
 
-  companyState CompanyState @relation(fields: [companyStateId], references: [id], onDelete: Cascade)
-  clientState  ClientState  @relation(fields: [clientStateId], references: [id], onDelete: Cascade)
+  companyState CompanyState @relation(fields: [companyStateId], references: [id])
+  clientState  ClientState  @relation(fields: [clientStateId], references: [id])
   items        LineItem[]
 
   @@unique([prefix, number, companyStateId])
