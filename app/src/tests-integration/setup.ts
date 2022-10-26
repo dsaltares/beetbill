@@ -1,8 +1,10 @@
 import 'tsconfig-paths/register';
 import prisma from '@server/prisma';
 
-const setup = async () =>
-  Promise.all([
+const setup = async () => {
+  await prisma.invoice.deleteMany();
+
+  await Promise.all([
     prisma.account.deleteMany(),
     prisma.user.deleteMany(),
     prisma.session.deleteMany(),
@@ -10,7 +12,7 @@ const setup = async () =>
     prisma.company.deleteMany(),
     prisma.product.deleteMany(),
     prisma.client.deleteMany(),
-    prisma.invoice.deleteMany(),
   ]);
+};
 
 export default setup;

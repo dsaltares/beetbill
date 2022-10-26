@@ -33,27 +33,6 @@ describe('updateClient', () => {
     ).rejects.toEqual(new TRPCError({ code: 'NOT_FOUND' }));
   });
 
-  it('throws when trying to update an invoice client of a non draft invoice', async () => {
-    const client = await createTestClient(company.id);
-    await prisma.invoice.create({
-      data: {
-        number: 1,
-        status: 'SENT',
-        clientStateId: client.states[0].id,
-        companyStateId: company.states[0].id,
-      },
-    });
-    await expect(
-      updateClient({
-        ctx: { session },
-        input: {
-          id: client.id,
-          name: 'Test Client',
-        },
-      })
-    ).rejects.toThrowError();
-  });
-
   it('updates the client', async () => {
     const client = await createTestClient(company.id);
     const newName = 'Updated Client';

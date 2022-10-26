@@ -31,11 +31,11 @@ describe('deleteClient', () => {
     expect(id).toEqual(clientDoesNotExistId);
   });
 
-  it('throws when the client has a non draft invoice', async () => {
+  it('throws when the client has an invoice', async () => {
     await prisma.invoice.create({
       data: {
         number: 1,
-        status: 'SENT',
+        status: 'DRAFT',
         clientStateId: client.states[0].id,
         companyStateId: company.states[0].id,
       },
