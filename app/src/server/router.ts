@@ -10,6 +10,11 @@ import deleteProduct from './products/deleteProduct';
 import getProduct from './products/getProduct';
 import getProducts from './products/getProducts';
 import updateProduct from './products/updateProduct';
+import getInvoice from './invoices/getInvoice';
+import getInvoices from './invoices/getInvoices';
+import createInvoice from './invoices/createInvoice';
+import updateInvoice from './invoices/updateInvoice';
+import deleteInvoice from './invoices/deleteInvoice';
 import trpc from './trpc';
 
 const router = trpc.router({
@@ -25,6 +30,11 @@ const router = trpc.router({
   deleteClient,
   getCompany,
   updateCompany,
+  getInvoice,
+  getInvoices,
+  createInvoice,
+  updateInvoice,
+  deleteInvoice,
 });
 
 export default router;
