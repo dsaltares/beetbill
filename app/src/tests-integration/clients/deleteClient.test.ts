@@ -51,13 +51,14 @@ describe('deleteClient', () => {
     );
   });
 
-  it('soft deletes the client', async () => {
+  it('soft deletes the client when there is a deleted invoice associated to it', async () => {
     await prisma.invoice.create({
       data: {
         number: 1,
         status: 'DRAFT',
         clientStateId: client.states[0].id,
         companyStateId: company.states[0].id,
+        deletedAt: new Date(),
       },
     });
 
