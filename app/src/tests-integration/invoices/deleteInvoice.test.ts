@@ -1,4 +1,5 @@
-import { InvoiceStatus, User } from '@prisma/client';
+import type { User } from '@prisma/client';
+import { InvoiceStatus } from '@prisma/client';
 import type { Session } from 'next-auth';
 import { TRPCError } from '@trpc/server';
 import prisma from '@server/prisma';

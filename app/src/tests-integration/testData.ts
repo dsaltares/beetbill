@@ -1,6 +1,6 @@
 import cuid from 'cuid';
+import type { InvoiceStatus } from '@prisma/client';
 import prisma from '@server/prisma';
-import { InvoiceStatus } from '@prisma/client';
 
 export const createTestUser = () =>
   prisma.user.create({
