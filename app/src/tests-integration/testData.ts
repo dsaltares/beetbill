@@ -41,3 +41,38 @@ export const createTestProduct = (companyId: string) =>
     },
     include: { states: true },
   });
+
+export const createTestInvoice = (
+  companyStateId: string,
+  clientStateId: string
+) =>
+  prisma.invoice.create({
+    data: {
+      prefix: cuid(),
+      number: 1,
+      status: 'DRAFT',
+      companyStateId,
+      clientStateId,
+    },
+    include: {
+      companyState: {
+        include: {
+          company: true,
+        },
+      },
+      clientState: {
+        include: {
+          client: true,
+        },
+      },
+      items: {
+        include: {
+          productState: {
+            include: {
+              product: true,
+            },
+          },
+        },
+      },
+    },
+  });
