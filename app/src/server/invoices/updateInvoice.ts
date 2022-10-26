@@ -8,7 +8,10 @@ import mapInvoiceEntity from './mapInvoiceEntity';
 export const updateInvoice: Procedure<
   UpdateInvoiceInput,
   UpdateInvoiceOutput
-> = async ({ ctx: { session }, input: { id, ...data } }) => {
+> = async ({
+  ctx: { session },
+  input: { id, clientId, number, status, prefix, date },
+}) => {
   const existingInvoice = await prisma.invoice.findFirst({
     where: {
       id,
@@ -25,9 +28,34 @@ export const updateInvoice: Procedure<
       message: 'Cannot update an approved invoice',
     });
   }
+  let clientStateId: string | undefined;
+  if (clientId) {
+    const client = await prisma.client.findFirst({
+      where: {
+        id: clientId,
+        deletedAt: null,
+      },
+      include: {
+        states: {
+          orderBy: { createdAt: 'desc' },
+          take: 1,
+        },
+      },
+    });
+    if (!client) {
+      throw new TRPCError({ code: 'NOT_FOUND' });
+    }
+    clientStateId = client.states[0].id;
+  }
   const updatedInvoice = await prisma.invoice.update({
     where: { id },
-    data,
+    data: {
+      number,
+      status,
+      prefix,
+      date,
+      clientStateId,
+    },
     include: {
       companyState: {
         include: {

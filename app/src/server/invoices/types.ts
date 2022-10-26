@@ -39,7 +39,6 @@ export const UpdateInvoiceInput = z.object({
   prefix: z.string().optional(),
   number: z.number().optional(),
   date: z.date().optional(),
-  companyId: z.string().optional(),
   clientId: z.string().optional(),
 });
 export const UpdateInvoiceOutput = Invoice;

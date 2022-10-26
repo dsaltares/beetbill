@@ -59,6 +59,27 @@ describe('updateInvoice', () => {
     );
   });
 
+  it('throws when trying to change the invoice client to one that does not exist', async () => {
+    const invoice = await createTestInvoice(
+      company.states[0].id,
+      client.states[0].id
+    );
+
+    await expect(
+      updateInvoice({
+        ctx: { session },
+        input: {
+          id: invoice.id,
+          clientId: 'invalid_client_id',
+        },
+      })
+    ).rejects.toEqual(
+      new TRPCError({
+        code: 'NOT_FOUND',
+      })
+    );
+  });
+
   it('updates the invoice', async () => {
     const invoice = await createTestInvoice(
       company.states[0].id,
@@ -79,5 +100,28 @@ describe('updateInvoice', () => {
 
     expect(updatedInvoice.number).toEqual(dbInvoice.number);
     expect(updatedInvoice.number).toEqual(newNumber);
+  });
+
+  it('changes the client of the invoice', async () => {
+    const invoice = await createTestInvoice(
+      company.states[0].id,
+      client.states[0].id
+    );
+
+    const differentClient = await createTestClient(company.id);
+
+    const updatedInvoice = await updateInvoice({
+      ctx: { session },
+      input: {
+        id: invoice.id,
+        clientId: differentClient.id,
+      },
+    });
+    const dbInvoice = await prisma.invoice.findUniqueOrThrow({
+      where: { id: invoice.id },
+    });
+
+    expect(updatedInvoice.client.id).toEqual(differentClient.id);
+    expect(dbInvoice.clientStateId).toEqual(differentClient.states[0].id);
   });
 });
