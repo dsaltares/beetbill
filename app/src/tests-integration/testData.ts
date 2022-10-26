@@ -1,5 +1,6 @@
 import cuid from 'cuid';
 import prisma from '@server/prisma';
+import { InvoiceStatus } from '@prisma/client';
 
 export const createTestUser = () =>
   prisma.user.create({
@@ -44,13 +45,14 @@ export const createTestProduct = (companyId: string) =>
 
 export const createTestInvoice = (
   companyStateId: string,
-  clientStateId: string
+  clientStateId: string,
+  status?: InvoiceStatus
 ) =>
   prisma.invoice.create({
     data: {
       prefix: cuid(),
       number: 1,
-      status: 'DRAFT',
+      status: status || 'DRAFT',
       companyStateId,
       clientStateId,
     },
