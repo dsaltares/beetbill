@@ -5,6 +5,7 @@ import prisma from '@server/prisma';
 import {
   createTestClient,
   createTestCompany,
+  createTestProduct,
   createTestUser,
 } from '../testData';
 import { createInvoice } from '@server/invoices/createInvoice';
@@ -23,12 +24,14 @@ describe('createInvoice', () => {
   });
 
   it('creates an invoice', async () => {
+    const product = await createTestProduct(company.id);
     const input = {
       status: InvoiceStatus.DRAFT,
       prefix: 'INV',
       number: 1,
       date: new Date(),
       clientId: client.id,
+      items: [{ productId: product.id }],
     };
     const invoice = await createInvoice({
       ctx: { session },
@@ -48,6 +51,11 @@ describe('createInvoice', () => {
     expect(invoice.date).toEqual(dbInvoice.date);
     expect(invoice.client.id).toEqual(dbInvoice.clientState.clientId);
     expect(invoice.company.id).toEqual(dbInvoice.companyState.companyId);
+    expect(invoice.items).toEqual([
+      expect.objectContaining({
+        product: expect.objectContaining({ id: product.id }),
+      }),
+    ]);
   });
 
   it('throws when the company does not exist', async () => {
@@ -60,6 +68,22 @@ describe('createInvoice', () => {
           number: 1,
           date: new Date(),
           clientId: client.id,
+        },
+      })
+    ).rejects.toThrow();
+  });
+
+  it('throws when the product does not exist', async () => {
+    await expect(
+      createInvoice({
+        ctx: { session: { ...session, companyId: company.id } },
+        input: {
+          status: InvoiceStatus.DRAFT,
+          prefix: 'INV',
+          number: 1,
+          date: new Date(),
+          clientId: client.id,
+          items: [{ productId: 'invalid_product' }],
         },
       })
     ).rejects.toThrow();
