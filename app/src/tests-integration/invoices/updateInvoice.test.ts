@@ -8,6 +8,7 @@ import {
   createTestClient,
   createTestUser,
   createTestInvoice,
+  createTestProduct,
 } from '../testData';
 import prisma from '@server/prisma';
 
@@ -123,5 +124,139 @@ describe('updateInvoice', () => {
 
     expect(updatedInvoice.client.id).toEqual(differentClient.id);
     expect(dbInvoice.clientStateId).toEqual(differentClient.states[0].id);
+  });
+
+  it('updates a line item', async () => {
+    const product = await createTestProduct(company.id);
+    const invoice = await createTestInvoice(
+      company.states[0].id,
+      client.states[0].id,
+      InvoiceStatus.DRAFT,
+      [
+        {
+          quantity: 1,
+          date: new Date(),
+          productStateId: product.states[0].id,
+        },
+      ]
+    );
+
+    const updatedItem = {
+      productId: product.id,
+      quantity: 2,
+      date: new Date(),
+    };
+
+    const updatedInvoice = await updateInvoice({
+      ctx: { session },
+      input: {
+        id: invoice.id,
+        items: [updatedItem],
+      },
+    });
+    const dbInvoice = await prisma.invoice.findUniqueOrThrow({
+      where: { id: invoice.id },
+      include: {
+        items: true,
+      },
+    });
+
+    expect(updatedInvoice.items[0].quantity).toEqual(updatedItem.quantity);
+    expect(dbInvoice.items[0].quantity).toEqual(updatedItem.quantity);
+  });
+
+  it('adds a line item', async () => {
+    const product1 = await createTestProduct(company.id);
+    const product2 = await createTestProduct(company.id);
+    const initialItem = {
+      quantity: 1,
+      date: new Date(),
+      productStateId: product1.states[0].id,
+    };
+    const invoice = await createTestInvoice(
+      company.states[0].id,
+      client.states[0].id,
+      InvoiceStatus.DRAFT,
+      [initialItem]
+    );
+
+    const newItem = {
+      productId: product2.id,
+      quantity: 2,
+      date: new Date(),
+    };
+
+    const updatedInvoice = await updateInvoice({
+      ctx: { session },
+      input: {
+        id: invoice.id,
+        items: [{ productId: product1.id, quantity: 1 }, newItem],
+      },
+    });
+    const dbInvoice = await prisma.invoice.findUniqueOrThrow({
+      where: { id: invoice.id },
+      include: {
+        items: true,
+      },
+    });
+
+    expect(updatedInvoice.items).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          product: expect.objectContaining({
+            id: product1.id,
+          }),
+        }),
+        expect.objectContaining({
+          product: expect.objectContaining({
+            id: product2.id,
+          }),
+        }),
+      ])
+    );
+
+    expect(dbInvoice.items).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          productStateId: product1.states[0].id,
+        }),
+        expect.objectContaining({
+          productStateId: product2.states[0].id,
+        }),
+      ])
+    );
+  });
+
+  it('removes a line item', async () => {
+    const product = await createTestProduct(company.id);
+    const invoice = await createTestInvoice(
+      company.states[0].id,
+      client.states[0].id,
+      InvoiceStatus.DRAFT,
+      [
+        {
+          quantity: 1,
+          date: new Date(),
+          productStateId: product.states[0].id,
+        },
+      ]
+    );
+
+    const updatedInvoice = await updateInvoice({
+      ctx: { session },
+      input: {
+        id: invoice.id,
+        items: [],
+      },
+    });
+    const dbInvoice = await prisma.invoice.findUniqueOrThrow({
+      where: { id: invoice.id },
+      include: {
+        items: true,
+      },
+    });
+
+    expect(updatedInvoice.items).toHaveLength(0);
+    expect(dbInvoice.items).toHaveLength(0);
   });
 });
