@@ -56,6 +56,30 @@ describe('createInvoice', () => {
     ]);
   });
 
+  it('creates an invoice with a number when not a draft', async () => {
+    const product = await createTestProduct(company.id);
+    const input = {
+      status: InvoiceStatus.SENT,
+      prefix: 'INV',
+      date: new Date(),
+      clientId: client.id,
+      items: [{ productId: product.id }],
+    };
+    const invoice = await createInvoice({
+      ctx: { session },
+      input,
+    });
+    const dbInvoice = await prisma.invoice.findUniqueOrThrow({
+      where: { id: invoice.id },
+      include: {
+        clientState: true,
+        companyState: true,
+      },
+    });
+    expect(invoice.number).not.toBeNull();
+    expect(invoice.number).toEqual(dbInvoice.number);
+  });
+
   it('throws when the company does not exist', async () => {
     await expect(
       createInvoice({
