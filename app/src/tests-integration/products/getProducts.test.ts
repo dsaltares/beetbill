@@ -37,11 +37,11 @@ describe('getProducts', () => {
     const product2 = await createTestProduct(company1.id);
 
     const products = await getProducts({ ctx: { session }, input: {} });
-    expect(products[0]).toMatchObject(
-      omit(product1.states[0], 'id', 'createdAt')
-    );
-    expect(products[1]).toMatchObject(
-      omit(product2.states[0], 'id', 'createdAt')
+    expect(products).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining(omit(product1.states[0], 'id', 'createdAt')),
+        expect.objectContaining(omit(product2.states[0], 'id', 'createdAt')),
+      ])
     );
   });
 });
