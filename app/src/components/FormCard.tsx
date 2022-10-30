@@ -54,7 +54,7 @@ const FormCard = ({
           </Button>
         </div>
       </div>
-      <div className="mt-16 grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+      <div className="mt-16 grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
         {children}
       </div>
     </form>
