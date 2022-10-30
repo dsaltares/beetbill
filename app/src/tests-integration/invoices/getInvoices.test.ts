@@ -50,25 +50,29 @@ describe('getInvoices', () => {
     );
 
     const invoices = await getInvoices({ ctx: { session }, input: {} });
-    expect(invoices[0]).toMatchObject(
-      omit(
-        dbInvoice1,
-        'companyStateId',
-        'clientStateId',
-        'companyState',
-        'clientState',
-        'deletedAt'
-      )
-    );
-    expect(invoices[1]).toMatchObject(
-      omit(
-        dbInvoice2,
-        'companyStateId',
-        'clientStateId',
-        'companyState',
-        'clientState',
-        'deletedAt'
-      )
+    expect(invoices).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining(
+          omit(
+            dbInvoice1,
+            'companyStateId',
+            'clientStateId',
+            'companyState',
+            'clientState',
+            'deletedAt'
+          )
+        ),
+        expect.objectContaining(
+          omit(
+            dbInvoice2,
+            'companyStateId',
+            'clientStateId',
+            'companyState',
+            'clientState',
+            'deletedAt'
+          )
+        ),
+      ])
     );
   });
 });

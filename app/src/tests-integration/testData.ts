@@ -46,7 +46,12 @@ export const createTestProduct = (companyId: string) =>
 export const createTestInvoice = (
   companyStateId: string,
   clientStateId: string,
-  status?: InvoiceStatus
+  status?: InvoiceStatus,
+  items: {
+    quantity: number;
+    date: Date;
+    productStateId: string;
+  }[] = []
 ) =>
   prisma.invoice.create({
     data: {
@@ -55,6 +60,9 @@ export const createTestInvoice = (
       status: status || 'DRAFT',
       companyStateId,
       clientStateId,
+      items: {
+        create: items,
+      },
     },
     include: {
       companyState: {

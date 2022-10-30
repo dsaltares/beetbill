@@ -16,6 +16,7 @@ export const getInvoice: Procedure<GetInvoiceInput, GetInvoiceOutput> = async ({
         deletedAt: null,
         companyState: { companyId: session?.companyId as string },
       },
+      orderBy: { createdAt: 'desc' },
       include: {
         companyState: {
           include: {

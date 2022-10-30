@@ -1,3 +1,4 @@
+import omit from 'lodash.omit';
 import api from '@lib/api';
 import useMutation from '@lib/useMutation';
 import type {
@@ -22,7 +23,7 @@ const useUpdateInvoice = ({ onSuccess }: UseUpdateInvoiceArgs = {}) =>
       if (invoiceIndex !== -1) {
         invoices[invoiceIndex] = {
           ...invoices[invoiceIndex],
-          ...input,
+          ...omit(input, 'items'),
         };
       }
     },

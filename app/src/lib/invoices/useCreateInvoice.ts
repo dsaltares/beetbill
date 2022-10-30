@@ -35,8 +35,8 @@ const useCreateInvoice = ({ onSuccess }: UseCreateInvoicesArgs = {}) =>
         date: new Date(),
         createdAt: new Date(),
         updatedAt: new Date(),
-        items: [],
         ...input,
+        items: [] as Invoice['items'],
       });
     },
     successMessage: () => 'Invoice created',
