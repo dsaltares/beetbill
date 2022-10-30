@@ -6,19 +6,21 @@ import prisma from '@server/prisma';
 import type { ArrayElement } from '@lib/utilityTypes';
 import { UpdateInvoiceOutput, UpdateInvoiceInput } from './types';
 import mapInvoiceEntity from './mapInvoiceEntity';
+import { getLastInvoiceNumber } from './utils';
 
 export const updateInvoice: Procedure<
   UpdateInvoiceInput,
   UpdateInvoiceOutput
 > = async ({
   ctx: { session },
-  input: { id, clientId, number, status, prefix, date, items },
+  input: { id, clientId, status, prefix, date, items },
 }) => {
+  const companyId = session?.companyId as string;
   const existingInvoice = await prisma.invoice.findFirst({
     where: {
       id,
       deletedAt: null,
-      companyState: { companyId: session?.companyId as string },
+      companyState: { companyId },
     },
     include: {
       items: {
@@ -83,6 +85,14 @@ export const updateInvoice: Procedure<
     });
   }
 
+  const isApproving =
+    existingInvoice.status === InvoiceStatus.DRAFT &&
+    !!status &&
+    status !== InvoiceStatus.DRAFT;
+  let number: number | undefined;
+  if (isApproving) {
+    number = (await getLastInvoiceNumber({ companyId, prefix })) + 1;
+  }
   const updatedInvoice = await prisma.invoice.update({
     where: { id },
     data: {
