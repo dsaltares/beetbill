@@ -17,7 +17,7 @@ export const Invoice = z.object({
   id: z.string(),
   status: InvoiceStatus,
   prefix: z.string(),
-  number: z.number().optional(),
+  number: z.number().nullish(),
   date: z.date(),
   createdAt: z.date(),
   updatedAt: z.date(),
