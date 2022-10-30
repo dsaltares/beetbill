@@ -42,7 +42,7 @@ const mapInvoiceEntity = ({
   id,
   status,
   prefix,
-  number,
+  number: number || undefined,
   date,
   createdAt,
   updatedAt,
