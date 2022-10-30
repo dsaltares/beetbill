@@ -61,11 +61,10 @@ model Company {
   userId    String   @unique
   createdAt DateTime @default(now())
 
-  user      User           @relation(fields: [userId], references: [id], onDelete: Cascade)
-  products  Product[]
-  clients   Client[]
-  states    CompanyState[]
-  invoiceId String?
+  user     User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  products Product[]
+  clients  Client[]
+  states   CompanyState[]
 }
 
 model CompanyState {
