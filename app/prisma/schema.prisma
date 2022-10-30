@@ -153,7 +153,7 @@ model Invoice {
   id     String        @id @default(cuid())
   status InvoiceStatus @default(DRAFT)
   prefix String        @default("")
-  number Int
+  number Int?
   date   DateTime      @default(now())
 
   companyStateId String

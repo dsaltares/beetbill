@@ -1,4 +1,5 @@
 import { TRPCError } from '@trpc/server';
+import { InvoiceStatus } from '@prisma/client';
 import { type Procedure, procedure } from '@server/trpc';
 import prisma from '@server/prisma';
 import type { ArrayElement } from '@lib/utilityTypes';
@@ -11,8 +12,9 @@ export const createInvoice: Procedure<
   CreateInvoiceOutput
 > = async ({
   ctx: { session },
-  input: { clientId, status, prefix, number, date, items },
+  input: { clientId, status, prefix, date, items },
 }) => {
+  const companyId = session?.companyId as string;
   const [client, company] = await Promise.all([
     prisma.client.findFirst({
       where: {
@@ -28,7 +30,7 @@ export const createInvoice: Procedure<
     }),
     prisma.company.findFirst({
       where: {
-        id: session?.companyId as string,
+        id: companyId,
       },
       include: {
         states: {
@@ -48,8 +50,9 @@ export const createInvoice: Procedure<
       status,
       prefix,
       number:
-        number ||
-        (await getLastInvoiceNumber({ companyId: company.id, prefix })) + 1,
+        status !== InvoiceStatus.DRAFT
+          ? (await getLastInvoiceNumber({ companyId, prefix })) + 1
+          : null,
       date,
       companyStateId: company.states[0].id,
       clientStateId: client.states[0].id,

@@ -2,6 +2,7 @@ import type { User } from '@prisma/client';
 import { InvoiceStatus } from '@prisma/client';
 import type { Session } from 'next-auth';
 import { TRPCError } from '@trpc/server';
+import cuid from 'cuid';
 import { updateInvoice } from '@server/invoices/updateInvoice';
 import {
   createTestCompany,
@@ -87,20 +88,20 @@ describe('updateInvoice', () => {
       client.states[0].id
     );
 
-    const newNumber = 2;
+    const newPrefix = '2022';
     const updatedInvoice = await updateInvoice({
       ctx: { session },
       input: {
         id: invoice.id,
-        number: newNumber,
+        prefix: newPrefix,
       },
     });
     const dbInvoice = await prisma.invoice.findUniqueOrThrow({
       where: { id: invoice.id },
     });
 
-    expect(updatedInvoice.number).toEqual(dbInvoice.number);
-    expect(updatedInvoice.number).toEqual(newNumber);
+    expect(updatedInvoice.prefix).toEqual(dbInvoice.prefix);
+    expect(updatedInvoice.prefix).toEqual(newPrefix);
   });
 
   it('changes the client of the invoice', async () => {
@@ -258,5 +259,39 @@ describe('updateInvoice', () => {
 
     expect(updatedInvoice.items).toHaveLength(0);
     expect(dbInvoice.items).toHaveLength(0);
+  });
+
+  it('approves the invoice and automatically chooses the right number', async () => {
+    const prefix = cuid();
+    const firstInvoice = await createTestInvoice(
+      company.states[0].id,
+      client.states[0].id,
+      InvoiceStatus.SENT,
+      [],
+      prefix,
+      1
+    );
+
+    const secondInvoice = await createTestInvoice(
+      company.states[0].id,
+      client.states[0].id,
+      InvoiceStatus.DRAFT,
+      [],
+      prefix
+    );
+
+    const updatedInvoice = await updateInvoice({
+      ctx: { session },
+      input: {
+        id: secondInvoice.id,
+        status: InvoiceStatus.SENT,
+      },
+    });
+    const dbInvoice = await prisma.invoice.findUniqueOrThrow({
+      where: { id: secondInvoice.id },
+    });
+
+    expect(updatedInvoice.number).toEqual(firstInvoice.number! + 1);
+    expect(updatedInvoice.number).toEqual(dbInvoice.number);
   });
 });

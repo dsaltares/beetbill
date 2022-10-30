@@ -51,12 +51,14 @@ export const createTestInvoice = (
     quantity: number;
     date: Date;
     productStateId: string;
-  }[] = []
+  }[] = [],
+  prefix?: string,
+  number?: number
 ) =>
   prisma.invoice.create({
     data: {
-      prefix: cuid(),
-      number: 1,
+      prefix: prefix || cuid(),
+      number,
       status: status || 'DRAFT',
       companyStateId,
       clientStateId,
