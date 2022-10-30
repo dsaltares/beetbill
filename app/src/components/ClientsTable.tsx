@@ -123,7 +123,7 @@ const ClientsTable = ({ clients, onDelete }: ClientsTableProps) => {
 
   return (
     <div className="flex flex-col w-full items-end">
-      <div className="w-full md:max-w-[250px]">
+      <div className="w-full lg:max-w-[250px]">
         <TextField
           value={globalFilter}
           onChange={(e) => setGlobalFilter(e.target.value)}
