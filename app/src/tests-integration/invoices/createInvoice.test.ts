@@ -28,7 +28,6 @@ describe('createInvoice', () => {
     const input = {
       status: InvoiceStatus.DRAFT,
       prefix: 'INV',
-      number: 1,
       date: new Date(),
       clientId: client.id,
       items: [{ productId: product.id }],
@@ -47,7 +46,6 @@ describe('createInvoice', () => {
     expect(invoice.id).toEqual(dbInvoice.id);
     expect(invoice.status).toEqual(dbInvoice.status);
     expect(invoice.prefix).toEqual(dbInvoice.prefix);
-    expect(invoice.number).toEqual(dbInvoice.number);
     expect(invoice.date).toEqual(dbInvoice.date);
     expect(invoice.client.id).toEqual(dbInvoice.clientState.clientId);
     expect(invoice.company.id).toEqual(dbInvoice.companyState.companyId);
@@ -65,7 +63,6 @@ describe('createInvoice', () => {
         input: {
           status: InvoiceStatus.DRAFT,
           prefix: 'INV',
-          number: 1,
           date: new Date(),
           clientId: client.id,
         },
@@ -80,7 +77,6 @@ describe('createInvoice', () => {
         input: {
           status: InvoiceStatus.DRAFT,
           prefix: 'INV',
-          number: 1,
           date: new Date(),
           clientId: client.id,
           items: [{ productId: 'invalid_product' }],

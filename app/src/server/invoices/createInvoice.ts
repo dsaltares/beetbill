@@ -4,14 +4,13 @@ import prisma from '@server/prisma';
 import type { ArrayElement } from '@lib/utilityTypes';
 import { CreateInvoiceOutput, CreateInvoiceInput } from './types';
 import mapInvoiceEntity from './mapInvoiceEntity';
-import { getLastInvoiceNumber } from './utils';
 
 export const createInvoice: Procedure<
   CreateInvoiceInput,
   CreateInvoiceOutput
 > = async ({
   ctx: { session },
-  input: { clientId, status, prefix, number, date, items },
+  input: { clientId, status, prefix, date, items },
 }) => {
   const [client, company] = await Promise.all([
     prisma.client.findFirst({
@@ -47,9 +46,7 @@ export const createInvoice: Procedure<
     data: {
       status,
       prefix,
-      number:
-        number ||
-        (await getLastInvoiceNumber({ companyId: company.id, prefix })) + 1,
+      number: null,
       date,
       companyStateId: company.states[0].id,
       clientStateId: client.states[0].id,
