@@ -1,10 +1,12 @@
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
+import Head from 'next/head';
 import FullScreenSpinner from '@components/Layout/FullScreenSpinner';
 import WithAuthentication from '@components/WithAuthentication';
 import Routes from '@lib/routes';
 import CreateEditClientForm from '@components/CreateEditClientForm';
 import useClient from '@lib/clients/useClient';
+import AppName from '@lib/appName';
 
 const EditClientPage = () => {
   const router = useRouter();
@@ -16,10 +18,19 @@ const EditClientPage = () => {
     }
   }, [router, isError]);
 
-  return client ? (
+  const content = client ? (
     <CreateEditClientForm client={client} />
   ) : (
     <FullScreenSpinner />
+  );
+
+  return (
+    <>
+      <Head>
+        <title>{`${client?.name ?? 'Client'} - ${AppName}`}</title>
+      </Head>
+      {content}
+    </>
   );
 };
 

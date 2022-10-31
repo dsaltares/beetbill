@@ -34,7 +34,6 @@ const company: Company = {
   iban: 'GB33BUKB20201555555555',
   userId: 'user_id',
   createdAt: new Date(),
-  updatedAt: new Date(),
 };
 
 const session: Session = {

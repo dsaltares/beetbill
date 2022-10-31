@@ -1,10 +1,12 @@
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
+import Head from 'next/head';
 import CreateEditProductForm from '@components/CreateEditProductForm';
 import FullScreenSpinner from '@components/Layout/FullScreenSpinner';
 import WithAuthentication from '@components/WithAuthentication';
 import useProduct from '@lib/products/useProduct';
 import Routes from '@lib/routes';
+import AppName from '@lib/appName';
 
 const EditProductPage = () => {
   const router = useRouter();
@@ -18,10 +20,19 @@ const EditProductPage = () => {
     }
   }, [router, isError]);
 
-  return product ? (
+  const content = product ? (
     <CreateEditProductForm product={product} />
   ) : (
     <FullScreenSpinner />
+  );
+
+  return (
+    <>
+      <Head>
+        <title>{`${product?.name ?? 'Product'} - ${AppName}`}</title>
+      </Head>
+      {content}
+    </>
   );
 };
 

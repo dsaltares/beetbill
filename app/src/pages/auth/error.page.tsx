@@ -1,6 +1,8 @@
 import type { GetServerSideProps, InferGetServerSidePropsType } from 'next';
+import Head from 'next/head';
 import Card from '@components/Card';
 import LinkButton from '@components/LinkButton';
+import AppName from '@lib/appName';
 
 const Messages: Record<string, string> = {
   Configuration: 'The application is misconfigured, please contact support.',
@@ -16,6 +18,9 @@ const ErrorPage = ({
   const message = Messages[error] || Messages.Default;
   return (
     <Card>
+      <Head>
+        <title>{`Log in - ${AppName}`}</title>
+      </Head>
       <h1 className="text-2xl font-bold text-center">Unable to sign in</h1>
       <div className="flex flex-col gap-4">
         <p className="text-base">{message}</p>

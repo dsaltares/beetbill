@@ -1,14 +1,21 @@
 import type { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import { getProviders } from 'next-auth/react';
+import Head from 'next/head';
 import SignInForm from '@components/SignInForm';
 import WithNoAuthentication from '@components/WithNoAuthentication';
+import AppName from '@lib/appName';
 
 const SignIn = ({
   providers,
   callbackUrl,
   error,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => (
-  <SignInForm providers={providers} callbackUrl={callbackUrl} error={error} />
+  <>
+    <Head>
+      <title>{`Log in - ${AppName}`}</title>
+    </Head>
+    <SignInForm providers={providers} callbackUrl={callbackUrl} error={error} />
+  </>
 );
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
