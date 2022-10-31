@@ -6,6 +6,7 @@ import { useForm } from 'react-hook-form';
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
 import capitalizeFirstLetter from '@lib/capitalizeFirstLetter';
 import EmailRegexp from '@lib/emailRegexp';
+import AppName from '@lib/appName';
 import Button from './Button';
 import GoogleIcon from './Icons/GoogleIcon';
 import type { CustomIcon } from './Icons/types';
@@ -33,7 +34,7 @@ const SignInForm = ({ providers, callbackUrl, error }: SignInFormProps) => {
 
   return (
     <Card>
-      <h1 className="text-2xl font-bold text-center">Sign in to Invoicing</h1>
+      <h1 className="text-2xl font-bold text-center">{`Sign in to ${AppName}`}</h1>
       <ErrorAlert error={error} />
       {hasOtherProviders && (
         <div className="flex flex-col gap-2">
