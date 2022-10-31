@@ -37,7 +37,7 @@ const Sidebar = ({ isOpen, onClose }: SidebarProps) => (
       </div>
       <UserMenu />
     </aside>
-    <div className="hidden lg:block h-full w-full max-w-[242px]"></div>
+    <div className="hidden lg:block h-full w-full max-w-[242px] flex-grow-0 flex-shrink-0"></div>
   </>
 );
 

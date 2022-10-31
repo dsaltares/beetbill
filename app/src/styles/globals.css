@@ -10,6 +10,14 @@
   .focus-ring {
     @apply focus-visible:focus-base focus:focus-base;
   }
+
+  .width-without-sidebar {
+    width: calc(100% - 242px);
+  }
+  
+  .main-content {
+    @apply w-full lg:width-without-sidebar
+  }
 }
 
 html {
@@ -31,4 +39,3 @@ body {
   width: 100%;
   padding: 0;
 }
-
