@@ -8,8 +8,8 @@ import classNames from 'classnames';
 import type { PropsWithChildren } from 'react';
 
 export const Table = ({ children }: PropsWithChildren) => (
-  <div className="flex w-full overflow-x-auto">
-    <table className="w-full overflow-x-auto text-left text-base text-zinc-900 whitespace-nowrap border-separate border-spacing-y-2">
+  <div className="relative block w-full overflow-x-auto">
+    <table className="w-full whitespace-nowrap text-left text-base text-zinc-900 border-separate border-spacing-y-2">
       {children}
     </table>
   </div>
@@ -32,7 +32,7 @@ export const BodyRow = ({ children }: PropsWithChildren) => (
 );
 
 export const HeaderCell = ({ children }: PropsWithChildren) => (
-  <th scope="col" className="py-2.5 px-3">
+  <th scope="col" className="py-2.5 px-3 min-w-[86px]">
     {children}
   </th>
 );
@@ -43,7 +43,7 @@ type BodyCellProps = PropsWithChildren<{
 
 export const BodyCell = ({ header, children }: BodyCellProps) => {
   const baseClass =
-    'py-4 px-6 first:rounded-l-md last:rounded-r-md border-y first:border-l last:border-r border-zinc-300';
+    'py-4 px-6 first:rounded-l-md last:rounded-r-md border-y first:border-l last:border-r border-zinc-300 min-w-[86px]';
   return header ? (
     <th scope="row" className={classNames('text-xl font-medium', baseClass)}>
       {children}
