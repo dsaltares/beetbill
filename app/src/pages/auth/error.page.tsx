@@ -4,11 +4,11 @@ import {
   faArrowRight,
   faTriangleExclamation,
 } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Card from '@components/Card';
 import LinkButton from '@components/LinkButton';
 import AppName from '@lib/appName';
 import Routes from '@lib/routes';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const Messages: Record<string, string> = {
   Configuration: 'The application is misconfigured, please contact support.',
