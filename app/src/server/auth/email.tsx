@@ -60,12 +60,12 @@ export const generateHtmlEmail = ({ url, host, email }: GenerateEmailArgs) => {
         </MjmlStyle>
       </MjmlHead>
       <MjmlBody backgroundColor={theme.colors.background}>
-        <MjmlWrapper>
+        <MjmlWrapper padding="12px">
           <MjmlSection
             backgroundColor={theme.colors.white}
             borderRadius="8px"
             css-class="box-shadow"
-            paddingTop="40px"
+            paddingTop="36px"
           >
             <MjmlColumn>
               <MjmlText
