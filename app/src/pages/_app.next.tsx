@@ -5,10 +5,10 @@ import { config } from '@fortawesome/fontawesome-svg-core';
 import type { AppProps as BaseAppProps } from 'next/app';
 import type { Session } from 'next-auth';
 import Head from 'next/head';
+import Script from 'next/script';
 import Providers from '@components/Providers';
 import Layout from '@components/Layout';
 import AppName from '@lib/appName';
-import Script from 'next/script';
 
 config.autoAddCss = false;
 
