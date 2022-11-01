@@ -1,4 +1,5 @@
 import '@testing-library/jest-dom';
+import React from 'react';
 
 // https://jestjs.io/docs/manual-mocks#mocking-methods-which-are-not-implemented-in-jsdom
 Object.defineProperty(window, 'matchMedia', {
@@ -23,3 +24,15 @@ class FakeInteractionObserver {
 }
 window.IntersectionObserver = FakeInteractionObserver;
 global.IntersectionObserver = FakeInteractionObserver;
+
+const originalLink = jest.requireActual('next/link');
+
+jest.mock(
+  'next/link',
+  () =>
+    ({ children, ...props }) =>
+      React.createElement(originalLink, {
+        ...props,
+        children: React.createElement('a', { children }),
+      })
+);
