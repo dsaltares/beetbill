@@ -1,8 +1,14 @@
 import type { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import Head from 'next/head';
+import {
+  faArrowRight,
+  faTriangleExclamation,
+} from '@fortawesome/free-solid-svg-icons';
 import Card from '@components/Card';
 import LinkButton from '@components/LinkButton';
 import AppName from '@lib/appName';
+import Routes from '@lib/routes';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const Messages: Record<string, string> = {
   Configuration: 'The application is misconfigured, please contact support.',
@@ -21,10 +27,20 @@ const ErrorPage = ({
       <Head>
         <title>{`Log in - ${AppName}`}</title>
       </Head>
-      <h1 className="text-2xl font-bold text-center">Unable to sign in</h1>
-      <div className="flex flex-col gap-4">
+      <div className="flex flex-col gap-8">
+        <div className="flex flex-col justify-center gap-3">
+          <FontAwesomeIcon
+            className="text-4xl text-violet-800 "
+            icon={faTriangleExclamation}
+          />
+          <h1 className="text-2xl font-bold text-center">Unable to sign in</h1>
+        </div>
         <p className="text-base">{message}</p>
-        <LinkButton href="/auth/signin">Sign in</LinkButton>
+        <div className="flex w-full justify-center">
+          <LinkButton endIcon={faArrowRight} href={Routes.signIn}>
+            Sign in
+          </LinkButton>
+        </div>
       </div>
     </Card>
   );

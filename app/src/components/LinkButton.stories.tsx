@@ -32,6 +32,12 @@ export default {
     color: {
       control: { type: 'radio', options: ['primary', 'secondary'] },
     },
+    variant: {
+      control: {
+        type: 'radio',
+        options: ['solid', 'light', 'outlined', 'borderless'],
+      },
+    },
   },
   parameters: {
     layout: 'centered',
