@@ -4,7 +4,7 @@ Invoicing app built using Next.js
 ## Requirements
 
 - Node 16, fnm recommended
-- yarn
+- pnpm
 - Docker
 
 ## Run locally
@@ -12,7 +12,7 @@ Invoicing app built using Next.js
 ```bash
 cd app
 mkdir database
-yarn install
-yarn docker:up
-yarn dev
+pnpm install
+pnpm docker:up
+pnpm dev
 ```
