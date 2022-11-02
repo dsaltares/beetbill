@@ -38,16 +38,15 @@ const callbackUrl = '/';
 const session = undefined;
 
 beforeAll(() => server.listen());
-afterEach(() => server.resetHandlers());
 afterAll(() => server.close());
 
 describe('SignInPage', () => {
   beforeEach(() => {
     jest.resetAllMocks();
+    server.resetHandlers(mockSession(session));
   });
 
   it('displays the providers', async () => {
-    server.resetHandlers(mockSession(session));
     render(<SignInPage providers={allProviders} callbackUrl={callbackUrl} />, {
       session,
     });
@@ -57,7 +56,6 @@ describe('SignInPage', () => {
   });
 
   it('does not display unavailable providers', async () => {
-    server.resetHandlers(mockSession(session));
     render(
       <SignInPage
         providers={{ email: emailProvider }}
@@ -71,7 +69,6 @@ describe('SignInPage', () => {
   });
 
   it('calls signIn with the right provider when trying to log in', async () => {
-    server.resetHandlers(mockSession(session));
     render(<SignInPage providers={allProviders} callbackUrl={callbackUrl} />, {
       session,
     });
@@ -85,7 +82,6 @@ describe('SignInPage', () => {
   });
 
   it('calls signIn with the email provider', async () => {
-    server.resetHandlers(mockSession(session));
     render(<SignInPage providers={allProviders} callbackUrl={callbackUrl} />, {
       session,
     });

@@ -14,7 +14,6 @@ import SidebarLayout from './SidebarLayout';
 const server = setupServer();
 
 beforeAll(() => server.listen());
-afterEach(() => server.resetHandlers());
 afterAll(() => server.close());
 
 const companyId = 'company_1';

@@ -1,7 +1,7 @@
 import 'next';
 import { setupServer } from 'msw/node';
 import { signOut } from 'next-auth/react';
-import { screen, render, act, mockSession, fireEvent } from '@lib/testing';
+import { screen, render, mockSession, fireEvent, waitFor } from '@lib/testing';
 import Routes from '@lib/routes';
 import SignOutPage from './signout.page';
 
@@ -19,7 +19,6 @@ const session = {
 const server = setupServer();
 
 beforeAll(() => server.listen());
-afterEach(() => server.resetHandlers());
 afterAll(() => server.close());
 
 describe('SignOutPage', () => {
@@ -33,7 +32,7 @@ describe('SignOutPage', () => {
 
     await fireEvent.click(screen.getByRole('button', { name: 'Sign out' }));
 
-    await act(async () => {
+    await waitFor(() => {
       expect(signOut).toHaveBeenCalledWith({ callbackUrl: Routes.home });
     });
   });
