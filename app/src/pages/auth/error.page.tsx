@@ -9,6 +9,7 @@ import Card from '@components/Card';
 import LinkButton from '@components/LinkButton';
 import AppName from '@lib/appName';
 import Routes from '@lib/routes';
+import WithNoAuthentication from '@components/WithNoAuthentication';
 
 const Messages: Record<string, string> = {
   Configuration: 'The application is misconfigured, please contact support.',
@@ -52,4 +53,4 @@ export const getServerSideProps: GetServerSideProps = async (context) => ({
   },
 });
 
-export default ErrorPage;
+export default WithNoAuthentication(ErrorPage);

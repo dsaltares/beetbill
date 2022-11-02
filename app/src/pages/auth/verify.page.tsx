@@ -8,6 +8,7 @@ import Card from '@components/Card';
 import AppName from '@lib/appName';
 import LinkButton from '@components/LinkButton';
 import Routes from '@lib/routes';
+import WithNoAuthentication from '@components/WithNoAuthentication';
 
 const VerifyPage = () => (
   <Card>
@@ -34,4 +35,4 @@ const VerifyPage = () => (
   </Card>
 );
 
-export default VerifyPage;
+export default WithNoAuthentication(VerifyPage);
