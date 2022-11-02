@@ -9,7 +9,7 @@ import AppName from '@lib/appName';
 import LinkButton from '@components/LinkButton';
 import Routes from '@lib/routes';
 
-const Verify = () => (
+const VerifyPage = () => (
   <Card>
     <Head>
       <title>{`Log in - ${AppName}`}</title>
@@ -34,4 +34,4 @@ const Verify = () => (
   </Card>
 );
 
-export default Verify;
+export default VerifyPage;

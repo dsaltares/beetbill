@@ -5,7 +5,7 @@ import SignInForm from '@components/SignInForm';
 import WithNoAuthentication from '@components/WithNoAuthentication';
 import AppName from '@lib/appName';
 
-const SignIn = ({
+const SignInPage = ({
   providers,
   callbackUrl,
   error,
@@ -30,4 +30,4 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   };
 };
 
-export default WithNoAuthentication(SignIn);
+export default WithNoAuthentication(SignInPage);

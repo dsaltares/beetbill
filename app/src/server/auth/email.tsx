@@ -15,6 +15,7 @@ import {
   MjmlStyle,
   MjmlText,
 } from 'mjml-react';
+import Routes from '@lib/routes';
 
 export const sendVerificationRequest: EmailConfig['sendVerificationRequest'] =
   async ({ identifier: email, url, provider: { server, from } }) => {
@@ -104,16 +105,12 @@ export const generateHtmlEmail = ({ url, host, email }: GenerateEmailArgs) => {
           </MjmlSection>
           <MjmlSection paddingTop="40px">
             <MjmlColumn width="25%">
-              <PolicyLink
-                href={`${baseUrl(host)}/invoicing_terms_and_conditions.pdf`}
-              >
+              <PolicyLink href={`${baseUrl(host)}${Routes.termsAndConditions}`}>
                 Terms of use
               </PolicyLink>
             </MjmlColumn>
             <MjmlColumn width="25%">
-              <PolicyLink
-                href={`${baseUrl(host)}/invoicing_privacy_policy.pdf`}
-              >
+              <PolicyLink href={`${baseUrl(host)}${Routes.privacyPolicy}`}>
                 Privacy policy
               </PolicyLink>
             </MjmlColumn>
