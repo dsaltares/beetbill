@@ -5,6 +5,7 @@ import GoogleProvider from 'next-auth/providers/google';
 import prisma from '@server/prisma';
 import { sendVerificationRequest } from '@server/auth/email';
 import events from '@server/auth/events';
+import callbacks from '@server/auth/callbacks';
 
 export default NextAuth({
   adapter: PrismaAdapter(prisma),
@@ -31,20 +32,12 @@ export default NextAuth({
       : []),
   ],
   secret: process.env.NEXT_AUTH_SECRET,
-  callbacks: {
-    session: async ({ session, user }) => {
-      const company = await prisma.company.findUnique({
-        where: { userId: user.id },
-      });
-      session.userId = user.id;
-      session.companyId = company?.id as string;
-      return session;
-    },
-  },
+  callbacks,
   events,
   pages: {
     signIn: '/auth/signin',
     verifyRequest: '/auth/verify',
     error: '/auth/error',
+    signOut: '/auth/signout',
   },
 });
