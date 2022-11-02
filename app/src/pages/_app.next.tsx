@@ -9,6 +9,7 @@ import Script from 'next/script';
 import Providers from '@components/Providers';
 import Layout from '@components/Layout';
 import AppName from '@lib/appName';
+import Routes from '@lib/routes';
 
 config.autoAddCss = false;
 
@@ -34,7 +35,7 @@ const App = ({ Component, pageProps: { session, ...pageProps } }: AppProps) => (
     <Script
       id="cookie-banner-init"
       dangerouslySetInnerHTML={{
-        __html: `window.addEventListener("load",function(){window.wpcc.init({"border":"thin","corners":"small","colors":{"popup":{"background":"#F5F3FF","text":"#000000","border":"#6D28D9"},"button":{"background":"#6D28D9","text":"#ffffff"}},"position":"bottom","content":{"href":"https://invoicing.saltares.com/invoicing_cookie_policy.pdf","message":"This app uses cookies to ensure the best possible experience."}})});`,
+        __html: `window.addEventListener("load",function(){window.wpcc.init({"border":"thin","corners":"small","colors":{"popup":{"background":"#F5F3FF","text":"#000000","border":"#6D28D9"},"button":{"background":"#6D28D9","text":"#ffffff"}},"position":"bottom","content":{"href":"https://invoicing.saltares.com${Routes.cookiePolicy}","message":"This app uses cookies to ensure the best possible experience."}})});`,
       }}
     />
   </Providers>
