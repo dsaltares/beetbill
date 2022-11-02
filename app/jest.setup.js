@@ -1,4 +1,5 @@
 import '@testing-library/jest-dom';
+import { TextEncoder, TextDecoder } from 'util';
 import React from 'react';
 
 // https://jestjs.io/docs/manual-mocks#mocking-methods-which-are-not-implemented-in-jsdom
@@ -27,12 +28,16 @@ global.IntersectionObserver = FakeInteractionObserver;
 
 const originalLink = jest.requireActual('next/link');
 
-jest.mock(
-  'next/link',
-  () =>
-    ({ children, ...props }) =>
-      React.createElement(originalLink, {
-        ...props,
-        children: React.createElement('a', { children }),
-      })
+jest.mock('next/link', () =>
+  React.forwardRef(({ children, ...props }, ref) =>
+    React.createElement(originalLink, {
+      ...props,
+      ref,
+      children: React.createElement('a', { children }),
+    })
+  )
 );
+
+// https://github.com/inrupt/solid-client-authn-js/issues/1676
+global.TextEncoder = TextEncoder;
+global.TextDecoder = TextDecoder;

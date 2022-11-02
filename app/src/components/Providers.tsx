@@ -49,7 +49,7 @@ const Providers = ({
     <SessionProvider session={session}>
       <QueryClientProvider client={queryClient}>
         {children}
-        <ReactQueryDevtools initialIsOpen={false} />
+        <ReactQueryDevtools initialIsOpen={false} position="bottom-right" />
         <Toaster position="bottom-center" />
       </QueryClientProvider>
     </SessionProvider>

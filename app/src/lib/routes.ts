@@ -10,7 +10,11 @@ const Routes = {
   invoices: '/invoices',
   createInvoice: '/invoices/new',
   signIn: '/api/auth/signin',
+  signOut: '/api/auth/signout',
   notFound: '/404',
+  privacyPolicy: '/invoicing_privacy_policy.pdf',
+  termsAndConditions: '/invoicing_terms_and_conditions.pdf',
+  cookiePolicy: '/invoicing_cookie_policy.pdf',
 };
 
 export default Routes;
