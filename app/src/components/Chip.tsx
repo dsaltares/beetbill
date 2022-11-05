@@ -3,8 +3,8 @@ import type { PropsWithChildren } from 'react';
 import Icon from './Icons/Icon';
 import type { IconProp } from './Icons/types';
 
-type ChipProps = PropsWithChildren<{
-  color?: 'primary' | 'secondary';
+export type ChipProps = PropsWithChildren<{
+  color?: 'primary' | 'secondary' | 'danger';
   variant?: 'solid' | 'light' | 'outlined';
   size?: 'sm' | 'md';
   startIcon?: IconProp;
@@ -21,7 +21,7 @@ const Chip = ({
 }: ChipProps) => (
   <div
     className={cn(
-      'flex flex-row px-3 text-base items-center justify-center gap-2 rounded-3xl',
+      'inline-flex flex-row px-3 text-base self-start items-center justify-center gap-2 rounded-3xl',
       {
         'py-2': size === 'md',
         'bg-violet-700 text-white': color === 'primary' && variant === 'solid',
@@ -34,6 +34,7 @@ const Chip = ({
           color === 'secondary' && variant === 'light',
         'bg-white text-zinc-800 border border-zinc-800':
           color === 'secondary' && variant === 'outlined',
+        'bg-red-700 text-zinc-50 hover:bg-red-800': color === 'danger',
         'py-0': size === 'sm',
         'py-1': size === 'md',
       }
