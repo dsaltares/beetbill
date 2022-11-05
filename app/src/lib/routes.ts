@@ -9,6 +9,7 @@ const Routes = {
   client: (clientId: string) => `/clients/${clientId}`,
   invoices: '/invoices',
   createInvoice: '/invoices/new',
+  invoice: (invoiceId: string) => `/invoices/${invoiceId}`,
   signIn: '/api/auth/signin',
   signOut: '/api/auth/signout',
   notFound: '/404',
