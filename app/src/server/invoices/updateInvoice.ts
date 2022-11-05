@@ -146,6 +146,18 @@ const buildItemsDiff = async (
     },
   });
 
+  const currency =
+    existing.length > 0 ? existing[0].productState.currency : undefined;
+  const hasDifferentCurrency =
+    !!currency &&
+    dbProducts.some((product) => product.states[0].currency !== currency);
+  if (hasDifferentCurrency) {
+    throw new TRPCError({
+      code: 'PRECONDITION_FAILED',
+      message: 'All products within an invoice must have the same currency',
+    });
+  }
+
   const dbProductsById = dbProducts.reduce(
     (acc, product) => ({
       ...acc,

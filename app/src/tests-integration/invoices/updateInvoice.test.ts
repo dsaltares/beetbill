@@ -228,6 +228,43 @@ describe('updateInvoice', () => {
     );
   });
 
+  it('throws when trying to add a line item with a different currency', async () => {
+    const product1 = await createTestProduct(company.id, 'EUR');
+    const product2 = await createTestProduct(company.id, 'USD');
+    const initialItem = {
+      quantity: 1,
+      date: new Date(),
+      productStateId: product1.states[0].id,
+    };
+    const invoice = await createTestInvoice(
+      company.states[0].id,
+      client.states[0].id,
+      InvoiceStatus.DRAFT,
+      [initialItem]
+    );
+
+    const newItem = {
+      productId: product2.id,
+      quantity: 2,
+      date: new Date(),
+    };
+
+    await expect(
+      updateInvoice({
+        ctx: { session },
+        input: {
+          id: invoice.id,
+          items: [{ productId: product1.id, quantity: 1 }, newItem],
+        },
+      })
+    ).rejects.toEqual(
+      new TRPCError({
+        code: 'PRECONDITION_FAILED',
+        message: 'All products within an invoice must have the same currency',
+      })
+    );
+  });
+
   it('removes a line item', async () => {
     const product = await createTestProduct(company.id);
     const invoice = await createTestInvoice(

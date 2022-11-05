@@ -30,13 +30,14 @@ export const createTestClient = (companyId: string) =>
     include: { states: true },
   });
 
-export const createTestProduct = (companyId: string) =>
+export const createTestProduct = (companyId: string, currency?: string) =>
   prisma.product.create({
     data: {
       companyId,
       states: {
         create: {
           name: 'Test product',
+          currency,
         },
       },
     },
