@@ -4,29 +4,26 @@ import Link from 'next/link';
 import type { IconProp } from './Icons/types';
 import Icon from './Icons/Icon';
 
-type ButtonProps = PropsWithChildren<
+type LinkIconButtonProps = PropsWithChildren<
   AnchorHTMLAttributes<HTMLAnchorElement> & {
     color?: 'primary' | 'secondary';
     variant?: 'solid' | 'light' | 'outlined' | 'borderless';
     size?: 'sm' | 'md' | 'lg';
     fullWidth?: boolean;
-    startIcon?: IconProp;
-    endIcon?: IconProp;
+    icon: IconProp;
     href: string;
   }
 >;
 
-const LinkButton = ({
+const LinkIconButton = ({
   color = 'primary',
   variant = 'solid',
   size = 'md',
   fullWidth = false,
-  children,
-  startIcon,
-  endIcon,
+  icon,
   href,
   ...anchorProps
-}: ButtonProps) => (
+}: LinkIconButtonProps) => (
   <div
     className={cn('flex', {
       'w-full': fullWidth,
@@ -34,7 +31,7 @@ const LinkButton = ({
   >
     <Link
       href={href}
-      className={cn('rounded-md text-base focus-ring text-left', {
+      className={cn('rounded-md text-base focus-ring text-left gap-2', {
         'bg-violet-700 text-zinc-50 hover:bg-violet-900':
           color === 'primary' && variant === 'solid',
         'bg-violet-100 text-violet-900 hover:bg-violet-300':
@@ -51,20 +48,18 @@ const LinkButton = ({
           color === 'secondary' && variant === 'outlined',
         'bg-transparent text-zinc-800 underline hover:bg-zinc-200':
           color === 'secondary' && variant === 'borderless',
-        'py-1.5 px-3': size === 'sm',
-        'py-2 px-4': size === 'md',
-        'py-2.5 px-5': size === 'lg',
+        'p-2': size === 'sm',
+        'p-2.5': size === 'md',
+        'p-3': size === 'lg',
         'w-full': fullWidth,
       })}
       {...anchorProps}
     >
-      <div className="flex items-center justify-center gap-2">
-        <Icon icon={startIcon} />
-        {children}
-        <Icon icon={endIcon} />
+      <div className="flex items-center justify-center">
+        <Icon icon={icon} />
       </div>
     </Link>
   </div>
 );
 
-export default LinkButton;
+export default LinkIconButton;

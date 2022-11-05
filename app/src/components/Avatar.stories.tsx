@@ -19,8 +19,7 @@ export const WithPlaceholder = Template.bind({});
 
 WithImage.args = {
   user: {
-    image:
-      'https://lh3.googleusercontent.com/ogw/AOh-ky2Zp3ZbGNwuJ8qUOX7TtwA5Mq5kurZqESl1-3b6AXE=s64-c-mo',
+    image: 'https://avatars.githubusercontent.com/u/570314?v=4',
   },
 };
 WithInitials.args = {

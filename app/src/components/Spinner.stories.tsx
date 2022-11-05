@@ -6,7 +6,8 @@ export default {
   component: Spinner,
   argTypes: {
     size: {
-      control: { type: 'radio', options: ['sm', 'md', 'lg'] },
+      control: { type: 'radio' },
+      options: ['sm', 'md', 'lg'],
     },
   },
   parameters: {

@@ -31,7 +31,7 @@ const Button = ({
 }: ButtonProps) => (
   <button
     className={cn(
-      'relative flex items-center justify-center rounded-md text-base font-normal focus-ring text-left',
+      'relative flex items-center justify-center rounded-md text-base font-normal focus-ring text-left gap-2',
       {
         'bg-violet-700 text-zinc-50 hover:bg-violet-900':
           !disabled && color === 'primary' && variant === 'solid',
@@ -72,9 +72,9 @@ const Button = ({
         <Spinner size="sm" />
       </div>
     )}
-    <Icon className="mr-2" icon={startIcon} />
+    <Icon icon={startIcon} />
     {children}
-    <Icon className="ml-2" icon={endIcon} />
+    <Icon icon={endIcon} />
   </button>
 );
 

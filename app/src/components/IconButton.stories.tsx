@@ -1,13 +1,20 @@
 import React from 'react';
 import type { ComponentStory, ComponentMeta } from '@storybook/react';
-import { faBars, faXmark } from '@fortawesome/free-solid-svg-icons';
+import {
+  faBoxOpen,
+  faBriefcase,
+  faFileInvoice,
+  faUsers,
+} from '@fortawesome/free-solid-svg-icons';
 import IconButton from './IconButton';
 import GoogleIcon from './Icons/GoogleIcon';
 
 const Icons = {
   none: undefined,
-  faBars,
-  faXmark,
+  faBriefcase,
+  faUsers,
+  faBoxOpen,
+  faFileInvoice,
   GoogleIcon,
 };
 const IconInputType = {
@@ -20,8 +27,13 @@ export default {
   title: 'IconButton',
   component: IconButton,
   argTypes: {
+    disabled: { control: 'boolean' },
     onClick: { action: 'clicked' },
     icon: IconInputType,
+    color: {
+      control: { type: 'radio' },
+      options: ['primary', 'secondary', 'danger'],
+    },
   },
   parameters: {
     layout: 'centered',
@@ -34,7 +46,11 @@ const Template: ComponentStory<typeof IconButton> = (args) => (
 
 export const Default = Template.bind({});
 Default.args = {
-  variant: 'primary',
-  label: 'menu',
-  icon: faBars,
+  color: 'primary',
+  variant: 'solid',
+  children: 'Button',
+  icon: faBriefcase,
+  disabled: false,
+  size: 'md',
+  fullWidth: false,
 };

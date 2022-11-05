@@ -31,7 +31,8 @@ import {
 import Button from './Button';
 import TextField from './TextField';
 import ConfirmationDialog from './ConfirmationDialog';
-import LinkButton from './LinkButton';
+import LinkIconButton from './LinkIconButton';
+import IconButton from './IconButton';
 
 const columnHelper = createColumnHelper<Client>();
 
@@ -81,25 +82,23 @@ const ClientsTable = ({ clients, onDelete }: ClientsTableProps) => {
           const beingCreated = info.row.original.id.startsWith('new-');
           return (
             <div className="flex gap-4 justify-end">
-              <Button
+              <IconButton
+                aria-label="Delete"
                 color="danger"
-                endIcon={faTrash}
+                icon={faTrash}
                 onClick={() => onOpen(info.row.original.id)}
                 disabled={beingCreated}
-              >
-                Delete
-              </Button>
-              <LinkButton
+              />
+              <LinkIconButton
+                aria-label="Edit"
                 color="secondary"
-                endIcon={faPencil}
+                icon={faPencil}
                 href={
                   beingCreated
                     ? Routes.clients
                     : Routes.client(info.row.original.id)
                 }
-              >
-                Edit
-              </LinkButton>
+              />
             </div>
           );
         },

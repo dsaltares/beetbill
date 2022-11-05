@@ -31,7 +31,8 @@ import {
 import Button from './Button';
 import TextField from './TextField';
 import ConfirmationDialog from './ConfirmationDialog';
-import LinkButton from './LinkButton';
+import IconButton from './IconButton';
+import LinkIconButton from './LinkIconButton';
 
 const columnHelper = createColumnHelper<Product>();
 
@@ -85,25 +86,23 @@ const ProductsTable = ({ products, onDelete }: ProductsTableProps) => {
           const beingCreated = info.row.original.id.startsWith('new-');
           return (
             <div className="flex gap-4 justify-end">
-              <Button
+              <IconButton
+                aria-label="Delete"
                 color="danger"
-                endIcon={faTrash}
+                icon={faTrash}
                 onClick={() => onOpen(info.row.original.id)}
                 disabled={beingCreated}
-              >
-                Delete
-              </Button>
-              <LinkButton
+              />
+              <LinkIconButton
+                aria-label="Edit"
                 color="secondary"
-                endIcon={faPencil}
+                icon={faPencil}
                 href={
                   beingCreated
                     ? Routes.products
                     : Routes.product(info.row.original.id)
                 }
-              >
-                Edit
-              </LinkButton>
+              />
             </div>
           );
         },
