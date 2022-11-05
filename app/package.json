@@ -36,6 +36,7 @@
     "@trpc/server": "^10.0.0-proxy-beta.21",
     "classnames": "^2.3.2",
     "cuid": "^2.1.8",
+    "date-fns": "^2.29.3",
     "iban": "^0.0.14",
     "immer": "^9.0.16",
     "lodash.omit": "^4.5.0",
