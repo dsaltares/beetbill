@@ -1,27 +1,23 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import cn from 'classnames';
 import type { ButtonHTMLAttributes } from 'react';
-import type { IconProp } from './Icons/types';
-import Spinner from './Spinner';
+import type { IconProp } from '../Icons/types';
 
-type IconButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
+type SidebarButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   label: string;
   variant?: 'primary' | 'secondary';
   icon: IconProp;
-  loading?: boolean;
 };
 
-const IconButton = ({
+const SidebarButton = ({
   label,
   variant = 'primary',
   icon: Icon,
-  loading = false,
   ...buttonProps
-}: IconButtonProps) => {
+}: SidebarButtonProps) => {
   const iconClassName = cn('text-2xl w-8 h-8', {
     'text-violet-700': variant === 'primary',
     'text-white': variant === 'secondary',
-    'text-transparent': !!loading,
   });
   return (
     <button
@@ -34,11 +30,6 @@ const IconButton = ({
       aria-label={label}
       {...buttonProps}
     >
-      {loading && (
-        <div className="absolute flex items-center justify-center">
-          <Spinner size="sm" />
-        </div>
-      )}
       {typeof Icon === 'function' ? (
         <Icon className={iconClassName} />
       ) : (
@@ -48,4 +39,4 @@ const IconButton = ({
   );
 };
 
-export default IconButton;
+export default SidebarButton;

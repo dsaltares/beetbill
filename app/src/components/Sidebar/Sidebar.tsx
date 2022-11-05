@@ -1,7 +1,7 @@
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
 import cn from 'classnames';
-import IconButton from '@components/IconButton';
-import Logo from '../Logo';
+import Logo from '@components/Logo';
+import SidebarButton from './SidebarButton';
 import NavLinks from './NavLinks';
 import UserMenu from './UserMenu';
 
@@ -24,7 +24,7 @@ const Sidebar = ({ isOpen, onClose }: SidebarProps) => (
       <div className="flex flex-col gap-10">
         <div className="flex items-center justify-between">
           <div className="block lg:hidden">
-            <IconButton
+            <SidebarButton
               color="secondary"
               label="close menu"
               icon={faXmark}

@@ -1,8 +1,8 @@
 import React from 'react';
 import type { ComponentStory, ComponentMeta } from '@storybook/react';
 import { faBars, faXmark } from '@fortawesome/free-solid-svg-icons';
-import IconButton from './IconButton';
-import GoogleIcon from './Icons/GoogleIcon';
+import SidebarButton from './SidebarButton';
+import GoogleIcon from './../Icons/GoogleIcon';
 
 const Icons = {
   none: undefined,
@@ -17,8 +17,8 @@ const IconInputType = {
 };
 
 export default {
-  title: 'IconButton',
-  component: IconButton,
+  title: 'SidebarButton',
+  component: SidebarButton,
   argTypes: {
     onClick: { action: 'clicked' },
     icon: IconInputType,
@@ -26,10 +26,10 @@ export default {
   parameters: {
     layout: 'centered',
   },
-} as ComponentMeta<typeof IconButton>;
+} as ComponentMeta<typeof SidebarButton>;
 
-const Template: ComponentStory<typeof IconButton> = (args) => (
-  <IconButton {...args} />
+const Template: ComponentStory<typeof SidebarButton> = (args) => (
+  <SidebarButton {...args} />
 );
 
 export const Default = Template.bind({});
