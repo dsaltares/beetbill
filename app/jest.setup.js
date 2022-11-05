@@ -33,7 +33,7 @@ jest.mock('next/link', () =>
     React.createElement(originalLink, {
       ...props,
       ref,
-      children: React.createElement('a', { children }),
+      children: React.createElement('a', { children, ...props }),
     })
   )
 );
