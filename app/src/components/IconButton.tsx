@@ -4,34 +4,31 @@ import Spinner from './Spinner';
 import type { IconProp } from './Icons/types';
 import Icon from './Icons/Icon';
 
-type ButtonProps = PropsWithChildren<
+type IconButtonProps = PropsWithChildren<
   ButtonHTMLAttributes<HTMLButtonElement> & {
     color?: 'primary' | 'secondary' | 'danger';
     variant?: 'solid' | 'light' | 'outlined' | 'borderless';
     size?: 'sm' | 'md' | 'lg';
     fullWidth?: boolean;
-    startIcon?: IconProp;
-    endIcon?: IconProp;
+    icon: IconProp;
     loading?: boolean;
   }
 >;
 
-const Button = ({
+const IconButton = ({
   color = 'primary',
   variant = 'solid',
   size = 'md',
   fullWidth = false,
-  children,
   disabled,
-  startIcon,
-  endIcon,
+  icon,
   loading = false,
   onClick,
   ...buttonProps
-}: ButtonProps) => (
+}: IconButtonProps) => (
   <button
     className={cn(
-      'relative flex items-center justify-center rounded-md text-base font-normal focus-ring text-left gap-2',
+      'relative flex items-center justify-center rounded-md focus-ring text-left',
       {
         'bg-violet-700 text-zinc-50 hover:bg-violet-900':
           !disabled && color === 'primary' && variant === 'solid',
@@ -53,9 +50,9 @@ const Button = ({
           !disabled && color === 'danger',
         'bg-zinc-100 text-zinc-400 cursor-not-allowed': !!disabled,
         'text-transparent': !!loading,
-        'py-1.5 px-3': size === 'sm',
-        'py-2 px-4': size === 'md',
-        'py-2.5 px-5': size === 'lg',
+        'p-2': size === 'sm',
+        'p-2.5': size === 'md',
+        'p-3': size === 'lg',
         'w-full': fullWidth,
       }
     )}
@@ -72,10 +69,8 @@ const Button = ({
         <Spinner size="sm" />
       </div>
     )}
-    <Icon icon={startIcon} />
-    {children}
-    <Icon icon={endIcon} />
+    <Icon className="text-xl" icon={icon} />
   </button>
 );
 
-export default Button;
+export default IconButton;

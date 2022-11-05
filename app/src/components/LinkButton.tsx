@@ -34,7 +34,7 @@ const LinkButton = ({
   >
     <Link
       href={href}
-      className={cn('rounded-md text-base focus-ring text-left', {
+      className={cn('rounded-md text-base focus-ring text-left gap-2', {
         'bg-violet-700 text-zinc-50 hover:bg-violet-900':
           color === 'primary' && variant === 'solid',
         'bg-violet-100 text-violet-900 hover:bg-violet-300':
@@ -59,9 +59,9 @@ const LinkButton = ({
       {...anchorProps}
     >
       <div className="flex items-center justify-center">
-        <Icon className="mr-2" icon={startIcon} />
+        <Icon icon={startIcon} />
         {children}
-        <Icon className="ml-2" icon={endIcon} />
+        <Icon icon={endIcon} />
       </div>
     </Link>
   </div>

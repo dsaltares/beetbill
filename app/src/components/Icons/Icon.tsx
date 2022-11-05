@@ -8,7 +8,10 @@ type IconProps = {
 };
 
 const Icon = ({ icon: Icon, className }: IconProps) => {
-  const finalClassName = cn('w-4 h-4', className);
+  const finalClassName = cn({
+    'w-4 h-4': !className,
+    ...(className && { [className]: true }),
+  });
   if (!Icon) {
     return null;
   }
