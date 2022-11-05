@@ -11,10 +11,12 @@ export default {
   component: ToastComponent,
   argTypes: {
     color: {
-      control: { type: 'radio', options: ['primary', 'secondary', 'danger'] },
+      control: { type: 'radio' },
+      options: ['primary', 'secondary', 'danger'],
     },
     variant: {
-      control: { type: 'radio', options: ['solid', 'light'] },
+      control: { type: 'radio' },
+      options: ['solid', 'light'],
     },
   },
   parameters: {

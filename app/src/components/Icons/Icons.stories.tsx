@@ -2,6 +2,7 @@ import React from 'react';
 import type { ComponentStory, ComponentMeta } from '@storybook/react';
 import type { CustomIcon } from './types';
 import GoogleIcon from './GoogleIcon';
+import UserPlaceholderIcon from './UserPlaceholderIcon';
 
 export default {
   title: 'Icons',
@@ -13,8 +14,9 @@ export default {
 const Template: ComponentStory<CustomIcon> = () => {
   const className = 'w-6 h-6';
   return (
-    <div className="grid grid-cols-4 gap-4">
+    <div className="grid grid-cols-2 gap-4">
       <GoogleIcon className={className} />
+      <UserPlaceholderIcon className={className} />
     </div>
   );
 };

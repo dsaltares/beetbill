@@ -30,13 +30,14 @@ export default {
     startIcon: IconInputType,
     endIcon: IconInputType,
     color: {
-      control: { type: 'radio', options: ['primary', 'secondary'] },
+      control: { type: 'radio' },
+      options: ['primary', 'secondary'],
     },
     variant: {
       control: {
         type: 'radio',
-        options: ['solid', 'light', 'outlined', 'borderless'],
       },
+      options: ['solid', 'light', 'outlined', 'borderless'],
     },
   },
   parameters: {

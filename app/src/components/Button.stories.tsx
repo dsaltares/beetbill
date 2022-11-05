@@ -32,7 +32,8 @@ export default {
     startIcon: IconInputType,
     endIcon: IconInputType,
     color: {
-      control: { type: 'radio', options: ['primary', 'secondary', 'danger'] },
+      control: { type: 'radio' },
+      options: ['primary', 'secondary', 'danger'],
     },
   },
   parameters: {
