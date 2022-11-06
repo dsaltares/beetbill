@@ -2,7 +2,6 @@ import { Listbox, Transition } from '@headlessui/react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCaretDown, faCaretUp } from '@fortawesome/free-solid-svg-icons';
 import cn from 'classnames';
-import { Fragment } from 'react';
 
 type SelectFieldProps<Option> = {
   value?: Option;

@@ -7,7 +7,7 @@ import type { Client } from '@server/clients/types';
 import useCreateClient from '@lib/clients/useCreateClient';
 import useUpdateClient from '@lib/clients/useUpdateClient';
 import EmailRegexp from '@lib/emailRegexp';
-import TextField from './TextField';
+import TextField from './Fields/TextField';
 import FormCard from './FormCard';
 
 type ClientFormValues = {

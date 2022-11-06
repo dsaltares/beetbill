@@ -29,7 +29,7 @@ import {
   Table,
 } from './Table';
 import Button from './Button';
-import TextField from './TextField';
+import TextField from './Fields/TextField';
 import ConfirmationDialog from './ConfirmationDialog';
 import LinkIconButton from './LinkIconButton';
 import IconButton from './IconButton';

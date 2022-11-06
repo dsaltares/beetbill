@@ -6,10 +6,10 @@ import useCreateProduct from '@lib/products/useCreateProduct';
 import useUpdateProduct from '@lib/products/useUpdateProduct';
 import type { Product } from '@server/products/types';
 import Routes from '@lib/routes';
-import TextField from './TextField';
-import SelectField from './SelectField';
+import TextField from './Fields/TextField';
+import SelectField from './Fields/SelectField';
+import Toggle from './Fields/Toggle';
 import FormCard from './FormCard';
-import Toggle from './Toggle';
 
 type ProductFormValues = {
   name: Product['name'];

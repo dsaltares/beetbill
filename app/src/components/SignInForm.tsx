@@ -10,7 +10,7 @@ import AppName from '@lib/appName';
 import Button from './Button';
 import GoogleIcon from './Icons/GoogleIcon';
 import type { CustomIcon } from './Icons/types';
-import TextField from './TextField';
+import TextField from './Fields/TextField';
 import Card from './Card';
 
 type SignInFormProps = {

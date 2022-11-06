@@ -5,7 +5,7 @@ import iban from 'iban';
 import useUpdateCompany from '@lib/companies/useUpdateCompany';
 import type { Company } from '@server/company/types';
 import EmailRegexp from '@lib/emailRegexp';
-import TextField from './TextField';
+import TextField from './Fields/TextField';
 import FormCard from './FormCard';
 
 type EditCompanyFormValues = {
