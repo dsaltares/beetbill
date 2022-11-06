@@ -1,12 +1,13 @@
-import { Listbox, Transition } from '@headlessui/react';
+import { Combobox, Transition } from '@headlessui/react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCaretDown, faCaretUp } from '@fortawesome/free-solid-svg-icons';
+import { faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons';
 import cn from 'classnames';
+import { useMemo, useState } from 'react';
 import Label from './Label';
 import Error from './Error';
 import Tip from './Tip';
 
-type SelectFieldProps<Option> = {
+type AutocompleteFieldProps<Option> = {
   value?: Option;
   options: Option[];
   optionToLabel: (option: Option) => string;
@@ -21,7 +22,7 @@ type SelectFieldProps<Option> = {
   required?: boolean;
 };
 
-function SelectField<Option>({
+function AutocompleteField<Option>({
   id,
   label,
   error,
@@ -34,49 +35,60 @@ function SelectField<Option>({
   optionToKey,
   placeholder,
   required = false,
-}: SelectFieldProps<Option>) {
+}: AutocompleteFieldProps<Option>) {
   const showError = !!error && !disabled;
   const showTip = !showError && !!tip;
+  const [query, setQuery] = useState(value ? optionToLabel(value) : '');
+  const filteredOptions = useMemo(
+    () =>
+      options.filter((option) =>
+        optionToLabel(option).toLowerCase().includes(query.toLowerCase())
+      ),
+    [options, optionToLabel, query]
+  );
 
   return (
     <div className="w-full">
       {label && (
         <div className="mb-2">
-          <Label htmlFor={id} error={showError} disabled={disabled}>
+          <Label
+            htmlFor={id}
+            error={showError}
+            disabled={disabled}
+            required={required}
+          >
             {label}
           </Label>
         </div>
       )}
-      <Listbox value={value} onChange={onChange} disabled={disabled}>
+      <Combobox value={value} onChange={onChange} disabled={disabled}>
         {({ open }) => (
           <div className="relative">
-            <Listbox.Button
-              className={cn(
-                'relative w-full text-left text-base rounded-lg p-2 border focus-ring',
-                {
-                  'bg-zinc-50 cursor-default': !disabled,
-                  'bg-zinc-100 text-zinc-400 cursor-not-allowed': !!disabled,
-                  'border-zinc-300': (!error || !!disabled) && !open,
-                  'border-violet-500': open,
-                  'border-red-600': !!error && !disabled,
-                  'text-zinc-900': !error && !disabled && !!value,
-                  'text-zinc-400': !error && !disabled && !value,
-                  'text-red-600': !!error && !disabled,
-                  "after:content-['*'] after:ml-0.5 after:text-red-500":
-                    !!required,
-                }
-              )}
+            <div
+              className={cn('relative w-full text-left text-sm', {
+                'bg-zinc-50 cursor-default': !disabled,
+                'bg-zinc-100 text-zinc-400 cursor-not-allowed': !!disabled,
+                'border-zinc-300': (!error || !!disabled) && !open,
+                'border-violet-500': open,
+                'border-red-600': !!error && !disabled,
+                'text-zinc-900': !error && !disabled && !!value,
+                'text-zinc-400': !error && !disabled && !value,
+                'text-red-600': !!error && !disabled,
+              })}
             >
-              <span className={cn('block truncate')}>
-                {value ? optionToLabel(value) : placeholder}
-              </span>
-              <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
+              <Combobox.Input
+                className="w-full bg-transparent rounded-lg p-2 border focus-ring"
+                displayValue={optionToLabel}
+                onChange={(event) => setQuery(event.target.value)}
+                placeholder={placeholder}
+              />
+              <Combobox.Button className="absolute inset-y-0 right-0 flex items-center pr-2">
                 <FontAwesomeIcon
-                  className="h-5 w-5 text-zinc-800"
-                  icon={open ? faCaretUp : faCaretDown}
+                  className="w-5 h-5"
+                  icon={open ? faChevronUp : faChevronDown}
                 />
-              </span>
-            </Listbox.Button>
+              </Combobox.Button>
+            </div>
             <Transition
               as={'div'}
               className="relative z-10"
@@ -84,9 +96,9 @@ function SelectField<Option>({
               leaveFrom="opacity-100"
               leaveTo="opacity-0"
             >
-              <Listbox.Options className="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-xl border border-violet-500 focus-ring">
-                {options.map((option) => (
-                  <Listbox.Option
+              <Combobox.Options className="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-xl border border-violet-500 focus-ring">
+                {filteredOptions.map((option) => (
+                  <Combobox.Option
                     key={optionToKey(option)}
                     className={({ active, selected }) =>
                       cn('relative cursor-default select-none py-2 px-3', {
@@ -109,13 +121,13 @@ function SelectField<Option>({
                         </span>
                       </>
                     )}
-                  </Listbox.Option>
+                  </Combobox.Option>
                 ))}
-              </Listbox.Options>
+              </Combobox.Options>
             </Transition>
           </div>
         )}
-      </Listbox>
+      </Combobox>
       {showTip && (
         <div className="mt-1">
           <Tip>{tip}</Tip>
@@ -130,4 +142,4 @@ function SelectField<Option>({
   );
 }
 
-export default SelectField;
+export default AutocompleteField;

@@ -1,6 +1,9 @@
 import type { InputHTMLAttributes } from 'react';
 import { forwardRef } from 'react';
 import cn from 'classnames';
+import Label from './Label';
+import Error from './Error';
+import Tip from './Tip';
 
 type TextFieldProps = InputHTMLAttributes<HTMLInputElement> & {
   label?: string;
@@ -33,18 +36,14 @@ const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
       <div className="w-full">
         {label && (
           <div className="mb-2">
-            <label
+            <Label
               htmlFor={id}
-              className={cn('text-sm', {
-                'text-zinc-900': !error && !disabled,
-                'text-red-600': !!error && !disabled,
-                'text-zinc-400': !!disabled,
-                "after:content-['*'] after:ml-0.5 after:text-red-500":
-                  !!required,
-              })}
+              error={showError}
+              disabled={disabled}
+              required={required}
             >
               {label}
-            </label>
+            </Label>
           </div>
         )}
         <div
@@ -85,21 +84,12 @@ const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
         </div>
         {showTip && (
           <div className="mt-1">
-            <span
-              className={cn('text-sm ', {
-                'text-zinc-900': !disabled,
-                'text-zinc-400': !!disabled,
-              })}
-            >
-              {tip}
-            </span>
+            <Tip>{tip}</Tip>
           </div>
         )}
         {showError && (
           <div className="mt-1">
-            <span role="alert" className="text-sm text-red-600">
-              {error}
-            </span>
+            <Error>{error}</Error>
           </div>
         )}
       </div>
