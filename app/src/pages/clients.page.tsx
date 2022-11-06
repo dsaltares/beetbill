@@ -36,7 +36,7 @@ const ClientsPage = () => {
       <div className="flex flex-col w-full gap-16">
         <div className="flex items-center justify-between">
           <h1 className="text-4xl font-bold">Your clients</h1>
-          <LinkButton href={Routes.createProduct} endIcon={faAdd}>
+          <LinkButton href={Routes.createClient} endIcon={faAdd}>
             Add client
           </LinkButton>
         </div>
