@@ -2,6 +2,9 @@ import { Listbox, Transition } from '@headlessui/react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCaretDown, faCaretUp } from '@fortawesome/free-solid-svg-icons';
 import cn from 'classnames';
+import Label from './Label';
+import Error from './Error';
+import Tip from './Tip';
 
 type SelectFieldProps<Option> = {
   value?: Option;
@@ -39,16 +42,9 @@ function SelectField<Option>({
     <div className="w-full">
       {label && (
         <div className="mb-2">
-          <label
-            htmlFor={id}
-            className={cn('text-sm font-medium', {
-              'text-zinc-900': !error && !disabled,
-              'text-red-600': !!error && !disabled,
-              'text-zinc-400': !!disabled,
-            })}
-          >
+          <Label htmlFor={id} error={showError} disabled={disabled}>
             {label}
-          </label>
+          </Label>
         </div>
       )}
       <Listbox value={value} onChange={onChange} disabled={disabled}>
@@ -122,21 +118,12 @@ function SelectField<Option>({
       </Listbox>
       {showTip && (
         <div className="mt-1">
-          <span
-            className={cn('text-sm ', {
-              'text-zinc-900': !disabled,
-              'text-zinc-400': !!disabled,
-            })}
-          >
-            {tip}
-          </span>
+          <Tip>{tip}</Tip>
         </div>
       )}
       {showError && (
         <div className="mt-1">
-          <span role="alert" className="text-sm text-red-600">
-            {error}
-          </span>
+          <Error>{error}</Error>
         </div>
       )}
     </div>
