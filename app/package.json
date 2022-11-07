@@ -29,7 +29,6 @@
     "@next/bundle-analyzer": "^12.3.1",
     "@prisma/client": "^4.5.0",
     "@tanstack/match-sorter-utils": "^8.5.14",
-    "@tanstack/query-broadcast-client-experimental": "^4.14.3",
     "@tanstack/react-query": "^4.14.3",
     "@tanstack/react-query-devtools": "^4.14.3",
     "@tanstack/react-table": "^8.5.15",

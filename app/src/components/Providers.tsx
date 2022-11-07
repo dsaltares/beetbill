@@ -1,13 +1,11 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
-import { broadcastQueryClient } from '@tanstack/query-broadcast-client-experimental';
 import { TRPCError } from '@trpc/server';
 import type { Session } from 'next-auth';
 import { SessionProvider } from 'next-auth/react';
 import type { PropsWithChildren } from 'react';
 import { useState } from 'react';
 import { Toaster } from 'react-hot-toast';
-import { getBaseUrl } from '@lib/api';
 
 type ProvidersProps = {
   session?: Session;
@@ -25,31 +23,27 @@ const Providers = ({
   session,
   children,
 }: PropsWithChildren<ProvidersProps>) => {
-  const [queryClient] = useState(() => {
-    const client = new QueryClient({
-      defaultOptions: {
-        queries: {
-          staleTime: 1 * 60 * 1000, // 1 minute
-          cacheTime: 12 * 60 * 60 * 1000, // 12 hours
-          refetchOnWindowFocus: true,
-          refetchOnReconnect: 'always',
-          refetchOnMount: true,
-          keepPreviousData: true,
-          retry: (_count, error) => {
-            if (error instanceof TRPCError) {
-              return RetriableErrors.has(error.code);
-            }
-            return false;
+  const [queryClient] = useState(
+    () =>
+      new QueryClient({
+        defaultOptions: {
+          queries: {
+            staleTime: 1 * 60 * 1000, // 1 minute
+            cacheTime: 12 * 60 * 60 * 1000, // 12 hours
+            refetchOnWindowFocus: true,
+            refetchOnReconnect: 'always',
+            refetchOnMount: true,
+            keepPreviousData: true,
+            retry: (_count, error) => {
+              if (error instanceof TRPCError) {
+                return RetriableErrors.has(error.code);
+              }
+              return false;
+            },
           },
         },
-      },
-    });
-    broadcastQueryClient({
-      queryClient: client,
-      broadcastChannel: `${getBaseUrl()}/invoicing/broadcast`,
-    });
-    return client;
-  });
+      })
+  );
 
   return (
     <SessionProvider session={session}>
