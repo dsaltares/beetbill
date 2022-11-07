@@ -12,6 +12,7 @@ type FormCard = PropsWithChildren<{
     label: string;
     icon: IconProp;
     loading?: boolean;
+    disabled?: boolean;
   };
   onSubmit: DOMAttributes<HTMLFormElement>['onSubmit'];
   backHref?: string;
@@ -39,7 +40,7 @@ const FormCard = ({
           </LinkButton>
         </div>
       )}
-      <div className="flex justify-between gap-8">
+      <div className="flex justify-between gap-8 mb-16">
         <div className="flex flex-col gap-2">
           <h1 className="text-4xl font-bold text-zinc-900">{title}</h1>
           <p className="text-base text-zinc-900">{description}</p>
@@ -49,14 +50,13 @@ const FormCard = ({
             type="submit"
             endIcon={submitButton.icon}
             loading={submitButton.loading}
+            disabled={submitButton.disabled}
           >
             {submitButton.label}
           </Button>
         </div>
       </div>
-      <div className="mt-16 grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
-        {children}
-      </div>
+      {children}
     </form>
   </FullScreenCard>
 );
