@@ -65,19 +65,22 @@ function AutocompleteField<Option>({
         {({ open }) => (
           <div className="relative">
             <div
-              className={cn('relative w-full text-left text-sm', {
-                'bg-zinc-50 cursor-default': !disabled,
-                'bg-zinc-100 text-zinc-400 cursor-not-allowed': !!disabled,
-                'border-zinc-300': (!error || !!disabled) && !open,
-                'border-violet-500': open,
-                'border-red-600': !!error && !disabled,
-                'text-zinc-900': !error && !disabled && !!value,
-                'text-zinc-400': !error && !disabled && !value,
-                'text-red-600': !!error && !disabled,
-              })}
+              className={cn(
+                'relative w-full rounded-lg border text-left text-sm',
+                {
+                  'bg-zinc-50 cursor-default': !disabled,
+                  'bg-zinc-100 text-zinc-400 cursor-not-allowed': !!disabled,
+                  'border-zinc-300': (!error || !!disabled) && !open,
+                  'border-violet-500': open,
+                  'border-red-600': !!error && !disabled,
+                  'text-zinc-900': !error && !disabled && !!value,
+                  'text-zinc-400': !error && !disabled && !value,
+                  'text-red-600': !!error && !disabled,
+                }
+              )}
             >
               <Combobox.Input
-                className="w-full bg-transparent rounded-lg p-2 border focus-ring"
+                className="w-full bg-transparent rounded-lg p-2 focus-ring"
                 displayValue={optionToLabel}
                 onChange={(event) => setQuery(event.target.value)}
                 placeholder={placeholder}
@@ -112,7 +115,7 @@ function AutocompleteField<Option>({
                     {({ selected }) => (
                       <>
                         <span
-                          className={cn('block truncate', {
+                          className={cn('block truncate text-sm', {
                             'font-medium text-violet-800': selected,
                             'font-normal': !selected,
                           })}
