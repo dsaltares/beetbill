@@ -46,7 +46,7 @@ describe('createInvoice', () => {
     expect(invoice.id).toEqual(dbInvoice.id);
     expect(invoice.status).toEqual(dbInvoice.status);
     expect(invoice.prefix).toEqual(dbInvoice.prefix);
-    expect(invoice.date).toEqual(dbInvoice.date);
+    expect(invoice.date).toEqual(dbInvoice.date.toISOString());
     expect(invoice.client.id).toEqual(dbInvoice.clientState.clientId);
     expect(invoice.company.id).toEqual(dbInvoice.companyState.companyId);
     expect(invoice.items).toEqual([
