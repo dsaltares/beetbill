@@ -80,79 +80,81 @@ const CreateEditProductForm = ({ product }: CreateEditProductFormProps) => {
       }}
       backHref={Routes.products}
     >
-      <TextField
-        id="product-name"
-        placeholder="Product name..."
-        type="text"
-        {...register('name', {
-          required: true,
-        })}
-        required
-        label="Name"
-        error={errors.name && 'Product name is required'}
-      />
-      <Controller
-        control={control}
-        name="includesVat"
-        defaultValue={defaultValues.includesVat}
-        render={({ field: { value, onChange } }) => (
-          <Toggle
-            id="product-includesVat"
-            label="Includes VAT"
-            checked={value}
-            onChange={onChange}
-          />
-        )}
-      ></Controller>
-      <TextField
-        id="product-price"
-        placeholder="Price..."
-        type="number"
-        {...register('price')}
-        label="Price"
-      />
-      <Controller
-        control={control}
-        name="currency"
-        defaultValue={defaultValues.currency}
-        render={({ field: { value, onChange } }) => (
-          <SelectField<string>
-            id="product-currency"
-            placeholder="Currency..."
-            label="Currency"
-            value={value}
-            options={['EUR', 'GBP', 'USD']}
-            optionToLabel={(option) => option}
-            optionToKey={(option) => option}
-            onChange={onChange}
-          />
-        )}
-      ></Controller>
-      <TextField
-        id="product-vat"
-        placeholder="VAT..."
-        type="number"
-        {...register('vat')}
-        label="VAT"
-        endAdornment="%"
-      />
-      <Controller
-        control={control}
-        name="unit"
-        defaultValue={defaultValues.unit}
-        render={({ field: { value, onChange } }) => (
-          <SelectField<string>
-            id="product-unit"
-            placeholder="Unit..."
-            label="Unit"
-            value={value}
-            options={['h', 'd', 'm', 'unit']}
-            optionToLabel={(option) => option}
-            optionToKey={(option) => option}
-            onChange={onChange}
-          />
-        )}
-      ></Controller>
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+        <TextField
+          id="product-name"
+          placeholder="Product name..."
+          type="text"
+          {...register('name', {
+            required: true,
+          })}
+          required
+          label="Name"
+          error={errors.name && 'Product name is required'}
+        />
+        <Controller
+          control={control}
+          name="includesVat"
+          defaultValue={defaultValues.includesVat}
+          render={({ field: { value, onChange } }) => (
+            <Toggle
+              id="product-includesVat"
+              label="Includes VAT"
+              checked={value}
+              onChange={onChange}
+            />
+          )}
+        ></Controller>
+        <TextField
+          id="product-price"
+          placeholder="Price..."
+          type="number"
+          {...register('price')}
+          label="Price"
+        />
+        <Controller
+          control={control}
+          name="currency"
+          defaultValue={defaultValues.currency}
+          render={({ field: { value, onChange } }) => (
+            <SelectField<string>
+              id="product-currency"
+              placeholder="Currency..."
+              label="Currency"
+              value={value}
+              options={['EUR', 'GBP', 'USD']}
+              optionToLabel={(option) => option}
+              optionToKey={(option) => option}
+              onChange={onChange}
+            />
+          )}
+        ></Controller>
+        <TextField
+          id="product-vat"
+          placeholder="VAT..."
+          type="number"
+          {...register('vat')}
+          label="VAT"
+          endAdornment="%"
+        />
+        <Controller
+          control={control}
+          name="unit"
+          defaultValue={defaultValues.unit}
+          render={({ field: { value, onChange } }) => (
+            <SelectField<string>
+              id="product-unit"
+              placeholder="Unit..."
+              label="Unit"
+              value={value}
+              options={['h', 'd', 'm', 'unit']}
+              optionToLabel={(option) => option}
+              optionToKey={(option) => option}
+              onChange={onChange}
+            />
+          )}
+        ></Controller>
+      </div>
     </FormCard>
   );
 };

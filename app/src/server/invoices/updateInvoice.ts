@@ -175,12 +175,12 @@ const buildItemsDiff = async (
   const toCreate: {
     productStateId: string;
     quantity?: number;
-    date?: Date;
+    date?: Date | string;
   }[] = [];
   const toUpdate: {
     id: string;
     quantity?: number;
-    date?: Date;
+    date?: Date | string;
   }[] = [];
   const toDelete: string[] = [];
 

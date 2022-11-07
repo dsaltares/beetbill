@@ -80,94 +80,96 @@ const CreateEditClientForm = ({ client }: CreateEditClientFormProps) => {
       }}
       backHref={Routes.clients}
     >
-      <TextField
-        id="client-name"
-        placeholder="Client name..."
-        type="text"
-        {...register('name', {
-          required: true,
-        })}
-        required
-        label="Name"
-        error={errors.name && 'Client name is required'}
-      />
-      <TextField
-        id="client-number"
-        placeholder="Company registration number..."
-        type="text"
-        {...register('number', {
-          required: true,
-        })}
-        required
-        label="Number"
-        error={errors.name && 'Registration number is required'}
-      />
-      <TextField
-        id="client-vat"
-        placeholder="VAT number..."
-        type="text"
-        {...register('vatNumber')}
-        label="VAT number"
-      />
-      <TextField
-        id="client-firstName"
-        placeholder="Contact first name..."
-        type="text"
-        {...register('firstName')}
-        label="First name"
-      />
-      <TextField
-        id="client-lastName"
-        placeholder="Contact last name..."
-        type="text"
-        {...register('lastName')}
-        label="Last name"
-      />
-      <TextField
-        id="client-email"
-        placeholder="Contact email..."
-        type="text"
-        {...register('email', {
-          pattern: EmailRegexp,
-        })}
-        label="Email"
-      />
-      <TextField
-        id="client-country"
-        placeholder="Client country..."
-        type="text"
-        {...register('country')}
-        label="Country"
-      />
-      <TextField
-        id="client-address"
-        placeholder="Client address..."
-        type="text"
-        {...register('address')}
-        label="Address"
-      />
-      <TextField
-        id="client-postCode"
-        placeholder="Client post code..."
-        type="text"
-        {...register('postCode')}
-        label="Post code"
-      />
-      <TextField
-        id="client-city"
-        placeholder="Client city..."
-        type="text"
-        {...register('city')}
-        label="City"
-      />
-      <TextField
-        id="client-payment-terms"
-        placeholder="Client payment terms..."
-        type="number"
-        {...register('paymentTerms')}
-        label="Payment terms"
-        endAdornment="days"
-      />
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+        <TextField
+          id="client-name"
+          placeholder="Client name..."
+          type="text"
+          {...register('name', {
+            required: true,
+          })}
+          required
+          label="Name"
+          error={errors.name && 'Client name is required'}
+        />
+        <TextField
+          id="client-number"
+          placeholder="Company registration number..."
+          type="text"
+          {...register('number', {
+            required: true,
+          })}
+          required
+          label="Number"
+          error={errors.name && 'Registration number is required'}
+        />
+        <TextField
+          id="client-vat"
+          placeholder="VAT number..."
+          type="text"
+          {...register('vatNumber')}
+          label="VAT number"
+        />
+        <TextField
+          id="client-firstName"
+          placeholder="Contact first name..."
+          type="text"
+          {...register('firstName')}
+          label="First name"
+        />
+        <TextField
+          id="client-lastName"
+          placeholder="Contact last name..."
+          type="text"
+          {...register('lastName')}
+          label="Last name"
+        />
+        <TextField
+          id="client-email"
+          placeholder="Contact email..."
+          type="text"
+          {...register('email', {
+            pattern: EmailRegexp,
+          })}
+          label="Email"
+        />
+        <TextField
+          id="client-country"
+          placeholder="Client country..."
+          type="text"
+          {...register('country')}
+          label="Country"
+        />
+        <TextField
+          id="client-address"
+          placeholder="Client address..."
+          type="text"
+          {...register('address')}
+          label="Address"
+        />
+        <TextField
+          id="client-postCode"
+          placeholder="Client post code..."
+          type="text"
+          {...register('postCode')}
+          label="Post code"
+        />
+        <TextField
+          id="client-city"
+          placeholder="Client city..."
+          type="text"
+          {...register('city')}
+          label="City"
+        />
+        <TextField
+          id="client-payment-terms"
+          placeholder="Client payment terms..."
+          type="number"
+          {...register('paymentTerms')}
+          label="Payment terms"
+          endAdornment="days"
+        />
+      </div>
     </FormCard>
   );
 };

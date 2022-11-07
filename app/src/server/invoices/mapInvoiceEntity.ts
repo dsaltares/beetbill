@@ -43,7 +43,7 @@ const mapInvoiceEntity = ({
   status,
   prefix,
   number,
-  date,
+  date: date.toISOString(),
   createdAt,
   updatedAt,
   company: mapCompanyEntity({
@@ -67,7 +67,7 @@ const mapInvoiceEntity = ({
       id,
       invoiceId,
       quantity,
-      date,
+      date: date.toISOString(),
       createdAt,
       updatedAt,
       product: mapProductEntity({
