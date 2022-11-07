@@ -60,6 +60,8 @@ const toInvoiceTableRow = (invoice: Invoice) => {
     number = `${invoice.prefix} - ${invoice.number}`;
   } else if (invoice.number) {
     number = invoice.number.toString();
+  } else if (invoice.prefix) {
+    number = `${invoice.prefix} -`;
   }
 
   const currency = invoice.items.find((item) => item.product.currency)?.product
