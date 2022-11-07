@@ -79,12 +79,16 @@ function AutocompleteField<Option>({
                 }
               )}
             >
-              <Combobox.Input
-                className="w-full bg-transparent rounded-lg p-2 focus-ring"
-                displayValue={optionToLabel}
-                onChange={(event) => setQuery(event.target.value)}
-                placeholder={placeholder}
-              />
+              <Combobox.Button as="div">
+                <Combobox.Input
+                  className="w-full bg-transparent rounded-lg p-2 focus-ring"
+                  displayValue={(newValue) =>
+                    newValue ? optionToLabel(newValue as Option) : ''
+                  }
+                  onChange={(event) => setQuery(event.target.value)}
+                  placeholder={placeholder}
+                />
+              </Combobox.Button>
               <Combobox.Button className="absolute inset-y-0 right-0 flex items-center pr-2">
                 <FontAwesomeIcon
                   className="w-5 h-5"
