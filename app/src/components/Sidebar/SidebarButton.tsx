@@ -15,16 +15,15 @@ const SidebarButton = ({
   icon: Icon,
   ...buttonProps
 }: SidebarButtonProps) => {
-  const iconClassName = cn('text-2xl w-8 h-8', {
-    'text-violet-700': variant === 'primary',
-    'text-white': variant === 'secondary',
-  });
+  const iconClassName = cn('text-2xl w-8 h-8', {});
   return (
     <button
       className={cn(
         'relative flex items-center justify-center w-10 h-10 rounded-lg focus-ring',
         {
           'hover:bg-violet-100': variant === 'primary',
+          'text-violet-700': variant === 'primary',
+          'text-white': variant === 'secondary',
         }
       )}
       aria-label={label}
