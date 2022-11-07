@@ -1,4 +1,3 @@
-import { InvoiceStatus } from '@prisma/client';
 import { useMemo } from 'react';
 import useInvoices from './useInvoices';
 
@@ -8,7 +7,7 @@ const useLatestNumberByPrefix = () => {
     () =>
       (invoices || []).reduce((acc, invoice) => {
         const { prefix, number, status } = invoice;
-        if (status === InvoiceStatus.DRAFT) {
+        if (status === 'DRAFT') {
           return acc;
         }
 

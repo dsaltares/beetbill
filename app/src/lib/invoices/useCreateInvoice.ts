@@ -32,7 +32,7 @@ const useCreateInvoice = ({ onSuccess }: UseCreateInvoicesArgs = {}) =>
         status: 'DRAFT',
         prefix: '',
         number: 0,
-        date: new Date(),
+        date: new Date().toISOString(),
         createdAt: new Date(),
         updatedAt: new Date(),
         ...input,
