@@ -59,22 +59,6 @@ export const UpdateInvoiceInput = z.object({
   items: LineItemsInput.optional(),
 });
 export const UpdateInvoiceOutput = Invoice;
-export const CreateLineItemInput = z.object({
-  invoiceId: z.string(),
-  productId: z.string(),
-  quantity: z.number().optional(),
-  date: z.string().optional(),
-});
-export const CreateLineItemOutput = Invoice;
-export const UpdateLineItemInput = z.object({
-  id: z.string(),
-  productId: z.string().optional(),
-  quantity: z.number().optional(),
-  date: z.string().optional(),
-});
-export const UpdateLineItemOutput = Invoice;
-export const DeleteLineItemInput = z.object({ id: z.string() });
-export const DeleteLineItemOutput = Invoice;
 
 export type Invoice = z.infer<typeof Invoice>;
 export type LineItemsInput = z.infer<typeof LineItemsInput>;
@@ -88,9 +72,3 @@ export type DeleteInvoiceInput = z.infer<typeof DeleteInvoiceInput>;
 export type DeleteInvoiceOutput = z.infer<typeof DeleteInvoiceOutput>;
 export type UpdateInvoiceInput = z.infer<typeof UpdateInvoiceInput>;
 export type UpdateInvoiceOutput = z.infer<typeof UpdateInvoiceOutput>;
-export type CreateLineItemInput = z.infer<typeof CreateLineItemInput>;
-export type CreateLineItemOutput = z.infer<typeof CreateLineItemOutput>;
-export type UpdateLineItemInput = z.infer<typeof UpdateLineItemInput>;
-export type UpdateLineItemOutput = z.infer<typeof UpdateLineItemOutput>;
-export type DeleteLineItemInput = z.infer<typeof DeleteLineItemInput>;
-export type DeleteLineItemOutput = z.infer<typeof DeleteLineItemOutput>;
