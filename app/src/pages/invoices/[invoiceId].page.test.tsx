@@ -6,7 +6,6 @@ import {
   mockRouter,
   mockTrpcMutation,
   mockTrpcMutationError,
-  mockTrpcQuery,
   render,
   screen,
   fireEvent,
