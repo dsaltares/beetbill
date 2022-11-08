@@ -3,10 +3,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons';
 import cn from 'classnames';
 import { useMemo, useState } from 'react';
+import useDropdownAnchor from '@lib/useDropdownAnchor';
 import Label from './Label';
 import Error from './Error';
 import Tip from './Tip';
-import useDropdownAnchor from '@lib/useDropdownAnchor';
 
 type AutocompleteFieldProps<Option> = {
   value?: Option;
