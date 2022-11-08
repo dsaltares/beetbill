@@ -32,7 +32,7 @@ describe('updateInvoice', () => {
         ctx: { session },
         input: {
           id: 'invalid_invoice',
-          date: new Date(),
+          date: new Date().toISOString(),
         },
       })
     ).rejects.toEqual(new TRPCError({ code: 'NOT_FOUND' }));
@@ -50,7 +50,7 @@ describe('updateInvoice', () => {
         ctx: { session },
         input: {
           id: invoice.id,
-          date: new Date(),
+          date: new Date().toISOString(),
         },
       })
     ).rejects.toEqual(
@@ -145,7 +145,7 @@ describe('updateInvoice', () => {
     const updatedItem = {
       productId: product.id,
       quantity: 2,
-      date: new Date(),
+      date: new Date().toISOString(),
     };
 
     const updatedInvoice = await updateInvoice({
@@ -184,7 +184,7 @@ describe('updateInvoice', () => {
     const newItem = {
       productId: product2.id,
       quantity: 2,
-      date: new Date(),
+      date: new Date().toISOString(),
     };
 
     const updatedInvoice = await updateInvoice({
@@ -228,6 +228,69 @@ describe('updateInvoice', () => {
     );
   });
 
+  it('adds a line item with the same product', async () => {
+    const product = await createTestProduct(company.id);
+    const initialItem = {
+      quantity: 1,
+      date: new Date(),
+      productStateId: product.states[0].id,
+    };
+    const invoice = await createTestInvoice(
+      company.states[0].id,
+      client.states[0].id,
+      InvoiceStatus.DRAFT,
+      [initialItem]
+    );
+
+    const newItem = {
+      productId: product.id,
+      quantity: 2,
+      date: new Date().toISOString(),
+    };
+
+    const updatedInvoice = await updateInvoice({
+      ctx: { session },
+      input: {
+        id: invoice.id,
+        items: [{ productId: product.id, quantity: 1 }, newItem],
+      },
+    });
+    const dbInvoice = await prisma.invoice.findUniqueOrThrow({
+      where: { id: invoice.id },
+      include: {
+        items: true,
+      },
+    });
+
+    expect(updatedInvoice.items).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          product: expect.objectContaining({
+            id: product.id,
+          }),
+          quantity: initialItem.quantity,
+        }),
+        expect.objectContaining({
+          product: expect.objectContaining({
+            id: product.id,
+          }),
+          quantity: newItem.quantity,
+        }),
+      ])
+    );
+
+    expect(dbInvoice.items).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          productStateId: product.states[0].id,
+        }),
+        expect.objectContaining({
+          productStateId: product.states[0].id,
+        }),
+      ])
+    );
+  });
+
   it('throws when trying to add a line item with a different currency', async () => {
     const product1 = await createTestProduct(company.id, 'EUR');
     const product2 = await createTestProduct(company.id, 'USD');
@@ -246,7 +309,7 @@ describe('updateInvoice', () => {
     const newItem = {
       productId: product2.id,
       quantity: 2,
-      date: new Date(),
+      date: new Date().toISOString(),
     };
 
     await expect(

@@ -26,6 +26,7 @@ import Routes from '@lib/routes';
 import calculateTotal from '@lib/invoices/calculateTotal';
 import type { Invoice } from '@server/invoices/types';
 import formatDate from '@lib/formatDate';
+import getTitle from '@lib/invoices/getTitle';
 import {
   Body,
   BodyCell,
@@ -55,15 +56,6 @@ const toInvoiceTableRow = (invoice: Invoice) => {
     status = 'Sent';
   }
 
-  let number = '-';
-  if (invoice.number && invoice.prefix) {
-    number = `${invoice.prefix} - ${invoice.number}`;
-  } else if (invoice.number) {
-    number = invoice.number.toString();
-  } else if (invoice.prefix) {
-    number = `${invoice.prefix} -`;
-  }
-
   const currency = invoice.items.find((item) => item.product.currency)?.product
     .currency;
 
@@ -72,7 +64,7 @@ const toInvoiceTableRow = (invoice: Invoice) => {
     total: calculateTotal(invoice),
     clientName: invoice.client.name,
     status,
-    number,
+    number: getTitle(invoice) || '-',
     dueDate,
     currency: currency ?? '',
   };

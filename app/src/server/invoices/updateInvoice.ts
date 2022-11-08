@@ -1,5 +1,4 @@
 import { TRPCError } from '@trpc/server';
-import type { LineItem, Product, ProductState } from '@prisma/client';
 import { InvoiceStatus } from '@prisma/client';
 import { type Procedure, procedure } from '@server/trpc';
 import prisma from '@server/prisma';
@@ -63,25 +62,63 @@ export const updateInvoice: Procedure<
     clientStateId = client.states[0].id;
   }
 
-  const diff = await buildItemsDiff(existingInvoice.items, items);
-  if (diff.toDelete.length) {
-    await prisma.lineItem.deleteMany({
+  if (items) {
+    const itemProductIds = Array.from(
+      new Set(items.map(({ productId }) => productId))
+    );
+    const dbProducts = await prisma.product.findMany({
       where: {
-        id: {
-          in: diff.toDelete,
+        id: { in: itemProductIds },
+      },
+      include: {
+        states: {
+          orderBy: { createdAt: 'desc' },
+          take: 1,
         },
       },
     });
-  }
-  if (diff.toCreate.length) {
-    await prisma.lineItem.createMany({
-      data: diff.toCreate.map((item) => ({ ...item, invoiceId: id })),
+
+    const currency = existingInvoice.items.length
+      ? existingInvoice.items[0].productState.currency
+      : undefined;
+    const hasDifferentCurrency =
+      !!currency &&
+      dbProducts.some((product) => product.states[0].currency !== currency);
+
+    if (hasDifferentCurrency) {
+      throw new TRPCError({
+        code: 'PRECONDITION_FAILED',
+        message: 'All products within an invoice must have the same currency',
+      });
+    }
+
+    await prisma.lineItem.deleteMany({
+      where: { id: { in: existingInvoice.items.map(({ id }) => id) } },
     });
-  }
-  for (const toUpdate of diff.toUpdate) {
-    await prisma.lineItem.update({
-      where: { id: toUpdate.id },
-      data: toUpdate,
+
+    const dbProductsById = dbProducts.reduce(
+      (acc, product) => ({
+        ...acc,
+        [product.id]: product,
+      }),
+      {} as Record<string, ArrayElement<typeof dbProducts>>
+    );
+    await prisma.lineItem.createMany({
+      data: items.map(({ productId, quantity, date }) => {
+        const product = dbProductsById[productId];
+        if (!product) {
+          throw new TRPCError({
+            code: 'NOT_FOUND',
+            message: `Product not found, id: ${productId}`,
+          });
+        }
+        return {
+          productStateId: product.states[0].id,
+          invoiceId: id,
+          quantity,
+          date,
+        };
+      }),
     });
   }
 
@@ -125,107 +162,6 @@ export const updateInvoice: Procedure<
     },
   });
   return mapInvoiceEntity(updatedInvoice);
-};
-
-const buildItemsDiff = async (
-  existing: (LineItem & {
-    productState: ProductState & { product: Product };
-  })[],
-  input: UpdateInvoiceInput['items'] = []
-) => {
-  const inputProductSet = new Set(input.map(({ productId }) => productId));
-  const dbProducts = await prisma.product.findMany({
-    where: {
-      id: { in: Array.from(inputProductSet) },
-    },
-    include: {
-      states: {
-        orderBy: { createdAt: 'desc' },
-        take: 1,
-      },
-    },
-  });
-
-  const currency =
-    existing.length > 0 ? existing[0].productState.currency : undefined;
-  const hasDifferentCurrency =
-    !!currency &&
-    dbProducts.some((product) => product.states[0].currency !== currency);
-  if (hasDifferentCurrency) {
-    throw new TRPCError({
-      code: 'PRECONDITION_FAILED',
-      message: 'All products within an invoice must have the same currency',
-    });
-  }
-
-  const dbProductsById = dbProducts.reduce(
-    (acc, product) => ({
-      ...acc,
-      [product.id]: product,
-    }),
-    {} as Record<string, ArrayElement<typeof dbProducts>>
-  );
-
-  inputProductSet.forEach((productId) => {
-    if (!dbProductsById[productId]) {
-      throw new TRPCError({ code: 'NOT_FOUND' });
-    }
-  });
-
-  const toCreate: {
-    productStateId: string;
-    quantity?: number;
-    date?: Date | string;
-  }[] = [];
-  const toUpdate: {
-    id: string;
-    quantity?: number;
-    date?: Date | string;
-  }[] = [];
-  const toDelete: string[] = [];
-
-  const existingById = existing.reduce(
-    (acc, { id, quantity, date, productState: { productId } }) => ({
-      ...acc,
-      [productId]: { date, quantity, id },
-    }),
-    {} as { [id: string]: ArrayElement<typeof toUpdate> }
-  );
-  const inputById = input.reduce((acc, { productId, quantity, date }) => {
-    const productStateId = dbProductsById[productId].states[0].id;
-    return {
-      ...acc,
-      [productId]: {
-        quantity,
-        date,
-        productStateId,
-      },
-    };
-  }, {} as { [id: string]: ArrayElement<typeof toCreate> });
-
-  input.forEach(({ productId }) => {
-    const item = inputById[productId];
-    const existingItem = existingById[productId];
-    if (existingItem) {
-      toUpdate.push({
-        ...existingItem,
-        ...item,
-      });
-    } else {
-      toCreate.push(item);
-    }
-  });
-  existing.forEach(({ id, productState: { productId } }) => {
-    if (!inputById[productId]) {
-      toDelete.push(id);
-    }
-  });
-
-  return {
-    toCreate,
-    toUpdate,
-    toDelete,
-  };
 };
 
 export default procedure
