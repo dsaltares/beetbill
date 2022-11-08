@@ -41,3 +41,30 @@ jest.mock('next/link', () =>
 // https://github.com/inrupt/solid-client-authn-js/issues/1676
 global.TextEncoder = TextEncoder;
 global.TextDecoder = TextDecoder;
+
+class FakeDOMRect {
+  constructor() {
+    this.x = 0;
+    this.y = 0;
+    this.width = 0;
+    this.height = 0;
+    this.top = 0;
+    this.right = 0;
+    this.bottom = 0;
+    this.left = 0;
+  }
+
+  toJSON() {
+    return {
+      x: this.x,
+      y: this.y,
+      width: this.width,
+      height: this.height,
+      top: this.top,
+      right: this.right,
+      bottom: this.bottom,
+      left: this.left,
+    };
+  }
+}
+global.DOMRect = FakeDOMRect;

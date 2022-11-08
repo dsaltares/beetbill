@@ -6,6 +6,7 @@ import { useMemo, useState } from 'react';
 import Label from './Label';
 import Error from './Error';
 import Tip from './Tip';
+import useDropdownAnchor from '@lib/useDropdownAnchor';
 
 type AutocompleteFieldProps<Option> = {
   value?: Option;
@@ -36,6 +37,7 @@ function AutocompleteField<Option>({
   placeholder,
   required = false,
 }: AutocompleteFieldProps<Option>) {
+  const { anchorRef, top, width } = useDropdownAnchor();
   const showError = !!error && !disabled;
   const showTip = !showError && !!tip;
   const [query, setQuery] = useState(value ? optionToLabel(value) : '');
@@ -63,7 +65,7 @@ function AutocompleteField<Option>({
       )}
       <Combobox value={value} onChange={onChange} disabled={disabled}>
         {({ open }) => (
-          <div className="relative">
+          <div ref={anchorRef} className="relative">
             <div
               className={cn(
                 'relative w-full rounded-lg border text-left text-sm',
@@ -103,7 +105,10 @@ function AutocompleteField<Option>({
               leaveFrom="opacity-100"
               leaveTo="opacity-0"
             >
-              <Combobox.Options className="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-xl border border-violet-500 focus-ring">
+              <Combobox.Options
+                className="fixed mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-xl border border-violet-500 focus-ring"
+                style={{ top, width }}
+              >
                 {filteredOptions.map((option) => (
                   <Combobox.Option
                     key={optionToKey(option)}

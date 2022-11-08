@@ -2,6 +2,7 @@ import { Listbox, Transition } from '@headlessui/react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCaretDown, faCaretUp } from '@fortawesome/free-solid-svg-icons';
 import cn from 'classnames';
+import useDropdownAnchor from '@lib/useDropdownAnchor';
 import Label from './Label';
 import Error from './Error';
 import Tip from './Tip';
@@ -35,6 +36,7 @@ function SelectField<Option>({
   placeholder,
   required = false,
 }: SelectFieldProps<Option>) {
+  const { anchorRef, top, width } = useDropdownAnchor();
   const showError = !!error && !disabled;
   const showTip = !showError && !!tip;
 
@@ -49,7 +51,7 @@ function SelectField<Option>({
       )}
       <Listbox value={value} onChange={onChange} disabled={disabled}>
         {({ open }) => (
-          <div className="relative">
+          <div ref={anchorRef} className="relative">
             <div
               className={cn('border text-sm rounded-lg', {
                 'bg-zinc-50 cursor-default': !disabled,
@@ -83,7 +85,10 @@ function SelectField<Option>({
               leaveFrom="opacity-100"
               leaveTo="opacity-0"
             >
-              <Listbox.Options className="absolute overflow:visible mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-xl border border-violet-500 focus-ring">
+              <Listbox.Options
+                className="fixed overflow:visible max-h-60 mt-1 overflow-auto rounded-md bg-white py-1 text-base shadow-xl border border-violet-500 focus-ring"
+                style={{ top, width }}
+              >
                 {options.map((option) => (
                   <Listbox.Option
                     key={optionToKey(option)}
