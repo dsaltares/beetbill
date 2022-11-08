@@ -187,9 +187,7 @@ describe('NewInvoicePage', () => {
       await screen.findByPlaceholderText('Client...'),
       `${client.name}{enter}`
     );
-    await fireEvent.click(
-      await screen.findByRole('button', { name: 'Product...' })
-    );
+    await fireEvent.click(await screen.findByPlaceholderText('Product...'));
     await act(async () => {
       await fireEvent.click(await screen.findByText(product.name));
     });
@@ -248,9 +246,7 @@ describe('NewInvoicePage', () => {
       await screen.findByPlaceholderText('Client...'),
       `${client.name}{enter}`
     );
-    await fireEvent.click(
-      await screen.findByRole('button', { name: 'Product...' })
-    );
+    await fireEvent.click(await screen.findByPlaceholderText('Product...'));
     await act(async () => {
       await fireEvent.click(await screen.findByText(product.name));
     });
