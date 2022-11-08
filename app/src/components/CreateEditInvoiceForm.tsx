@@ -23,7 +23,6 @@ import FormCard from './FormCard';
 import AutocompleteField from './Fields/AutocompleteField';
 import TextField from './Fields/TextField';
 import InvoiceTotalSection from './InvoiceTotalSection';
-import SelectField from './Fields/SelectField';
 import IconButton from './IconButton';
 
 type InvoiceFormValues = {
@@ -211,7 +210,7 @@ const CreateEditInvoiceForm = ({
                       control={control}
                       name={`items.${index}.product`}
                       render={({ field: { value, onChange } }) => (
-                        <SelectField
+                        <AutocompleteField
                           id={`${item.id}-product`}
                           value={value}
                           placeholder="Product..."
@@ -280,7 +279,7 @@ const CreateEditInvoiceForm = ({
             <tr>
               <BodyCell>
                 <div className="min-w-[200px]">
-                  <SelectField
+                  <AutocompleteField
                     id="lineitem-add-product"
                     placeholder="Product..."
                     options={products}
@@ -294,6 +293,12 @@ const CreateEditInvoiceForm = ({
                   />
                 </div>
               </BodyCell>
+              <BodyCell />
+              <BodyCell />
+              <BodyCell />
+              <BodyCell />
+              <BodyCell />
+              <BodyCell />
             </tr>
           )}
         </LineItemsTable>
