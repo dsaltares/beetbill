@@ -11,12 +11,14 @@ import {
 } from 'react-hook-form';
 import { faPlus, faXmark } from '@fortawesome/free-solid-svg-icons';
 import useCreateInvoice from '@lib/invoices/useCreateInvoice';
+import useUpdateInvoice from '@lib/invoices/useUpdateInvoice';
 import Routes from '@lib/routes';
 import type { Client } from '@server/clients/types';
 import type { Invoice } from '@server/invoices/types';
 import type { Company } from '@server/company/types';
 import type { Product } from '@server/products/types';
-import formatDate from '@lib/formatDate';
+import { safeFormatDate } from '@lib/formatDate';
+import getTitle from '@lib/invoices/getTitle';
 import FormCard from './FormCard';
 import AutocompleteField from './Fields/AutocompleteField';
 import TextField from './Fields/TextField';
@@ -41,6 +43,7 @@ type CreateEditInvoiceFormProps = {
   clients: Client[];
   products: Product[];
   numberByPrefix: { [prefix: string]: number };
+  invoice?: Invoice;
 };
 
 const getInvoiceNumber = (
@@ -51,21 +54,30 @@ const getInvoiceNumber = (
   return number + 1;
 };
 
+const datePickerFormat = (date: Date) => format(date, 'yyyy-MM-dd');
+
 const CreateEditInvoiceForm = ({
   company,
   products,
   clients,
   numberByPrefix,
+  invoice,
 }: CreateEditInvoiceFormProps) => {
   const router = useRouter();
   const handleSuccess = useCallback(
     () => router.push(Routes.invoices),
     [router]
   );
-  const { mutate: createInvoice } = useCreateInvoice({
+  const { mutate: createInvoice, isLoading: isCreating } = useCreateInvoice({
     onSuccess: handleSuccess,
   });
-  const today = useMemo(() => format(startOfDay(new Date()), 'yyyy-MM-dd'), []);
+  const { mutate: updateInvoice, isLoading: isUpdating } = useUpdateInvoice({
+    onSuccess: handleSuccess,
+  });
+  const isLoading = isCreating || isUpdating;
+  const today = useMemo(() => datePickerFormat(startOfDay(new Date())), []);
+  const isSent = invoice && invoice?.status !== 'DRAFT';
+
   const {
     register,
     watch,
@@ -75,10 +87,15 @@ const CreateEditInvoiceForm = ({
   } = useForm<InvoiceFormValues>({
     mode: 'onBlur',
     defaultValues: {
-      status: 'DRAFT',
-      prefix: '',
-      date: today,
-      items: [],
+      client: invoice?.client,
+      status: invoice?.status ?? 'DRAFT',
+      prefix: invoice?.prefix ?? '',
+      date: invoice?.date ? datePickerFormat(new Date(invoice.date)) : today,
+      items: (invoice?.items ?? []).map(({ product, date, quantity }) => ({
+        product,
+        date: datePickerFormat(new Date(date)),
+        quantity: quantity.toString(),
+      })),
     },
   });
   const {
@@ -97,30 +114,41 @@ const CreateEditInvoiceForm = ({
     'items',
   ]);
   const onSubmit: SubmitHandler<InvoiceFormValues> = useCallback(
-    (values) =>
-      createInvoice({
+    (values) => {
+      const data = {
         ...values,
         company,
         clientId: values.client.id,
-        // clientId: clients[0].id,
         date: new Date(values.date).toISOString(),
         items: values.items.map((item) => ({
           productId: item.product.id,
           quantity: parseInt(item.quantity, 10),
           date: new Date(item.date).toISOString(),
         })),
-      }),
-    [createInvoice, company]
+      };
+      return !invoice
+        ? createInvoice(data)
+        : updateInvoice({ ...data, id: invoice.id });
+    },
+    [createInvoice, updateInvoice, company, invoice]
   );
+
+  const formattedDueDate =
+    watchClient &&
+    safeFormatDate(
+      addDays(new Date(Date.parse(watchDate)), watchClient.paymentTerms)
+    );
 
   return (
     <FormCard
-      title="Invoice details"
-      description="Add the details of your invoice below"
+      title={isSent ? `Invoice ${getTitle(invoice!)}` : 'Invoice details'}
+      description={isSent ? '' : 'Add the details of your invoice below'}
       onSubmit={handleSubmit(onSubmit)}
       submitButton={{
         label: 'Save draft',
         icon: faPlus,
+        loading: isLoading,
+        disabled: isSent,
       }}
       backHref={Routes.invoices}
     >
@@ -142,6 +170,7 @@ const CreateEditInvoiceForm = ({
                 onChange={onChange}
                 required
                 error={errors.client && 'Client is required'}
+                disabled={isSent}
               />
             )}
           />
@@ -152,6 +181,7 @@ const CreateEditInvoiceForm = ({
               type="text"
               {...register('prefix')}
               label="Prefix"
+              disabled={isSent}
             />
             <div className="flex justify-center bg-zinc-200 rounded-lg p-2 text-sm text-zinc-900 min-w-[54px]">
               {getInvoiceNumber(numberByPrefix, watchPrefix)}
@@ -164,20 +194,11 @@ const CreateEditInvoiceForm = ({
             {...register('date', { required: true })}
             label="Date"
             required
-            min={today}
+            disabled={isSent}
           />
           <div className="flex flex-col gap-2 text-zinc-900 text-sm">
             <span className="font-medium">Due date</span>
-            <span className="font-bold py-2">
-              {watchClient
-                ? formatDate(
-                    addDays(
-                      new Date(Date.parse(watchDate)),
-                      watchClient.paymentTerms
-                    )
-                  )
-                : ''}
-            </span>
+            <span className="font-bold py-2">{formattedDueDate || ''}</span>
           </div>
         </div>
         <LineItemsTable>
@@ -198,6 +219,7 @@ const CreateEditInvoiceForm = ({
                           optionToKey={(product) => product.id}
                           optionToLabel={(product) => product.name}
                           onChange={onChange}
+                          disabled={isSent}
                         />
                       )}
                     />
@@ -211,6 +233,7 @@ const CreateEditInvoiceForm = ({
                     {...register(`items.${index}.date`, { required: true })}
                     required
                     defaultValue={today}
+                    disabled={isSent}
                   />
                 </BodyCell>
                 <BodyCell>
@@ -225,6 +248,7 @@ const CreateEditInvoiceForm = ({
                       required
                       defaultValue="1"
                       endAdornment={item.product.unit}
+                      disabled={isSent}
                     />
                   </div>
                 </BodyCell>
@@ -246,29 +270,32 @@ const CreateEditInvoiceForm = ({
                     variant="borderless"
                     size="sm"
                     onClick={() => removeItem(index)}
+                    disabled={isSent}
                   />
                 </BodyCell>
               </tr>
             ))}
           </>
-          <tr>
-            <BodyCell>
-              <div className="min-w-[200px]">
-                <SelectField
-                  id="lineitem-add-product"
-                  placeholder="Product..."
-                  options={products}
-                  optionToKey={(product) => product.id}
-                  optionToLabel={(product) => product.name}
-                  onChange={(product) => {
-                    if (product) {
-                      appendItem({ product, date: today, quantity: '1' });
-                    }
-                  }}
-                />
-              </div>
-            </BodyCell>
-          </tr>
+          {!isSent && (
+            <tr>
+              <BodyCell>
+                <div className="min-w-[200px]">
+                  <SelectField
+                    id="lineitem-add-product"
+                    placeholder="Product..."
+                    options={products}
+                    optionToKey={(product) => product.id}
+                    optionToLabel={(product) => product.name}
+                    onChange={(product) => {
+                      if (product) {
+                        appendItem({ product, date: today, quantity: '1' });
+                      }
+                    }}
+                  />
+                </div>
+              </BodyCell>
+            </tr>
+          )}
         </LineItemsTable>
         <div className="grid grid-cols-2 gap-8">
           <div></div>
