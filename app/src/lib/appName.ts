@@ -1,2 +1,2 @@
-const AppName = 'Invoicing';
+const AppName = 'Beet Bill';
 export default AppName;
