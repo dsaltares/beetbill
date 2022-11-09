@@ -31,7 +31,7 @@ const Sidebar = ({ isOpen, onClose }: SidebarProps) => (
               onClick={onClose}
             />
           </div>
-          <Logo variant="secondary" />
+          <Logo color="secondary" />
         </div>
         <NavLinks />
       </div>
