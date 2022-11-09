@@ -1,26 +1,18 @@
 import Head from 'next/head';
-import {
-  faArrowLeft,
-  faEnvelopeOpenText,
-} from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import Card from '@components/Card';
+import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import AppName from '@lib/appName';
 import LinkButton from '@components/LinkButton';
 import Routes from '@lib/routes';
 import WithNoAuthentication from '@components/WithNoAuthentication';
+import CardWithLogo from '@components/CardWithLogo';
 
 const VerifyPage = () => (
-  <Card>
+  <CardWithLogo>
     <Head>
       <title>{`Log in - ${AppName}`}</title>
     </Head>
     <div className="flex flex-col gap-8">
       <div className="flex flex-col justify-center gap-3">
-        <FontAwesomeIcon
-          className="text-4xl text-violet-800"
-          icon={faEnvelopeOpenText}
-        />
         <h1 className="text-2xl font-bold text-center">Check your email</h1>
       </div>
       <p className="text-base">
@@ -32,7 +24,7 @@ const VerifyPage = () => (
         </LinkButton>
       </div>
     </div>
-  </Card>
+  </CardWithLogo>
 );
 
 export default WithNoAuthentication(VerifyPage);

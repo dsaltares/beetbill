@@ -14,6 +14,7 @@ import {
   MjmlFont,
   MjmlStyle,
   MjmlText,
+  MjmlImage,
 } from 'mjml-react';
 import Routes from '@lib/routes';
 
@@ -69,37 +70,55 @@ export const generateHtmlEmail = ({ url, host, email }: GenerateEmailArgs) => {
             paddingTop="36px"
           >
             <MjmlColumn>
+              <MjmlImage
+                width="140px"
+                height="64px"
+                src={`${baseUrl(host)}/beet-bill-logo-email.png`}
+                paddingBottom={42}
+              />
               <MjmlText
                 fontSize={theme.fontSizes.lg}
                 fontFamily={theme.font}
                 align="center"
                 fontWeight={700}
-                paddingBottom="30px"
+                paddingBottom={10}
                 cssClass="link-nostyle"
               >
-                Hi{' '}
+                Hello{' '}
                 <a className="link-nostyle" href={`mailto://${email}`}>
                   {email}
                 </a>
                 !
               </MjmlText>
+              <MjmlText
+                fontSize={theme.fontSizes.md}
+                fontFamily={theme.font}
+                align="center"
+                fontWeight={400}
+                paddingBottom={24}
+                cssClass="link-nostyle"
+              >
+                Click the button below to sign in to Beet Bill.
+              </MjmlText>
               <MjmlButton
                 backgroundColor={theme.colors.primary}
                 href={url}
-                paddingBottom="80px"
+                paddingBottom={42}
                 fontFamily={theme.font}
                 fontSize={theme.fontSizes.md}
+                borderRadius={8}
               >
-                Click here to sign in
+                Sign in
               </MjmlButton>
               <MjmlText
                 fontSize={theme.fontSizes.sm}
                 fontFamily={theme.font}
                 align="center"
+                paddingBottom={36}
               >
                 All the best,
                 <br />
-                Invoicing team.
+                Beet Bill team.
               </MjmlText>
             </MjmlColumn>
           </MjmlSection>
@@ -137,8 +156,8 @@ const theme = {
   fontSizes: {
     sm: '14px',
     md: '16px',
-    lg: '22px',
-    xl: '28px',
+    lg: '36px',
+    xl: '42px',
   },
 };
 

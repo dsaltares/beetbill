@@ -1,25 +1,17 @@
 import Head from 'next/head';
-import {
-  faHouse,
-  faTriangleExclamation,
-} from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import Card from '@components/Card';
+import { faHouse } from '@fortawesome/free-solid-svg-icons';
 import AppName from '@lib/appName';
 import Routes from '@lib/routes';
 import LinkButton from '@components/LinkButton';
+import CardWithLogo from '@components/CardWithLogo';
 
 const NotFoundPage = () => (
-  <Card>
+  <CardWithLogo>
     <Head>
       <title>{`404 - ${AppName}`}</title>
     </Head>
     <div className="flex flex-col gap-8">
       <div className="flex flex-col justify-center gap-3">
-        <FontAwesomeIcon
-          className="text-4xl text-violet-800"
-          icon={faTriangleExclamation}
-        />
         <h1 className="text-2xl font-bold">
           This is not the page you are looking for.
         </h1>
@@ -31,7 +23,7 @@ const NotFoundPage = () => (
         </LinkButton>
       </div>
     </div>
-  </Card>
+  </CardWithLogo>
 );
 
 export default NotFoundPage;

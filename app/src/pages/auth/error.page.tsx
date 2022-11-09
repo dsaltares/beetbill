@@ -5,11 +5,11 @@ import {
   faTriangleExclamation,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import Card from '@components/Card';
 import LinkButton from '@components/LinkButton';
 import AppName from '@lib/appName';
 import Routes from '@lib/routes';
 import WithNoAuthentication from '@components/WithNoAuthentication';
+import CardWithLogo from '@components/CardWithLogo';
 
 const Messages: Record<string, string> = {
   Configuration: 'The application is misconfigured, please contact support.',
@@ -24,7 +24,7 @@ const ErrorPage = ({
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const message = Messages[error] || Messages.Default;
   return (
-    <Card>
+    <CardWithLogo>
       <Head>
         <title>{`Log in - ${AppName}`}</title>
       </Head>
@@ -43,7 +43,7 @@ const ErrorPage = ({
           </LinkButton>
         </div>
       </div>
-    </Card>
+    </CardWithLogo>
   );
 };
 
