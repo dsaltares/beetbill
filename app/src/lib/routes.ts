@@ -10,12 +10,13 @@ const Routes = {
   invoices: '/invoices',
   createInvoice: '/invoices/new',
   invoice: (invoiceId: string) => `/invoices/${invoiceId}`,
+  invoicePreview: (invoiceId: string) => `/invoices/${invoiceId}/preview`,
   signIn: '/api/auth/signin',
   signOut: '/api/auth/signout',
   notFound: '/404',
-  privacyPolicy: '/invoicing_privacy_policy.pdf',
-  termsAndConditions: '/invoicing_terms_and_conditions.pdf',
-  cookiePolicy: '/invoicing_cookie_policy.pdf',
+  privacyPolicy: '/beetbill_privacy_policy.pdf',
+  termsAndConditions: '/beetbill_terms_and_conditions.pdf',
+  cookiePolicy: '/beetbill_cookie_policy.pdf',
 };
 
 export default Routes;
