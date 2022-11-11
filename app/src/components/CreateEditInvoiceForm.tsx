@@ -9,7 +9,7 @@ import {
   Controller,
   useFieldArray,
 } from 'react-hook-form';
-import { faPlus, faXmark } from '@fortawesome/free-solid-svg-icons';
+import { faCheck, faPlus, faXmark } from '@fortawesome/free-solid-svg-icons';
 import useCreateInvoice from '@lib/invoices/useCreateInvoice';
 import useUpdateInvoice from '@lib/invoices/useUpdateInvoice';
 import Routes from '@lib/routes';
@@ -24,6 +24,7 @@ import AutocompleteField from './Fields/AutocompleteField';
 import TextField from './Fields/TextField';
 import InvoiceTotalSection from './InvoiceTotalSection';
 import IconButton from './IconButton';
+import Button from './Button';
 
 type InvoiceFormValues = {
   status: Invoice['status'];
@@ -143,12 +144,15 @@ const CreateEditInvoiceForm = ({
       title={isSent ? `Invoice ${getTitle(invoice!)}` : 'Invoice details'}
       description={isSent ? '' : 'Add the details of your invoice below'}
       onSubmit={handleSubmit(onSubmit)}
-      submitButton={{
-        label: 'Save draft',
-        icon: faPlus,
-        loading: isLoading,
-        disabled: isSent,
-      }}
+      buttons={
+        <Button
+          type="submit"
+          endIcon={invoice ? faCheck : faPlus}
+          loading={isLoading}
+        >
+          Save draft
+        </Button>
+      }
       backHref={Routes.invoices}
     >
       <div className="flex flex-col gap-8">
@@ -313,7 +317,7 @@ const CreateEditInvoiceForm = ({
 
 const LineItemsTable = ({ children }: PropsWithChildren) => (
   <div className="relative flex w-full h-full overflow-x-auto overflow-y-visible">
-    <table className="w-full whitespace-nowrap text-left text-base text-zinc-900 border-separate border-spacing-y-2 px-1">
+    <table className="w-full whitespace-nowrap text-left text-base text-zinc-900 border-separate border-spacing-y-0 pb-4">
       <thead className="text-sm font-medium">
         <tr>
           <HeaderCell>Product</HeaderCell>

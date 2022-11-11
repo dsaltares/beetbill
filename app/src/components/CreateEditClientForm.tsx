@@ -9,6 +9,7 @@ import useUpdateClient from '@lib/clients/useUpdateClient';
 import EmailRegexp from '@lib/emailRegexp';
 import TextField from './Fields/TextField';
 import FormCard from './FormCard';
+import Button from './Button';
 
 type ClientFormValues = {
   name: Client['name'];
@@ -73,11 +74,15 @@ const CreateEditClientForm = ({ client }: CreateEditClientFormProps) => {
       title={client?.name || 'Client details'}
       description="Add the details of your client below"
       onSubmit={handleSubmit(onSubmit)}
-      submitButton={{
-        label: client ? 'Save client' : 'Add client',
-        icon: client ? faCheck : faPlus,
-        loading: isLoading,
-      }}
+      buttons={
+        <Button
+          type="submit"
+          endIcon={client ? faCheck : faPlus}
+          loading={isLoading}
+        >
+          {client ? 'Save client' : 'Add client'}
+        </Button>
+      }
       backHref={Routes.clients}
     >
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">

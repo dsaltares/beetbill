@@ -7,6 +7,7 @@ import type { Company } from '@server/company/types';
 import EmailRegexp from '@lib/emailRegexp';
 import TextField from './Fields/TextField';
 import FormCard from './FormCard';
+import Button from './Button';
 
 type EditCompanyFormValues = {
   name: Company['name'];
@@ -42,11 +43,11 @@ const EditCompanyForm = ({ company }: EditCompanyFormProps) => {
       title={company.name || 'Company details'}
       description="Add the details of your company below"
       onSubmit={handleSubmit(onSubmit)}
-      submitButton={{
-        label: 'Save',
-        icon: faCheck,
-        loading: isLoading,
-      }}
+      buttons={
+        <Button type="submit" endIcon={faCheck} loading={isLoading}>
+          Save
+        </Button>
+      }
     >
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
         <TextField
