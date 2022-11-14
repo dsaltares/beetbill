@@ -1,15 +1,15 @@
 import 'next';
 import { setupServer } from 'msw/node';
 import type { Session } from 'next-auth';
-import {
-  mockRouter,
-  render,
-  screen,
-  fireEvent,
-  mockSession,
-} from '@lib/testing';
+import { signOut } from 'next-auth/react';
+import { render, screen, fireEvent, mockSession } from '@lib/testing';
 import Routes from '@lib/routes';
 import SidebarLayout from './SidebarLayout';
+
+jest.mock('next-auth/react', () => ({
+  ...jest.requireActual('next-auth/react'),
+  signOut: jest.fn(),
+}));
 
 const server = setupServer();
 
@@ -43,12 +43,11 @@ describe('SidebarLayout', () => {
       name: /Ada Lovelace/,
     });
     await fireEvent.click(menuButton);
-    await fireEvent.click(screen.getByRole('link', { name: 'Sign out' }));
+    await fireEvent.click(screen.getByRole('button', { name: 'Sign out' }));
 
-    expect(mockRouter.push).toHaveBeenCalledWith(
-      Routes.signOut,
-      expect.anything(),
-      expect.anything()
-    );
+    await screen.findByText('Sign out of Beet Bill');
+    await fireEvent.click(screen.getByRole('button', { name: 'Sign out' }));
+
+    expect(signOut).toHaveBeenCalled();
   });
 });

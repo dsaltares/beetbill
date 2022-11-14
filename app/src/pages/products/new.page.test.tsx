@@ -39,7 +39,7 @@ const product: Product = {
   price: 10,
   currency: 'GBP',
   vat: 15,
-  unit: 'm',
+  unit: 'months',
   companyId,
   createdAt: new Date(),
   updatedAt: new Date(),
@@ -65,7 +65,7 @@ describe('NewProductPage', () => {
       screen.getByLabelText('VAT'),
       product.vat.toString() as string
     );
-    await fireEvent.click(screen.getByRole('button', { name: 'h' }));
+    await fireEvent.click(screen.getByRole('button', { name: 'hours' }));
     await fireEvent.click(await screen.findByText(product.unit!));
 
     server.resetHandlers(

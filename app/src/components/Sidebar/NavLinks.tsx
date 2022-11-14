@@ -34,7 +34,7 @@ const Links = [
 const isSelected = (href: string, pathname: string) => {
   const path = pathname.split('/');
   const hrefPath = href.split('/');
-  return path[1] === hrefPath[1] && path.length === hrefPath.length;
+  return path[1] === hrefPath[1];
 };
 
 const NavLinks = () => {

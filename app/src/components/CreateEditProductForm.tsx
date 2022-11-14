@@ -10,6 +10,7 @@ import TextField from './Fields/TextField';
 import SelectField from './Fields/SelectField';
 import Toggle from './Fields/Toggle';
 import FormCard from './FormCard';
+import Button from './Button';
 
 type ProductFormValues = {
   name: Product['name'];
@@ -39,7 +40,7 @@ const CreateEditProductForm = ({ product }: CreateEditProductFormProps) => {
   const isLoading = isCreating || isUpdating;
   const defaultValues = {
     includesVat: false,
-    unit: 'h',
+    unit: 'hours',
     currency: 'EUR',
     ...(product || {}),
     price: product?.price.toString() || '0',
@@ -73,11 +74,15 @@ const CreateEditProductForm = ({ product }: CreateEditProductFormProps) => {
       title={product?.name || 'Product details'}
       description="Add the details of your product below"
       onSubmit={handleSubmit(onSubmit)}
-      submitButton={{
-        label: product ? 'Save product' : 'Add product',
-        icon: product ? faCheck : faPlus,
-        loading: isLoading,
-      }}
+      buttons={
+        <Button
+          type="submit"
+          endIcon={product ? faCheck : faPlus}
+          loading={isLoading}
+        >
+          {product ? 'Save product' : 'Add product'}
+        </Button>
+      }
       backHref={Routes.products}
     >
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
@@ -147,7 +152,7 @@ const CreateEditProductForm = ({ product }: CreateEditProductFormProps) => {
               placeholder="Unit..."
               label="Unit"
               value={value}
-              options={['h', 'd', 'm', 'unit']}
+              options={['hours', 'days', 'months', 'units']}
               optionToLabel={(option) => option}
               optionToKey={(option) => option}
               onChange={onChange}
