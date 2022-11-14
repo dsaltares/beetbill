@@ -6,7 +6,7 @@ import SignInForm from './SignInForm';
 export default {
   title: 'SignInForm',
   parameters: {
-    layout: 'centered',
+    layout: 'fullscreen',
   },
 } as ComponentMeta<typeof SignInForm>;
 
@@ -28,7 +28,9 @@ const providers: Record<string, ClientSafeProvider> = {
 };
 
 const Template: ComponentStory<typeof SignInForm> = () => (
-  <SignInForm providers={providers} />
+  <div className="flex w-full h-full items-center justify-center">
+    <SignInForm providers={providers} />
+  </div>
 );
 
 export const Default = Template.bind({});

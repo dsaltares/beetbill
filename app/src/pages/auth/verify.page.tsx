@@ -7,22 +7,17 @@ import WithNoAuthentication from '@components/WithNoAuthentication';
 import CardWithLogo from '@components/CardWithLogo';
 
 const VerifyPage = () => (
-  <CardWithLogo>
+  <CardWithLogo title="Check your email">
     <Head>
       <title>{`Log in - ${AppName}`}</title>
     </Head>
-    <div className="flex flex-col gap-8">
-      <div className="flex flex-col justify-center gap-3">
-        <h1 className="text-2xl font-bold text-center">Check your email</h1>
-      </div>
-      <p className="text-base">
-        We just emailed you a link that will log you in securely.
-      </p>
-      <div className="flex w-full justify-center">
-        <LinkButton startIcon={faArrowLeft} href={Routes.signIn}>
-          Back
-        </LinkButton>
-      </div>
+    <p className="text-base text-center">
+      We just emailed you a link that will log you in securely.
+    </p>
+    <div className="flex w-full justify-center">
+      <LinkButton startIcon={faArrowLeft} href={Routes.signIn}>
+        Back
+      </LinkButton>
     </div>
   </CardWithLogo>
 );

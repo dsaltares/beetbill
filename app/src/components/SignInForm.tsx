@@ -33,8 +33,7 @@ const SignInForm = ({ providers, callbackUrl, error }: SignInFormProps) => {
   const hasOauthAndEmail = hasEmail && nonEmailProviders.length > 0;
 
   return (
-    <CardWithLogo>
-      <h1 className="text-2xl font-bold text-center">{`Sign in to ${AppName}`}</h1>
+    <CardWithLogo title={`Sign in to ${AppName}`}>
       <ErrorAlert error={error} />
       {hasOtherProviders && (
         <div className="flex flex-col gap-2">

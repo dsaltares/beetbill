@@ -24,24 +24,15 @@ const ErrorPage = ({
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const message = Messages[error] || Messages.Default;
   return (
-    <CardWithLogo>
+    <CardWithLogo title="Unable to sign in" icon={faTriangleExclamation}>
       <Head>
         <title>{`Log in - ${AppName}`}</title>
       </Head>
-      <div className="flex flex-col gap-8">
-        <div className="flex flex-col justify-center gap-3">
-          <FontAwesomeIcon
-            className="text-4xl text-violet-800 "
-            icon={faTriangleExclamation}
-          />
-          <h1 className="text-2xl font-bold text-center">Unable to sign in</h1>
-        </div>
-        <p className="text-base">{message}</p>
-        <div className="flex w-full justify-center">
-          <LinkButton endIcon={faArrowRight} href={Routes.signIn}>
-            Sign in
-          </LinkButton>
-        </div>
+      <p className="text-base text-center">{message}</p>
+      <div className="flex w-full justify-center">
+        <LinkButton endIcon={faArrowRight} href={Routes.signIn}>
+          Sign in
+        </LinkButton>
       </div>
     </CardWithLogo>
   );
