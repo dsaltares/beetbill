@@ -38,6 +38,5 @@ export default NextAuth({
     signIn: '/auth/signin',
     verifyRequest: '/auth/verify',
     error: '/auth/error',
-    signOut: '/auth/signout',
   },
 });
