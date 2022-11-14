@@ -40,7 +40,7 @@ const CreateEditProductForm = ({ product }: CreateEditProductFormProps) => {
   const isLoading = isCreating || isUpdating;
   const defaultValues = {
     includesVat: false,
-    unit: 'h',
+    unit: 'hours',
     currency: 'EUR',
     ...(product || {}),
     price: product?.price.toString() || '0',
@@ -152,7 +152,7 @@ const CreateEditProductForm = ({ product }: CreateEditProductFormProps) => {
               placeholder="Unit..."
               label="Unit"
               value={value}
-              options={['h', 'd', 'm', 'unit']}
+              options={['hours', 'days', 'months', 'units']}
               optionToLabel={(option) => option}
               optionToKey={(option) => option}
               onChange={onChange}
