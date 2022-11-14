@@ -11,7 +11,7 @@ const Avatar = ({ user }: AvatarProps) => {
   if (user.image) {
     return (
       <img
-        className="w-10 h-10 rounded-full"
+        className="w-[35px] h-[35px] rounded-full"
         src={user.image}
         alt="Avatar"
         aria-hidden
@@ -22,11 +22,11 @@ const Avatar = ({ user }: AvatarProps) => {
 
   const initials = getInitials(user);
   return initials ? (
-    <div className="inline-flex overflow-hidden relative justify-center items-center w-10 h-10 bg-gray-100 rounded-full">
+    <div className="inline-flex overflow-hidden relative justify-center items-center w-[35px] h-[35px] bg-gray-100 rounded-full">
       <span className="font-medium text-zinc-800">{initials}</span>
     </div>
   ) : (
-    <div className="overflow-hidden relative w-10 h-10 bg-zinc-100 rounded-full">
+    <div className="overflow-hidden relative w-[35px] h-[35px] bg-zinc-100 rounded-full">
       <UserPlaceholderIcon className="absolute -left-1 w-12 h-12 text-zinc-400" />
     </div>
   );
