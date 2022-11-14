@@ -9,7 +9,7 @@ import LinkButton from '@components/LinkButton';
 import AppName from '@lib/appName';
 import Routes from '@lib/routes';
 import WithNoAuthentication from '@components/WithNoAuthentication';
-import CardWithLogo from '@components/CardWithLogo';
+import Card from '@components/Card';
 
 const Messages: Record<string, string> = {
   Configuration: 'The application is misconfigured, please contact support.',
@@ -24,7 +24,7 @@ const ErrorPage = ({
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const message = Messages[error] || Messages.Default;
   return (
-    <CardWithLogo title="Unable to sign in" icon={faTriangleExclamation}>
+    <Card title="Unable to sign in" icon={faTriangleExclamation}>
       <Head>
         <title>{`Log in - ${AppName}`}</title>
       </Head>
@@ -34,7 +34,7 @@ const ErrorPage = ({
           Sign in
         </LinkButton>
       </div>
-    </CardWithLogo>
+    </Card>
   );
 };
 

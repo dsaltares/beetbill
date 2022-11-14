@@ -3,10 +3,10 @@ import { faHouse } from '@fortawesome/free-solid-svg-icons';
 import AppName from '@lib/appName';
 import Routes from '@lib/routes';
 import LinkButton from '@components/LinkButton';
-import CardWithLogo from '@components/CardWithLogo';
+import Card from '@components/Card';
 
 const NotFoundPage = () => (
-  <CardWithLogo title="This is not the page you are looking for">
+  <Card title="This is not the page you are looking for">
     <Head>
       <title>{`404 - ${AppName}`}</title>
     </Head>
@@ -16,7 +16,7 @@ const NotFoundPage = () => (
         Home
       </LinkButton>
     </div>
-  </CardWithLogo>
+  </Card>
 );
 
 export default NotFoundPage;

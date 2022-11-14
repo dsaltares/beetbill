@@ -11,7 +11,7 @@ import Button from './Button';
 import GoogleIcon from './Icons/GoogleIcon';
 import type { CustomIcon } from './Icons/types';
 import TextField from './Fields/TextField';
-import CardWithLogo from './CardWithLogo';
+import Card from './Card';
 
 type SignInFormProps = {
   providers: Record<string, ClientSafeProvider>;
@@ -33,7 +33,7 @@ const SignInForm = ({ providers, callbackUrl, error }: SignInFormProps) => {
   const hasOauthAndEmail = hasEmail && nonEmailProviders.length > 0;
 
   return (
-    <CardWithLogo title={`Sign in to ${AppName}`}>
+    <Card title={`Sign in to ${AppName}`}>
       <ErrorAlert error={error} />
       {hasOtherProviders && (
         <div className="flex flex-col gap-2">
@@ -56,7 +56,7 @@ const SignInForm = ({ providers, callbackUrl, error }: SignInFormProps) => {
         </div>
       )}
       {hasEmail && <EmailForm callbackUrl={callbackUrl} />}
-    </CardWithLogo>
+    </Card>
   );
 };
 

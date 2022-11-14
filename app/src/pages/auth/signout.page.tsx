@@ -6,12 +6,12 @@ import AppName from '@lib/appName';
 import Button from '@components/Button';
 import WithAuthentication from '@components/WithAuthentication';
 import Routes from '@lib/routes';
-import CardWithLogo from '@components/CardWithLogo';
+import Card from '@components/Card';
 
 const SignOutPage = () => {
   const router = useRouter();
   return (
-    <CardWithLogo title="Sign out">
+    <Card title="Sign out">
       <Head>
         <title>{`Log in - ${AppName}`}</title>
       </Head>
@@ -33,7 +33,7 @@ const SignOutPage = () => {
           Sign out
         </Button>
       </div>
-    </CardWithLogo>
+    </Card>
   );
 };
 

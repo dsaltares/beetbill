@@ -4,10 +4,10 @@ import AppName from '@lib/appName';
 import LinkButton from '@components/LinkButton';
 import Routes from '@lib/routes';
 import WithNoAuthentication from '@components/WithNoAuthentication';
-import CardWithLogo from '@components/CardWithLogo';
+import Card from '@components/Card';
 
 const VerifyPage = () => (
-  <CardWithLogo title="Check your email">
+  <Card title="Check your email">
     <Head>
       <title>{`Log in - ${AppName}`}</title>
     </Head>
@@ -19,7 +19,7 @@ const VerifyPage = () => (
         Back
       </LinkButton>
     </div>
-  </CardWithLogo>
+  </Card>
 );
 
 export default WithNoAuthentication(VerifyPage);
