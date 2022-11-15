@@ -18,6 +18,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import useDisclosureForId from '@lib/useDisclosureForId';
 import Routes from '@lib/routes';
 import type { Client } from '@server/clients/types';
+import fullName from '@lib/fullName';
 import {
   Body,
   BodyCell,
@@ -46,11 +47,6 @@ type ClientsTableProps = {
   clients: Client[];
   onDelete: (id: string) => void;
 };
-
-const fullName = (
-  firstName: string | undefined | null,
-  lastName: string | undefined | null
-) => [firstName, lastName].filter((part) => part).join(' ');
 
 const ClientsTable = ({ clients, onDelete }: ClientsTableProps) => {
   const { isOpen, openFor, onClose, onOpen } = useDisclosureForId();
