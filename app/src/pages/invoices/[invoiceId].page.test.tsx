@@ -142,7 +142,7 @@ describe('EditInvoicePage', () => {
 
     await act(async () => {
       await fireEvent.click(
-        await screen.findByRole('button', { name: 'Save draft' })
+        await screen.findByRole('button', { name: 'Save as draft' })
       );
     });
 
@@ -183,7 +183,7 @@ describe('EditInvoicePage', () => {
 
     await act(async () => {
       await fireEvent.click(
-        await screen.findByRole('button', { name: 'Save draft' })
+        await screen.findByRole('button', { name: 'Save as draft' })
       );
     });
 

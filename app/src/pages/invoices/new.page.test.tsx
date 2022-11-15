@@ -143,7 +143,7 @@ describe('NewInvoicePage', () => {
       await screen.findByRole('link', { name: 'Add clients' })
     );
     expect(mockRouter.push).toHaveBeenCalledWith(
-      Routes.clients,
+      Routes.createClient,
       expect.anything(),
       expect.anything()
     );
@@ -165,7 +165,7 @@ describe('NewInvoicePage', () => {
       await screen.findByRole('link', { name: 'Add products' })
     );
     expect(mockRouter.push).toHaveBeenCalledWith(
-      Routes.products,
+      Routes.createProduct,
       expect.anything(),
       expect.anything()
     );
@@ -220,7 +220,7 @@ describe('NewInvoicePage', () => {
 
     await act(async () => {
       await fireEvent.click(
-        await screen.findByRole('button', { name: 'Save draft' })
+        await screen.findByRole('button', { name: 'Save as draft' })
       );
     });
 
@@ -261,7 +261,7 @@ describe('NewInvoicePage', () => {
 
     await act(async () => {
       await fireEvent.click(
-        await screen.findByRole('button', { name: 'Save draft' })
+        await screen.findByRole('button', { name: 'Save as draft' })
       );
     });
 
