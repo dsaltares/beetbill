@@ -77,7 +77,7 @@ const UserMenu = () => {
             >
               <Menu.Items className="w-full absolute bottom-[60px] rounded-md bg-white py-2 shadow-xl border border-zinc-300 focus-ring">
                 {Items.map(({ icon, label, href, onClick }) => (
-                  <Menu.Item key={href}>
+                  <Menu.Item key={label}>
                     {({ active }) => {
                       const content = (
                         <>
