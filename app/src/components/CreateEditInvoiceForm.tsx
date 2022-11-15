@@ -9,7 +9,7 @@ import {
   Controller,
   useFieldArray,
 } from 'react-hook-form';
-import { faCheck, faPlus, faXmark } from '@fortawesome/free-solid-svg-icons';
+import { faEye, faFile, faXmark } from '@fortawesome/free-solid-svg-icons';
 import useCreateInvoice from '@lib/invoices/useCreateInvoice';
 import useUpdateInvoice from '@lib/invoices/useUpdateInvoice';
 import Routes from '@lib/routes';
@@ -25,6 +25,7 @@ import TextField from './Fields/TextField';
 import InvoiceTotalSection from './InvoiceTotalSection';
 import IconButton from './IconButton';
 import Button from './Button';
+import LinkButton from './LinkButton';
 
 type InvoiceFormValues = {
   status: Invoice['status'];
@@ -145,13 +146,25 @@ const CreateEditInvoiceForm = ({
       description={isSent ? '' : 'Add the details of your invoice below'}
       onSubmit={handleSubmit(onSubmit)}
       buttons={
-        <Button
-          type="submit"
-          endIcon={invoice ? faCheck : faPlus}
-          loading={isLoading}
-        >
-          Save draft
-        </Button>
+        <>
+          <Button
+            type="submit"
+            color="secondary"
+            variant="outlined"
+            endIcon={faFile}
+            loading={isLoading}
+          >
+            Save as draft
+          </Button>
+          {invoice && (
+            <LinkButton
+              href={Routes.invoicePreview(invoice.id)}
+              endIcon={faEye}
+            >
+              Preview
+            </LinkButton>
+          )}
+        </>
       }
       backHref={Routes.invoices}
     >

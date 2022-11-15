@@ -61,7 +61,7 @@ const toInvoiceTableRow = (invoice: Invoice) => {
 
   return {
     ...invoice,
-    total: calculateTotal(invoice),
+    total: calculateTotal(invoice.items).total,
     clientName: invoice.client.name,
     status,
     number: getTitle(invoice) || '-',

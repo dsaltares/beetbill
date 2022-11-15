@@ -1,3 +1,4 @@
+import calculateTotal from '@lib/invoices/calculateTotal';
 import type { Product } from '@server/products/types';
 
 type LineItem = {
@@ -26,31 +27,12 @@ const InvoiceTotalSection = ({ items }: InvoiceTotalSectionProps) => {
   );
 };
 
-const useInvoiceTotals = (items: LineItem[]) => {
-  if (items.length === 0) {
-    return {
-      exclVat: 0,
-      total: 0,
-      currency: '',
-    };
-  }
-  const currency = items[0].product.currency;
-  const [exclVat, total] = items.reduce(
-    ([exclVatAcc, totalAcc], { product, quantity }) => {
-      const basePrice = product.price * parseInt(quantity || '1', 10);
-      const priceExclVat = product.includesVat
-        ? basePrice / (1 + product.vat / 100.0)
-        : basePrice;
-      const priceWithVat = priceExclVat * (1 + product.vat / 100.0);
-      return [exclVatAcc + priceExclVat, totalAcc + priceWithVat];
-    },
-    [0, 0] as [number, number]
+const useInvoiceTotals = (items: LineItem[]) =>
+  calculateTotal(
+    items.map(({ quantity, ...item }) => ({
+      ...item,
+      quantity: parseFloat(quantity),
+    }))
   );
-  return {
-    exclVat,
-    total,
-    currency,
-  };
-};
 
 export default InvoiceTotalSection;

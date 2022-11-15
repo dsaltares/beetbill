@@ -43,7 +43,7 @@ const NewInvoicePage = () => {
       <EmptyContent
         message="Before creating invoices, you need to add some products."
         createLabel="Add products"
-        createHref={Routes.products}
+        createHref={Routes.createProduct}
       />
     );
   } else if (!clients || clients?.length === 0) {
@@ -51,7 +51,7 @@ const NewInvoicePage = () => {
       <EmptyContent
         message="Before creating invoices, you need to add at least a client."
         createLabel="Add clients"
-        createHref={Routes.clients}
+        createHref={Routes.createClient}
       />
     );
   } else {
