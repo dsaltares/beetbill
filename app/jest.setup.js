@@ -68,3 +68,13 @@ class FakeDOMRect {
   }
 }
 global.DOMRect = FakeDOMRect;
+
+jest.mock('@react-pdf/renderer', () => ({
+  Font: { register: jest.fn() },
+  Document: ({ children }) => <div>{children}</div>,
+  Image: ({ children }) => <div>{children}</div>,
+  Page: ({ children }) => <div>{children}</div>,
+  PDFViewer: ({ children }) => <div>{children}</div>,
+  Text: ({ children }) => <div>{children}</div>,
+  View: ({ children }) => <div>{children}</div>,
+}));
