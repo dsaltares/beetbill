@@ -107,7 +107,7 @@ const InvoicePDF = ({ invoice }: InvoicePDFProps) => {
                     {format(new Date(date), 'dd MMM yyyy')}
                   </TableCell>
                   <TableCell weight={0.15} textAlign="right">
-                    {quantity}
+                    {`${quantity} ${product.unit}`}
                   </TableCell>
                   <TableCell weight={0.2} textAlign="right">
                     {`${(product.includesVat
