@@ -75,7 +75,7 @@ describe('NewProductPage', () => {
 
     await fireEvent.click(screen.getByRole('button', { name: 'Add product' }));
 
-    await screen.findByText('Product created');
+    await screen.findByText('Successfully created product!');
     expect(mockRouter.push).toHaveBeenCalledWith(Routes.products);
   });
 

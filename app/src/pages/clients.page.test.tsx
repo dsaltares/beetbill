@@ -183,7 +183,7 @@ describe('ClientsPage', () => {
       await fireEvent.click(modalDeleteButton);
     });
 
-    await screen.findByText('Client deleted');
+    await screen.findByText('Successfully deleted client!');
     expect(screen.queryByText(client1.name)).not.toBeInTheDocument();
   });
 

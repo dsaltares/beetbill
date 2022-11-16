@@ -10,31 +10,19 @@ import baseToast from 'react-hot-toast';
 
 export type ToastArgs = {
   color?: 'primary' | 'secondary' | 'danger';
-  variant?: 'solid' | 'light';
   message: string;
 };
 
-const toast = ({
-  color = 'primary',
-  variant = 'solid',
-  message,
-}: ToastArgs) => {
+const toast = ({ color = 'primary', message }: ToastArgs) => {
   baseToast(
     (t) => (
-      <div
-        className={cn(
-          'flex w-full flex-row items-center justify-between align-middle text-base px-1 py-0.5',
-          {
-            'text-white': variant === 'solid',
-            'text-violet-800': color === 'primary' && variant === 'light',
-            'text-zinc-700': color === 'secondary' && variant === 'light',
-            'text-red-700': color === 'danger' && variant === 'light',
-          }
-        )}
-      >
-        <div className="flex w-full flex-row items-center gap-2">
+      <div className="flex w-full flex-row items-center justify-between align-middle text-base px-1.5 py-4 text-zinc-50">
+        <div className="flex w-full flex-row items-center gap-3">
           <FontAwesomeIcon
-            className="w-4 h-4"
+            className={cn('w-4 h-4 pr-3 border-r', {
+              'border-r-zinc-50': color !== 'secondary',
+              'border-r-zinc-500': color === 'secondary',
+            })}
             icon={color === 'danger' ? faTriangleExclamation : faCircleInfo}
           />
           <span>{message}</span>
@@ -49,18 +37,9 @@ const toast = ({
     {
       className: 'min-w-[100%] sm:min-w-[400px]',
       style: {
-        ...(color === 'primary' &&
-          variant === 'solid' && { background: '#6B26D9' }),
-        ...(color === 'primary' &&
-          variant === 'light' && { background: '#EBE7FE' }),
-        ...(color === 'secondary' &&
-          variant === 'solid' && { background: '#27272A' }),
-        ...(color === 'secondary' &&
-          variant === 'light' && { background: '#F4F4F5' }),
-        ...(color === 'danger' &&
-          variant === 'solid' && { background: '#B91C1C' }),
-        ...(color === 'danger' &&
-          variant === 'light' && { background: '#FEE2E2' }),
+        ...(color === 'primary' && { background: '#6B26D9' }),
+        ...(color === 'secondary' && { background: '#27272A' }),
+        ...(color === 'danger' && { background: '#B91C1C' }),
         borderRadius: 6,
         padding: 0,
         margin: 0,

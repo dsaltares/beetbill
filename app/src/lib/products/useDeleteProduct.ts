@@ -16,7 +16,7 @@ const useDeleteProduct = () =>
         products.splice(productIndex, 1);
       }
     },
-    successMessage: () => 'Product deleted',
+    successMessage: () => 'Successfully deleted product!',
     errorMessage: () => 'Failed to delete product',
   });
 

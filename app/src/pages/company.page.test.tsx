@@ -89,7 +89,7 @@ describe('CompanyPage', () => {
       userEvent.click(screen.getByRole('button', { name: 'Save' }))
     );
 
-    await screen.findByText('Updated company');
+    await screen.findByText('Successfully updated company!');
   });
 
   it('shows toast when failing to update company details', async () => {
