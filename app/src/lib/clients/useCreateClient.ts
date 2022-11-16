@@ -36,7 +36,7 @@ const useCreateClient = ({ onSuccess }: UseCreateClientArgs = {}) =>
         ...input,
       });
     },
-    successMessage: () => 'Client created',
+    successMessage: () => 'Successfully created client!',
     errorMessage: () => 'Failed to create client',
     onSuccess,
   });

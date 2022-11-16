@@ -16,7 +16,7 @@ const useDeleteInvoice = () =>
         invoices.splice(invoiceIndex, 1);
       }
     },
-    successMessage: () => 'Invoice deleted',
+    successMessage: () => 'Successfully deleted invoice!',
     errorMessage: () => 'Failed to delete invoice',
   });
 

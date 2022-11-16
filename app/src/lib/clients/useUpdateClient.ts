@@ -26,7 +26,7 @@ const useUpdateClient = ({ onSuccess }: UseUpdateClientArgs = {}) =>
         };
       }
     },
-    successMessage: () => 'Client updated',
+    successMessage: () => 'Successfully updated client!',
     errorMessage: () => 'Failed to update client',
     onSuccess,
   });

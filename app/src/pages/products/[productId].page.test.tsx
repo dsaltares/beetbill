@@ -71,7 +71,7 @@ describe('ProductPage', () => {
       );
     });
 
-    await screen.findByText('Product updated');
+    await screen.findByText('Successfully updated product!');
     expect(mockRouter.push).toHaveBeenCalledWith(Routes.products);
   });
 

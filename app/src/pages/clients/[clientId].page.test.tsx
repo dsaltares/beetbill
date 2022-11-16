@@ -76,7 +76,7 @@ describe('ClientPage', () => {
       );
     });
 
-    await screen.findByText('Client updated');
+    await screen.findByText('Successfully updated client!');
     expect(mockRouter.push).toHaveBeenCalledWith(Routes.clients);
   });
 

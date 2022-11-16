@@ -52,7 +52,6 @@ const useMutation = <Input, Cache, Data = unknown>({
       const message = errorMessage ? errorMessage(_error) : _error.message;
       toast({
         color: 'danger',
-        variant: 'light',
         message,
       });
     },
@@ -61,8 +60,7 @@ const useMutation = <Input, Cache, Data = unknown>({
       if (successMessage) {
         toast({
           message: successMessage(),
-          color: 'primary',
-          variant: 'light',
+          color: 'secondary',
         });
       }
       if (onSuccess) {

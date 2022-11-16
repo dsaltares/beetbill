@@ -39,7 +39,7 @@ const useCreateInvoice = ({ onSuccess }: UseCreateInvoicesArgs = {}) =>
         items: [] as Invoice['items'],
       });
     },
-    successMessage: () => 'Invoice created',
+    successMessage: () => 'Successfully created invoice!',
     errorMessage: () => 'Failed to create invoice',
     onSuccess,
   });

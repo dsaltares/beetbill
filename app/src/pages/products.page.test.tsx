@@ -177,7 +177,7 @@ describe('ProductsPage', () => {
       await fireEvent.click(modalDeleteButton);
     });
 
-    await screen.findByText('Product deleted');
+    await screen.findByText('Successfully deleted product!');
     expect(screen.queryByText(product1.name)).not.toBeInTheDocument();
   });
 

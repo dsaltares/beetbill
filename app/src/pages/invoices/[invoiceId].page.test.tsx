@@ -147,7 +147,7 @@ describe('EditInvoicePage', () => {
     });
 
     await waitFor(() => {
-      screen.getByText('Invoice updated');
+      screen.getByText('Successfully updated invoice!');
       expect(mockRouter.push).toHaveBeenCalledWith(Routes.invoices);
     });
   });

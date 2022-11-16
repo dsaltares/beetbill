@@ -14,10 +14,6 @@ export default {
       control: { type: 'radio' },
       options: ['primary', 'secondary', 'danger'],
     },
-    variant: {
-      control: { type: 'radio' },
-      options: ['solid', 'light'],
-    },
   },
   parameters: {
     layout: 'centered',
@@ -33,7 +29,6 @@ const Template: ComponentStory<typeof ToastComponent> = (args) => (
 
 export const Default = Template.bind({});
 Default.args = {
-  color: 'primary',
-  variant: 'solid',
+  color: 'secondary',
   message: 'Toast message',
 };

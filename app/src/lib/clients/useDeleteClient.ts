@@ -16,7 +16,7 @@ const useDeleteClient = () =>
         clients.splice(clientIndex, 1);
       }
     },
-    successMessage: () => 'Client deleted',
+    successMessage: () => 'Successfully deleted client!',
     errorMessage: () => 'Failed to delete client',
   });
 

@@ -27,7 +27,7 @@ const useUpdateInvoice = ({ onSuccess }: UseUpdateInvoiceArgs = {}) =>
         };
       }
     },
-    successMessage: () => 'Invoice updated',
+    successMessage: () => 'Successfully updated invoice!',
     errorMessage: () => 'Failed to update invoice',
     onSuccess,
   });

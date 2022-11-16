@@ -27,7 +27,7 @@ const useUpdateProduct = ({ onSuccess }: UseUpdateProductArgs = {}) =>
       }
     },
     onSuccess,
-    successMessage: () => 'Product updated',
+    successMessage: () => 'Successfully updated product!',
     errorMessage: () => 'Failed to update product',
   });
 

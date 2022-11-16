@@ -231,7 +231,7 @@ describe('InvoicesPage', () => {
       await fireEvent.click(modalDeleteButton);
     });
 
-    await screen.findByText('Invoice deleted');
+    await screen.findByText('Successfully deleted invoice!');
     expect(screen.queryByText(client.name)).not.toBeInTheDocument();
   });
 

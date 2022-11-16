@@ -98,7 +98,7 @@ describe('NewClientPage', () => {
 
     await fireEvent.click(screen.getByRole('button', { name: 'Add client' }));
 
-    await screen.findByText('Client created');
+    await screen.findByText('Successfully created client!');
     expect(mockRouter.push).toHaveBeenCalledWith(Routes.clients);
   });
 
