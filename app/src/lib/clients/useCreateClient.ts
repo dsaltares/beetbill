@@ -19,11 +19,12 @@ const useCreateClient = ({ onSuccess }: UseCreateClientArgs = {}) =>
     mutationFn: api.createClient.mutate,
     cacheKey: QueryKeys.clients,
     cacheUpdater: (clients, input) => {
+      const now = new Date().toISOString();
       clients.push({
         id: `new-client${cuid()}`,
         companyId: '',
-        createdAt: new Date(),
-        updatedAt: new Date(),
+        createdAt: now,
+        updatedAt: now,
         vatNumber: null,
         firstName: null,
         lastName: null,

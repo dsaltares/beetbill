@@ -8,8 +8,8 @@ export const LineItem = z.object({
   invoiceId: z.string(),
   quantity: z.number(),
   date: z.string(),
-  createdAt: z.date(),
-  updatedAt: z.date(),
+  createdAt: z.string(),
+  updatedAt: z.string(),
   product: Product,
 });
 export const InvoiceStatus = z.enum(['DRAFT', 'SENT', 'PAID']);
@@ -19,8 +19,8 @@ export const Invoice = z.object({
   prefix: z.string(),
   number: z.number().nullish(),
   date: z.string(),
-  createdAt: z.date(),
-  updatedAt: z.date(),
+  createdAt: z.string(),
+  updatedAt: z.string(),
   company: Company,
   client: Client,
   items: LineItem.array(),

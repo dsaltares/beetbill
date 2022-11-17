@@ -13,6 +13,7 @@ export default {
   },
 } as ComponentMeta<typeof ProductsTable>;
 
+const now = new Date().toISOString();
 const products: Product[] = [
   {
     id: 'product_1',
@@ -23,8 +24,8 @@ const products: Product[] = [
     vat: 15,
     unit: 'h',
     companyId: 'company_1',
-    createdAt: new Date(),
-    updatedAt: new Date(),
+    createdAt: now,
+    updatedAt: now,
   },
   {
     id: 'product_2',
@@ -35,8 +36,8 @@ const products: Product[] = [
     vat: 9,
     unit: 'h',
     companyId: 'company_1',
-    createdAt: new Date(),
-    updatedAt: new Date(),
+    createdAt: now,
+    updatedAt: now,
   },
   {
     id: 'product_3',
@@ -47,8 +48,8 @@ const products: Product[] = [
     vat: 0,
     unit: 'h',
     companyId: 'company_1',
-    createdAt: new Date(),
-    updatedAt: new Date(),
+    createdAt: now,
+    updatedAt: now,
   },
 ];
 

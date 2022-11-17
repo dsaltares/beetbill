@@ -22,6 +22,7 @@ beforeAll(() => server.listen());
 afterEach(() => server.resetHandlers());
 afterAll(() => server.close());
 
+const now = new Date().toISOString();
 const companyId = 'company_1';
 const session: Session = {
   user: {},
@@ -41,8 +42,8 @@ const product: Product = {
   vat: 15,
   unit: 'months',
   companyId,
-  createdAt: new Date(),
-  updatedAt: new Date(),
+  createdAt: now,
+  updatedAt: now,
 };
 
 describe('NewProductPage', () => {

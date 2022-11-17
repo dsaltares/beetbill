@@ -27,14 +27,15 @@ const useCreateInvoice = ({ onSuccess }: UseCreateInvoicesArgs = {}) =>
       api.createInvoice.mutate(input),
     cacheKey: QueryKeys.invoices,
     cacheUpdater: (invoices, input) => {
+      const now = new Date().toISOString();
       invoices.push({
         id: `new-invoice${cuid()}`,
         status: 'DRAFT',
         prefix: '',
         number: 0,
-        date: new Date().toISOString(),
-        createdAt: new Date(),
-        updatedAt: new Date(),
+        date: now,
+        createdAt: now,
+        updatedAt: now,
         ...input,
         items: [] as Invoice['items'],
       });

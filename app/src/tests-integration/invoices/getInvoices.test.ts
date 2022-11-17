@@ -60,7 +60,9 @@ describe('getInvoices', () => {
             'companyState',
             'clientState',
             'deletedAt',
-            'date'
+            'date',
+            'createdAt',
+            'updatedAt'
           )
         ),
         expect.objectContaining(
@@ -71,7 +73,9 @@ describe('getInvoices', () => {
             'companyState',
             'clientState',
             'deletedAt',
-            'date'
+            'date',
+            'createdAt',
+            'updatedAt'
           )
         ),
       ])

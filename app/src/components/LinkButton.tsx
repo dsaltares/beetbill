@@ -6,7 +6,7 @@ import Icon from './Icons/Icon';
 
 type ButtonProps = PropsWithChildren<
   AnchorHTMLAttributes<HTMLAnchorElement> & {
-    color?: 'primary' | 'secondary';
+    color?: 'primary' | 'secondary' | 'tertiary';
     variant?: 'solid' | 'light' | 'outlined' | 'borderless';
     size?: 'sm' | 'md' | 'lg';
     fullWidth?: boolean;
@@ -57,6 +57,8 @@ const LinkButton = ({
             color === 'secondary' && variant === 'outlined',
           'bg-transparent text-zinc-800 underline hover:bg-zinc-200':
             color === 'secondary' && variant === 'borderless',
+          'bg-transparent text-zinc-50 underline hover:bg-violet-900':
+            color === 'tertiary' && variant === 'borderless',
           'py-1.5 px-3 text-sm': size === 'sm',
           'py-2 px-4': size === 'md',
           'py-2.5 px-5': size === 'lg',

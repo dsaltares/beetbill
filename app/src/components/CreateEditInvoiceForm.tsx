@@ -147,15 +147,17 @@ const CreateEditInvoiceForm = ({
       onSubmit={handleSubmit(onSubmit)}
       buttons={
         <>
-          <Button
-            type="submit"
-            color="secondary"
-            variant="outlined"
-            endIcon={faFile}
-            loading={isLoading}
-          >
-            Save as draft
-          </Button>
+          {(!invoice || invoice.status === 'DRAFT') && (
+            <Button
+              type="submit"
+              color="secondary"
+              variant="outlined"
+              endIcon={faFile}
+              loading={isLoading}
+            >
+              Save as draft
+            </Button>
+          )}
           {invoice && (
             <LinkButton
               href={Routes.invoicePreview(invoice.id)}

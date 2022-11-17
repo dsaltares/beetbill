@@ -28,6 +28,7 @@ specifiers:
   '@testing-library/user-event': ^13
   '@trpc/client': ^10.0.0-proxy-beta.21
   '@trpc/server': ^10.0.0-proxy-beta.21
+  '@types/file-saver': ^2.0.5
   '@types/iban': ^0.0.32
   '@types/jest': ^29.2.1
   '@types/lodash.omit': ^4.5.7
@@ -50,6 +51,7 @@ specifiers:
   eslint-config-prettier: ^8.5.0
   eslint-import-resolver-typescript: ^3.5.1
   eslint-plugin-import: ^2.26.0
+  file-saver: ^2.0.5
   iban: ^0.0.14
   immer: ^9.0.16
   jest: ^29.2.2
@@ -96,6 +98,7 @@ dependencies:
   classnames: 2.3.2
   cuid: 2.1.8
   date-fns: 2.29.3
+  file-saver: 2.0.5
   iban: 0.0.14
   immer: 9.0.16
   lodash.omit: 4.5.0
@@ -125,6 +128,7 @@ devDependencies:
   '@testing-library/jest-dom': 5.16.5
   '@testing-library/react': 13.4.0_biqbaboplfbrettd7655fr4n2y
   '@testing-library/user-event': 13.5.0
+  '@types/file-saver': 2.0.5
   '@types/iban': 0.0.32
   '@types/jest': 29.2.1
   '@types/lodash.omit': 4.5.7
@@ -4622,6 +4626,10 @@ packages:
     resolution: {integrity: sha512-WulqXMDUTYAXCjZnk6JtIHPigp55cVtDgDrO2gHRwhyJto21+1zbVCtOYB2L1F9w4qCQ0rOGWBnBe0FNTiEJIQ==}
     dev: true
 
+  /@types/file-saver/2.0.5:
+    resolution: {integrity: sha512-zv9kNf3keYegP5oThGLaPk8E081DFDuwfqjtiTzm6PoxChdJ1raSuADf2YGCVIyrSynLrgc8JWv296s7Q7pQSQ==}
+    dev: true
+
   /@types/glob/7.2.0:
     resolution: {integrity: sha512-ZUxbzKl0IfJILTS6t7ip5fQQM/J3TJYubDm3nMbgubNNYS62eXeUpoLUC8/7fJNiFYHTrGPQn7hspDUzIHX3UA==}
     dependencies:
@@ -8452,6 +8460,10 @@ packages:
       schema-utils: 3.1.1
       webpack: 4.46.0
     dev: true
+
+  /file-saver/2.0.5:
+    resolution: {integrity: sha512-P9bmyZ3h/PRG+Nzga+rbdI4OEpNDzAVyy74uVO9ATgzLK6VtAsYybF/+TOCvrc0MO793d6+42lLyZTw7/ArVzA==}
+    dev: false
 
   /file-system-cache/1.1.0:
     resolution: {integrity: sha512-IzF5MBq+5CR0jXx5RxPe4BICl/oEhBSXKaL9fLhAXrIfIUS77Hr4vzrYyqYMHN6uTt+BOqi3fDCTjjEBCjERKw==}

@@ -5,7 +5,7 @@ import BlankLayout from './BlankLayout';
 import SidebarLayout from './SidebarLayout';
 import FullScreenSpinner from './FullScreenSpinner';
 
-const BlankLayoutPaths = ['/auth', '/404'];
+const BlankLayoutPaths = ['/auth', '/404', '/invoices/[invoiceId]/preview'];
 
 const Layout = ({ children }: PropsWithChildren) => {
   const { status } = useSession();

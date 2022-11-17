@@ -16,7 +16,7 @@ type InvoicePDFProps = {
 const InvoicePDF = ({ invoice }: InvoicePDFProps) => {
   const { items, company, client, date } = invoice;
   const { total, currency, exclVat } = calculateTotal(items);
-  const title = `Invoice - ${getTitle(invoice)}`;
+  const title = `Invoice ${getTitle(invoice)}`;
   return (
     <Document title={title} data-testid={`${invoice.id}-preview`}>
       <Page

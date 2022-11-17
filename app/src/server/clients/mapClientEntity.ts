@@ -6,6 +6,8 @@ type Entity = Client & { states: ClientState[] };
 const mapClientEntity = ({ states, ...client }: Entity): APIClient => ({
   ...states[0],
   ...client,
+  createdAt: client.createdAt.toISOString(),
+  updatedAt: client.updatedAt.toISOString(),
 });
 
 export default mapClientEntity;

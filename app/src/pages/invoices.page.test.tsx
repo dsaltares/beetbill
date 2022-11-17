@@ -26,6 +26,7 @@ beforeAll(() => server.listen());
 afterEach(() => server.resetHandlers());
 afterAll(() => server.close());
 
+const now = new Date().toISOString();
 const userId = 'user_1';
 const companyId = 'company_1';
 const session: Session = {
@@ -43,7 +44,7 @@ const company: Company = {
   number: '1',
   vatNumber: '123456789',
   userId: userId,
-  createdAt: new Date(),
+  createdAt: now,
   email: null,
   website: null,
   address: null,
@@ -65,8 +66,8 @@ const client: Client = {
   city: null,
   postCode: null,
   paymentTerms: 7,
-  createdAt: new Date(),
-  updatedAt: new Date(),
+  createdAt: now,
+  updatedAt: now,
   companyId,
 };
 const product: Product = {
@@ -78,26 +79,26 @@ const product: Product = {
   vat: 0,
   unit: 'h',
   companyId,
-  createdAt: new Date(),
-  updatedAt: new Date(),
+  createdAt: now,
+  updatedAt: now,
 };
 const invoice1: Invoice = {
   id: 'invoice_1',
   status: 'DRAFT',
   prefix: '2022',
   number: null,
-  date: new Date(),
-  createdAt: new Date(),
-  updatedAt: new Date(),
+  date: now,
+  createdAt: now,
+  updatedAt: now,
   company,
   client,
   items: [
     {
       id: 'item_1',
       invoiceId: 'invoice_1',
-      date: new Date(),
-      createdAt: new Date(),
-      updatedAt: new Date(),
+      date: now,
+      createdAt: now,
+      updatedAt: now,
       quantity: 2,
       product,
     },
@@ -108,18 +109,18 @@ const invoice2: Invoice = {
   status: 'SENT',
   prefix: '2022',
   number: null,
-  date: new Date(),
-  createdAt: new Date(),
-  updatedAt: new Date(),
+  date: now,
+  createdAt: now,
+  updatedAt: now,
   company,
   client,
   items: [
     {
       id: 'item_1',
       invoiceId: 'invoice_2',
-      date: new Date(),
-      createdAt: new Date(),
-      updatedAt: new Date(),
+      date: now,
+      createdAt: now,
+      updatedAt: now,
       quantity: 5,
       product,
     },
@@ -130,18 +131,18 @@ const invoice3: Invoice = {
   status: 'PAID',
   prefix: '2022',
   number: null,
-  date: new Date(),
-  createdAt: new Date(),
-  updatedAt: new Date(),
+  date: now,
+  createdAt: now,
+  updatedAt: now,
   company,
   client,
   items: [
     {
       id: 'item_1',
       invoiceId: 'invoice_3',
-      date: new Date(),
-      createdAt: new Date(),
-      updatedAt: new Date(),
+      date: now,
+      createdAt: now,
+      updatedAt: now,
       quantity: 3,
       product,
     },

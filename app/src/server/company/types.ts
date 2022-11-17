@@ -13,7 +13,7 @@ export const Company = z.object({
   city: z.string().nullable(),
   iban: z.string().nullable(),
   userId: z.string(),
-  createdAt: z.date(),
+  createdAt: z.string(),
 });
 
 export const GetCompanyOutput = Company.nullish();

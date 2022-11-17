@@ -26,6 +26,7 @@ beforeAll(() => server.listen());
 afterEach(() => server.resetHandlers());
 afterAll(() => server.close());
 
+const now = new Date().toISOString();
 const companyId = 'company_1';
 const userId = 'user_1';
 const session: Session = {
@@ -47,7 +48,7 @@ const company: Company = {
   postCode: 'W1',
   iban: 'GB33BUKB20201555555555',
   userId,
-  createdAt: new Date(),
+  createdAt: now,
 };
 const product: Product = {
   id: 'product_id',
@@ -58,8 +59,8 @@ const product: Product = {
   vat: 15,
   unit: 'm',
   companyId,
-  createdAt: new Date(),
-  updatedAt: new Date(),
+  createdAt: now,
+  updatedAt: now,
 };
 const client: Client = {
   id: 'client_1',
@@ -75,8 +76,8 @@ const client: Client = {
   city: 'client_city',
   paymentTerms: 7,
   companyId,
-  createdAt: new Date(),
-  updatedAt: new Date(),
+  createdAt: now,
+  updatedAt: now,
 };
 const invoiceId = 'invoice_1';
 const invoice: Invoice = {
@@ -85,20 +86,20 @@ const invoice: Invoice = {
   prefix: '',
   company,
   client,
-  date: new Date().toISOString(),
+  date: now,
   items: [
     {
       id: 'item_1',
       invoiceId: 'invoice_1',
       product,
       quantity: 1,
-      date: new Date().toISOString(),
-      createdAt: new Date(),
-      updatedAt: new Date(),
+      date: now,
+      createdAt: now,
+      updatedAt: now,
     },
   ],
-  createdAt: new Date(),
-  updatedAt: new Date(),
+  createdAt: now,
+  updatedAt: now,
 };
 const router = {
   pathname: '/invoices/[invoiceId]',
@@ -150,6 +151,31 @@ describe('EditInvoicePage', () => {
       screen.getByText('Successfully updated invoice!');
       expect(mockRouter.push).toHaveBeenCalledWith(Routes.invoices);
     });
+  });
+
+  it('prevents the user from editing a sent invoice', async () => {
+    const sentInvoice = {
+      ...invoice,
+      status: 'SENT',
+      number: 1,
+    };
+    server.resetHandlers(
+      mockTrpcQueries([
+        { name: 'getInvoice', result: sentInvoice },
+        { name: 'getClients', result: [client] },
+        { name: 'getProducts', result: [product] },
+        { name: 'getCompany', result: company },
+        { name: 'getInvoices', result: [sentInvoice] },
+      ])
+    );
+
+    render(<EditInvoicePage />, { session, router });
+
+    expect(await screen.findByPlaceholderText('Prefix...')).toBeDisabled();
+    screen
+      .queryAllByPlaceholderText('Date...')
+      .forEach((element) => expect(element).toBeDisabled());
+    expect(screen.queryByRole('button', { name: 'Save as draft' })).toBeNull();
   });
 
   it('shows a message when failing to update the invoice', async () => {

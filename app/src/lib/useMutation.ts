@@ -9,7 +9,7 @@ import toast from '@components/Toast';
 
 type UseMutationArgs<Input, Cache, Data> = {
   cacheKey: QueryKey;
-  mutationFn: (input: Input) => Promise<unknown>;
+  mutationFn: (input: Input) => Promise<Data>;
   cacheUpdater: (cache: Draft<Cache>, input: Input) => void;
   errorMessage?: (error: TRPCError) => string;
   onSuccess?: (data: Data) => void;

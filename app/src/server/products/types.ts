@@ -9,8 +9,8 @@ export const Product = z.object({
   vat: z.number(),
   unit: z.string(),
   companyId: z.string(),
-  createdAt: z.date(),
-  updatedAt: z.date(),
+  createdAt: z.string(),
+  updatedAt: z.string(),
 });
 export const GetProductInput = z.object({
   id: z.string(),

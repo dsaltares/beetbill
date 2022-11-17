@@ -78,6 +78,8 @@ describe('updateProduct', () => {
     });
 
     expect(updatedProduct.name).toEqual(newName);
-    expect(updatedProduct).toMatchObject(omit(dbProduct, 'id', 'createdAt'));
+    expect(updatedProduct).toMatchObject(
+      omit(dbProduct, 'id', 'createdAt', 'updatedAt')
+    );
   });
 });

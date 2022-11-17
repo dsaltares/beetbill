@@ -24,6 +24,7 @@ beforeAll(() => server.listen());
 afterEach(() => server.resetHandlers());
 afterAll(() => server.close());
 
+const now = new Date().toISOString();
 const session: Session = {
   user: {},
   userId: 'user_1',
@@ -42,8 +43,8 @@ const product1: Product = {
   vat: 9,
   unit: 'h',
   companyId: 'company_1',
-  createdAt: new Date(),
-  updatedAt: new Date(),
+  createdAt: now,
+  updatedAt: now,
 };
 const product2: Product = {
   id: 'product_2',
@@ -54,8 +55,8 @@ const product2: Product = {
   vat: 15,
   unit: 'h',
   companyId: 'company_1',
-  createdAt: new Date(),
-  updatedAt: new Date(),
+  createdAt: now,
+  updatedAt: now,
 };
 const product3: Product = {
   id: 'product_3',
@@ -66,8 +67,8 @@ const product3: Product = {
   vat: 7,
   unit: 'h',
   companyId: 'company_1',
-  createdAt: new Date(),
-  updatedAt: new Date(),
+  createdAt: now,
+  updatedAt: now,
 };
 const products: Product[] = [product1, product2, product3];
 

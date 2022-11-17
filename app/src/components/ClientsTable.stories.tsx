@@ -13,6 +13,7 @@ export default {
   },
 } as ComponentMeta<typeof ClientsTable>;
 
+const now = new Date().toISOString();
 const clients: Client[] = [
   {
     id: 'client_1',
@@ -28,8 +29,8 @@ const clients: Client[] = [
     city: 'client_city',
     paymentTerms: 7,
     companyId: 'company_1',
-    createdAt: new Date(),
-    updatedAt: new Date(),
+    createdAt: now,
+    updatedAt: now,
   },
   {
     id: 'client_2',
@@ -45,8 +46,8 @@ const clients: Client[] = [
     city: 'client_city',
     paymentTerms: 30,
     companyId: 'company_1',
-    createdAt: new Date(),
-    updatedAt: new Date(),
+    createdAt: now,
+    updatedAt: now,
   },
   {
     id: 'client_3',
@@ -62,8 +63,8 @@ const clients: Client[] = [
     city: 'client_city',
     paymentTerms: 14,
     companyId: 'company_1',
-    createdAt: new Date(),
-    updatedAt: new Date(),
+    createdAt: now,
+    updatedAt: now,
   },
 ];
 
