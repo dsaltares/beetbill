@@ -1,6 +1,6 @@
 import { faBars } from '@fortawesome/free-solid-svg-icons';
-import { useRef } from 'react';
 import Logo from '@components/Logo';
+import useSticky from '@lib/useSticky';
 import SidebarButton from './SidebarButton';
 
 type MobileSidebarOpenControlsProps = {
@@ -10,11 +10,11 @@ type MobileSidebarOpenControlsProps = {
 const MobileSidebarOpenControls = ({
   onOpenSidebar,
 }: MobileSidebarOpenControlsProps) => {
-  const stickyRef = useRef<HTMLDivElement>(null);
+  const { ref, height } = useSticky();
   return (
     <>
       <div
-        ref={stickyRef}
+        ref={ref}
         className="fixed top-0 z-10 flex w-full p-4 items-center justify-between lg:hidden bg-violet-50"
       >
         <SidebarButton
@@ -27,9 +27,7 @@ const MobileSidebarOpenControls = ({
       <div
         className="flex w-full flex-shrink-0 lg:hidden"
         style={{
-          height: stickyRef.current
-            ? `${stickyRef.current.offsetHeight}px`
-            : '0px',
+          height: `${height}px`,
         }}
       />
     </>
