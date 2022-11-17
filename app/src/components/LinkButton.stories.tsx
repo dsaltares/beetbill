@@ -31,7 +31,7 @@ export default {
     endIcon: IconInputType,
     color: {
       control: { type: 'radio' },
-      options: ['primary', 'secondary'],
+      options: ['primary', 'secondary', 'tertiary'],
     },
     variant: {
       control: {

@@ -6,7 +6,7 @@ import Icon from './Icons/Icon';
 
 type ButtonProps = PropsWithChildren<
   ButtonHTMLAttributes<HTMLButtonElement> & {
-    color?: 'primary' | 'secondary' | 'danger';
+    color?: 'primary' | 'secondary' | 'tertiary' | 'danger';
     variant?: 'solid' | 'light' | 'outlined' | 'borderless';
     size?: 'sm' | 'md' | 'lg';
     fullWidth?: boolean;
@@ -55,6 +55,8 @@ const Button = ({
             !disabled && color === 'secondary' && variant === 'outlined',
           'bg-transparent text-zinc-800 underline hover:bg-zinc-200':
             !disabled && color === 'secondary' && variant === 'borderless',
+          'bg-transparent text-zinc-50 underline hover:bg-violet-900':
+            !disabled && color === 'tertiary' && variant === 'borderless',
           'bg-red-700 text-zinc-50 hover:bg-red-800':
             !disabled && color === 'danger',
           'bg-zinc-100 text-zinc-400 cursor-not-allowed': !!disabled,
