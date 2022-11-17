@@ -21,6 +21,7 @@ beforeAll(() => server.listen());
 afterEach(() => server.resetHandlers());
 afterAll(() => server.close());
 
+const now = new Date().toISOString();
 const companyId = 'company_1';
 const session: Session = {
   user: {},
@@ -45,8 +46,8 @@ const client: Client = {
   city: 'client_city',
   paymentTerms: 30,
   companyId,
-  createdAt: new Date(),
-  updatedAt: new Date(),
+  createdAt: now,
+  updatedAt: now,
 };
 
 describe('NewClientPage', () => {

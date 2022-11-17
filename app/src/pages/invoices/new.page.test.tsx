@@ -2,8 +2,6 @@ import 'next';
 import { setupServer } from 'msw/node';
 import type { Session } from 'next-auth';
 import { TRPCError } from '@trpc/server';
-
-import userEvent from '@testing-library/user-event';
 import {
   mockRouter,
   mockTrpcMutation,
@@ -29,6 +27,7 @@ beforeAll(() => server.listen());
 afterEach(() => server.resetHandlers());
 afterAll(() => server.close());
 
+const now = new Date().toISOString();
 const companyId = 'company_1';
 const userId = 'user_1';
 const session: Session = {
@@ -53,7 +52,7 @@ const company: Company = {
   postCode: 'W1',
   iban: 'GB33BUKB20201555555555',
   userId,
-  createdAt: new Date(),
+  createdAt: now,
 };
 const product: Product = {
   id: 'product_id',
@@ -64,8 +63,8 @@ const product: Product = {
   vat: 15,
   unit: 'm',
   companyId,
-  createdAt: new Date(),
-  updatedAt: new Date(),
+  createdAt: now,
+  updatedAt: now,
 };
 const client: Client = {
   id: 'client_1',
@@ -81,8 +80,8 @@ const client: Client = {
   city: 'client_city',
   paymentTerms: 7,
   companyId,
-  createdAt: new Date(),
-  updatedAt: new Date(),
+  createdAt: now,
+  updatedAt: now,
 };
 
 describe('NewInvoicePage', () => {
@@ -104,7 +103,7 @@ describe('NewInvoicePage', () => {
       postCode: '',
       iban: '',
       userId: 'user_id',
-      createdAt: new Date(),
+      createdAt: now,
     };
     server.resetHandlers(
       mockTrpcQueries([
@@ -183,10 +182,8 @@ describe('NewInvoicePage', () => {
 
     render(<NewInvoicePage />, { session, router });
 
-    await userEvent.type(
-      await screen.findByPlaceholderText('Client...'),
-      `${client.name}{enter}`
-    );
+    await fireEvent.click(await screen.findByPlaceholderText('Client...'));
+    await fireEvent.click(await screen.findByText(client.name));
     await fireEvent.click(await screen.findByPlaceholderText('Product...'));
     await act(async () => {
       await fireEvent.click(await screen.findByText(product.name));
@@ -198,30 +195,31 @@ describe('NewInvoicePage', () => {
       prefix: '',
       company,
       client,
-      date: new Date().toISOString(),
+      date: now,
       items: [
         {
           id: 'item_1',
           invoiceId: 'invoice_1',
           product,
           quantity: 1,
-          date: new Date().toISOString(),
-          createdAt: new Date(),
-          updatedAt: new Date(),
+          date: now,
+          createdAt: now,
+          updatedAt: now,
         },
       ],
-      createdAt: new Date(),
-      updatedAt: new Date(),
+      createdAt: now,
+      updatedAt: now,
     };
     server.resetHandlers(
       mockTrpcMutation('createInvoice', invoice),
       mockTrpcQuery('getInvoices', [invoice])
     );
 
+    const saveButton = await screen.findByRole('button', {
+      name: 'Save as draft',
+    });
     await act(async () => {
-      await fireEvent.click(
-        await screen.findByRole('button', { name: 'Save as draft' })
-      );
+      await fireEvent.click(saveButton);
     });
 
     await waitFor(() => {
@@ -242,13 +240,15 @@ describe('NewInvoicePage', () => {
 
     render(<NewInvoicePage />, { session, router });
 
-    await userEvent.type(
-      await screen.findByPlaceholderText('Client...'),
-      `${client.name}{enter}`
-    );
+    await fireEvent.click(await screen.findByPlaceholderText('Client...'));
+    await fireEvent.click(await screen.findByText(client.name));
     await fireEvent.click(await screen.findByPlaceholderText('Product...'));
     await act(async () => {
       await fireEvent.click(await screen.findByText(product.name));
+    });
+
+    const saveButton = await screen.findByRole('button', {
+      name: 'Save as draft',
     });
 
     server.resetHandlers(
@@ -260,9 +260,7 @@ describe('NewInvoicePage', () => {
     );
 
     await act(async () => {
-      await fireEvent.click(
-        await screen.findByRole('button', { name: 'Save as draft' })
-      );
+      await fireEvent.click(saveButton);
     });
 
     await screen.findByText('Failed to create invoice');

@@ -9,12 +9,15 @@ import {
   waitFor,
   mockTrpcQuery,
   mockTrpcQueryError,
+  mockTrpcMutation,
+  fireEvent,
 } from '@lib/testing';
 import type { Product } from '@server/products/types';
 import type { Company } from '@server/company/types';
 import type { Client } from '@server/clients/types';
 import type { Invoice } from '@server/invoices/types';
 import Routes from '@lib/routes';
+import downloadInvoice from '@lib/invoices/downloadInvoice';
 import PreviewInvoicePage from './preview.page';
 
 const server = setupServer();
@@ -23,6 +26,9 @@ beforeAll(() => server.listen());
 afterEach(() => server.resetHandlers());
 afterAll(() => server.close());
 
+jest.mock('@lib/invoices/downloadInvoice', () => jest.fn());
+
+const now = new Date().toISOString();
 const companyId = 'company_1';
 const userId = 'user_1';
 const session: Session = {
@@ -44,7 +50,7 @@ const company: Company = {
   postCode: 'W1',
   iban: 'GB33BUKB20201555555555',
   userId,
-  createdAt: new Date(),
+  createdAt: now,
 };
 const product: Product = {
   id: 'product_id',
@@ -55,8 +61,8 @@ const product: Product = {
   vat: 15,
   unit: 'm',
   companyId,
-  createdAt: new Date(),
-  updatedAt: new Date(),
+  createdAt: now,
+  updatedAt: now,
 };
 const client: Client = {
   id: 'client_1',
@@ -72,8 +78,8 @@ const client: Client = {
   city: 'client_city',
   paymentTerms: 7,
   companyId,
-  createdAt: new Date(),
-  updatedAt: new Date(),
+  createdAt: now,
+  updatedAt: now,
 };
 const invoiceId = 'invoice_1';
 const invoice: Invoice = {
@@ -82,20 +88,20 @@ const invoice: Invoice = {
   prefix: '',
   company,
   client,
-  date: new Date().toISOString(),
+  date: now,
   items: [
     {
       id: 'item_1',
       invoiceId: 'invoice_1',
       product,
       quantity: 1,
-      date: new Date().toISOString(),
-      createdAt: new Date(),
-      updatedAt: new Date(),
+      date: now,
+      createdAt: now,
+      updatedAt: now,
     },
   ],
-  createdAt: new Date(),
-  updatedAt: new Date(),
+  createdAt: now,
+  updatedAt: now,
 };
 const router = {
   pathname: '/invoices/[invoiceId]/preview',
@@ -117,6 +123,45 @@ describe('PreviewInvoicePage', () => {
         screen.queryAllByText(invoice.company.name).length
       ).toBeGreaterThanOrEqual(1);
     });
+  });
+
+  it('allows the user to send and download the invoice', async () => {
+    server.resetHandlers(mockTrpcQuery('getInvoice', invoice));
+
+    render(<PreviewInvoicePage />, { session, router });
+
+    const approveButton = await screen.findByRole('button', {
+      name: 'Approve and download',
+    });
+
+    const updatedInvoice = {
+      ...invoice,
+      number: 1,
+      status: 'SENT',
+    };
+    server.resetHandlers(
+      mockTrpcMutation('updateInvoice', updatedInvoice),
+      mockTrpcQuery('getInvoice', updatedInvoice)
+    );
+
+    await fireEvent.click(approveButton);
+    await waitFor(() => {
+      expect(downloadInvoice).toHaveBeenCalledWith(updatedInvoice);
+    });
+  });
+
+  it('allows the user to go back to the invoice page', async () => {
+    server.resetHandlers(mockTrpcQuery('getInvoice', invoice));
+
+    render(<PreviewInvoicePage />, { session, router });
+
+    await fireEvent.click(await screen.findByRole('link', { name: 'Back' }));
+
+    expect(mockRouter.push).toHaveBeenCalledWith(
+      Routes.invoice(invoiceId),
+      expect.anything(),
+      expect.anything()
+    );
   });
 
   it('redirects to the 404 page when the invoice is not found', async () => {

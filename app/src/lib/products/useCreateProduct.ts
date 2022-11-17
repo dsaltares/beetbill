@@ -19,11 +19,12 @@ const useCreateProduct = ({ onSuccess }: UseCreateProductArgs = {}) =>
     mutationFn: api.createProduct.mutate,
     cacheKey: QueryKeys.products,
     cacheUpdater: (products, input) => {
+      const now = new Date().toISOString();
       products.push({
         id: `new-product${cuid()}`,
         companyId: '',
-        createdAt: new Date(),
-        updatedAt: new Date(),
+        createdAt: now,
+        updatedAt: now,
         ...input,
       });
     },

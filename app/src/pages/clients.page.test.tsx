@@ -47,8 +47,8 @@ const client1: Client = {
   city: 'client_city',
   paymentTerms: 7,
   companyId: 'company_1',
-  createdAt: new Date(),
-  updatedAt: new Date(),
+  createdAt: new Date().toISOString(),
+  updatedAt: new Date().toISOString(),
 };
 const client2: Client = {
   id: 'client_2',
@@ -64,8 +64,8 @@ const client2: Client = {
   city: 'client_city',
   paymentTerms: 30,
   companyId: 'company_1',
-  createdAt: new Date(),
-  updatedAt: new Date(),
+  createdAt: new Date().toISOString(),
+  updatedAt: new Date().toISOString(),
 };
 const client3: Client = {
   id: 'client_3',
@@ -81,8 +81,8 @@ const client3: Client = {
   city: 'client_city',
   paymentTerms: 14,
   companyId: 'company_1',
-  createdAt: new Date(),
-  updatedAt: new Date(),
+  createdAt: new Date().toISOString(),
+  updatedAt: new Date().toISOString(),
 };
 const clients: Client[] = [client1, client2, client3];
 

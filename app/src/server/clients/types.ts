@@ -14,8 +14,8 @@ export const Client = z.object({
   city: z.string().nullable(),
   paymentTerms: z.number(),
   companyId: z.string(),
-  createdAt: z.date(),
-  updatedAt: z.date(),
+  createdAt: z.string(),
+  updatedAt: z.string(),
 });
 
 export const GetClientInput = z.object({

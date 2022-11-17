@@ -147,7 +147,7 @@ const CreateEditInvoiceForm = ({
       onSubmit={handleSubmit(onSubmit)}
       buttons={
         <>
-          {invoice?.status === 'DRAFT' && (
+          {(!invoice || invoice.status === 'DRAFT') && (
             <Button
               type="submit"
               color="secondary"
