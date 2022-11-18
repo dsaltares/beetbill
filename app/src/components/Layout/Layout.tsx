@@ -17,6 +17,7 @@ const Layout = ({ children }: PropsWithChildren) => {
 
   const hasBlankLayout =
     status === 'unauthenticated' ||
+    pathname === '/' ||
     BlankLayoutPaths.some((path) => pathname.startsWith(path));
 
   return hasBlankLayout ? (

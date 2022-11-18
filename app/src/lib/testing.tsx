@@ -10,6 +10,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { rest } from 'msw';
 import type { TRPCError } from '@trpc/server';
 import { Toaster } from 'react-hot-toast';
+import Layout from '@components/Layout';
 
 const customRender = (
   ui: React.ReactElement,
@@ -48,7 +49,7 @@ const createProviders = ({ session, router }: ProviderData) => {
           basePath="http://localhost:3000/api/auth"
         >
           <QueryClientProvider client={queryClient}>
-            {children}
+            <Layout>{children}</Layout>
             <Toaster position="bottom-center" />
           </QueryClientProvider>
         </SessionProvider>
