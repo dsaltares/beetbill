@@ -128,8 +128,7 @@ model ClientState {
   name         String
   number       String
   vatNumber    String?
-  firstName    String?
-  lastName     String?
+  contactName  String?
   email        String?
   country      String?
   address      String?

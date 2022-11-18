@@ -37,8 +37,7 @@ const client: Client = {
   name: 'client_name',
   number: 'client_number',
   vatNumber: 'client_vat_number',
-  firstName: 'client_first_name',
-  lastName: 'client_last_name',
+  contactName: 'client_contact_name',
   email: 'contact@company.com',
   country: 'client_country',
   address: 'client_address',
@@ -67,11 +66,8 @@ describe('NewClientPage', () => {
     await fireEvent.change(screen.getByLabelText('VAT number'), {
       target: { value: client.vatNumber! },
     });
-    await fireEvent.change(screen.getByLabelText('First name'), {
-      target: { value: client.firstName! },
-    });
-    await fireEvent.change(screen.getByLabelText('Last name'), {
-      target: { value: client.lastName! },
+    await fireEvent.change(screen.getByLabelText('Contact name'), {
+      target: { value: client.contactName! },
     });
     await fireEvent.change(screen.getByLabelText('Email'), {
       target: { value: client.email! },

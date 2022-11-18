@@ -15,8 +15,7 @@ type ClientFormValues = {
   name: Client['name'];
   number: Client['number'];
   vatNumber: Client['vatNumber'];
-  firstName: Client['firstName'];
-  lastName: Client['lastName'];
+  contactName: Client['contactName'];
   email: Client['email'];
   country: Client['country'];
   address: Client['address'];
@@ -116,18 +115,11 @@ const CreateEditClientForm = ({ client }: CreateEditClientFormProps) => {
           label="VAT number"
         />
         <TextField
-          id="client-firstName"
-          placeholder="Contact first name..."
+          id="client-contactName"
+          placeholder="Contact name..."
           type="text"
-          {...register('firstName')}
-          label="First name"
-        />
-        <TextField
-          id="client-lastName"
-          placeholder="Contact last name..."
-          type="text"
-          {...register('lastName')}
-          label="Last name"
+          {...register('contactName')}
+          label="Contact name"
         />
         <TextField
           id="client-email"
