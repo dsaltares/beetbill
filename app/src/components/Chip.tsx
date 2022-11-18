@@ -34,7 +34,10 @@ const Chip = ({
           color === 'secondary' && variant === 'light',
         'bg-white text-zinc-800 border border-zinc-800':
           color === 'secondary' && variant === 'outlined',
-        'bg-red-700 text-zinc-50 hover:bg-red-800': color === 'danger',
+        'bg-red-700 text-zinc-50 hover:bg-red-800':
+          color === 'danger' && variant === 'solid',
+        'bg-red-100 text-red-700 hover:bg-red-200':
+          color === 'danger' && variant === 'light',
         'py-0': size === 'sm',
         'py-1': size === 'md',
       }

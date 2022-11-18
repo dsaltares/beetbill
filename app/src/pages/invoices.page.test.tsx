@@ -265,4 +265,26 @@ describe('InvoicesPage', () => {
     await screen.findByText('Failed to delete invoice');
     await screen.findByText(client.name);
   });
+
+  it('allows marking an invoice as paid', async () => {
+    server.resetHandlers(mockTrpcQuery('getInvoices', [invoice1, invoice2]));
+
+    render(<InvoicesPage />, { session, router });
+
+    await fireEvent.click(await screen.findByRole('button', { name: 'Sent' }));
+
+    const updatedInvoice = {
+      ...invoice2,
+      status: 'PAID',
+    };
+    server.resetHandlers(
+      mockTrpcMutation('updateInvoice', updatedInvoice),
+      mockTrpcQuery('getInvoices', [invoice1, updatedInvoice])
+    );
+
+    await fireEvent.click(await screen.findByText('Paid'));
+
+    await screen.findByText('Successfully updated invoice!');
+    await screen.findByText('Paid');
+  });
 });

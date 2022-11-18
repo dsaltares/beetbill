@@ -10,17 +10,12 @@ import {
 } from '@tanstack/react-table';
 import { rankItem } from '@tanstack/match-sorter-utils';
 import {
-  faArrowRight,
-  faCheck,
-  faFile,
   faMagnifyingGlass,
   faPencil,
   faTrash,
-  faTriangleExclamation,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import addDays from 'date-fns/addDays';
-import isPast from 'date-fns/isPast';
 import useDisclosureForId from '@lib/useDisclosureForId';
 import Routes from '@lib/routes';
 import calculateTotal from '@lib/invoices/calculateTotal';
@@ -42,31 +37,20 @@ import TextField from './Fields/TextField';
 import ConfirmationDialog from './ConfirmationDialog';
 import IconButton from './IconButton';
 import LinkIconButton from './LinkIconButton';
-import Chip from './Chip';
+import InvoiceStatusMenu from './InvoiceStatusMenu';
 
 const toInvoiceTableRow = (invoice: Invoice) => {
   const dueDate = addDays(new Date(invoice.date), invoice.client.paymentTerms);
-  const isOverdue = isPast(dueDate);
-  let status = 'Draft';
-  if (invoice.status === 'PAID') {
-    status = 'Paid';
-  } else if (invoice.status === 'SENT' && isOverdue) {
-    status = 'Overdue';
-  } else if (invoice.status === 'SENT') {
-    status = 'Sent';
-  }
-
-  const currency = invoice.items.find((item) => item.product.currency)?.product
-    .currency;
+  const { total, currency } = calculateTotal(invoice.items);
 
   return {
     ...invoice,
-    total: calculateTotal(invoice.items).total,
+    total,
     clientName: invoice.client.name,
-    status,
     number: getTitle(invoice) || '-',
     dueDate,
-    currency: currency ?? '',
+    currency: currency,
+    invoice,
   };
 };
 
@@ -122,54 +106,9 @@ const InvoicesTable = ({ invoices, onDelete }: InvoicesTableProps) => {
       }),
       columnHelper.accessor('status', {
         header: () => 'Status',
-        cell: (info) => {
-          const status = info.getValue();
-          const size = 'sm';
-          if (status === 'Draft') {
-            return (
-              <Chip
-                color="secondary"
-                variant="light"
-                size={size}
-                startIcon={faFile}
-              >
-                Draft
-              </Chip>
-            );
-          } else if (status === 'Overdue') {
-            return (
-              <Chip
-                color="danger"
-                size={size}
-                startIcon={faTriangleExclamation}
-              >
-                Overdue
-              </Chip>
-            );
-          } else if (status === 'Sent') {
-            return (
-              <Chip
-                color="secondary"
-                variant="solid"
-                size={size}
-                startIcon={faArrowRight}
-              >
-                Sent
-              </Chip>
-            );
-          } else if (status === 'Paid') {
-            return (
-              <Chip
-                color="primary"
-                variant="solid"
-                size={size}
-                startIcon={faCheck}
-              >
-                Paid
-              </Chip>
-            );
-          }
-        },
+        cell: (info) => (
+          <InvoiceStatusMenu invoice={info.row.original.invoice} />
+        ),
       }),
       columnHelper.accessor('total', {
         id: 'total',
@@ -185,7 +124,7 @@ const InvoicesTable = ({ invoices, onDelete }: InvoicesTableProps) => {
         id: 'actions',
         cell: ({ row: { original } }) => {
           const beingCreated = original.id.startsWith('new-');
-          const nonDraft = original.status !== 'Draft';
+          const nonDraft = original.status !== 'DRAFT';
           return (
             <div className="flex gap-4 justify-end">
               <IconButton
