@@ -60,6 +60,7 @@ export const UpdateInvoiceInput = z.object({
 });
 export const UpdateInvoiceOutput = Invoice;
 
+export type InvoiceStatus = z.infer<typeof InvoiceStatus>;
 export type Invoice = z.infer<typeof Invoice>;
 export type LineItemsInput = z.infer<typeof LineItemsInput>;
 export type GetInvoiceInput = z.infer<typeof GetInvoiceInput>;

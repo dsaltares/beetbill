@@ -1,5 +1,6 @@
 import { TRPCError } from '@trpc/server';
 import { InvoiceStatus } from '@prisma/client';
+import omit from 'lodash.omit';
 import { type Procedure, procedure } from '@server/trpc';
 import prisma from '@server/prisma';
 import type { ArrayElement } from '@lib/utilityTypes';
@@ -10,10 +11,8 @@ import { getLastInvoiceNumber } from './utils';
 export const updateInvoice: Procedure<
   UpdateInvoiceInput,
   UpdateInvoiceOutput
-> = async ({
-  ctx: { session },
-  input: { id, clientId, status, prefix, date, items },
-}) => {
+> = async ({ ctx: { session }, input }) => {
+  const { id, clientId, status, prefix, date, items } = input;
   const companyId = session?.companyId as string;
   const existingInvoice = await prisma.invoice.findFirst({
     where: {
@@ -36,7 +35,7 @@ export const updateInvoice: Procedure<
   if (!existingInvoice) {
     throw new TRPCError({ code: 'NOT_FOUND' });
   }
-  if (existingInvoice.status !== InvoiceStatus.DRAFT) {
+  if (!canUpdateInvice(existingInvoice.status, input)) {
     throw new TRPCError({
       code: 'PRECONDITION_FAILED',
       message: 'Cannot update an approved invoice',
@@ -162,6 +161,19 @@ export const updateInvoice: Procedure<
     },
   });
   return mapInvoiceEntity(updatedInvoice);
+};
+
+const canUpdateInvice = (status: InvoiceStatus, input: UpdateInvoiceInput) => {
+  if (status === 'DRAFT') {
+    return true;
+  }
+  if (input.status === 'DRAFT') {
+    return false;
+  }
+
+  return Object.values(omit(input, ['id', 'status'])).every(
+    (value) => value === undefined
+  );
 };
 
 export default procedure

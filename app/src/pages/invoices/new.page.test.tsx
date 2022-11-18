@@ -224,7 +224,7 @@ describe('NewInvoicePage', () => {
 
     await waitFor(() => {
       screen.getByText('Successfully created invoice!');
-      expect(mockRouter.push).toHaveBeenCalledWith(Routes.invoices);
+      expect(mockRouter.push).toHaveBeenCalledWith(Routes.invoice(invoice.id));
     });
   });
 

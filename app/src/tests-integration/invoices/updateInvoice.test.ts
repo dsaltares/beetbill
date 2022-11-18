@@ -394,4 +394,50 @@ describe('updateInvoice', () => {
     expect(updatedInvoice.number).toEqual(firstInvoice.number! + 1);
     expect(updatedInvoice.number).toEqual(dbInvoice.number);
   });
+
+  it('marks an invoice as paid', async () => {
+    const invoice = await createTestInvoice(
+      company.states[0].id,
+      client.states[0].id,
+      InvoiceStatus.SENT
+    );
+
+    const newStatus = InvoiceStatus.PAID;
+    const updatedInvoice = await updateInvoice({
+      ctx: { session },
+      input: {
+        id: invoice.id,
+        status: newStatus,
+      },
+    });
+    const dbInvoice = await prisma.invoice.findUniqueOrThrow({
+      where: { id: invoice.id },
+    });
+
+    expect(updatedInvoice.status).toEqual(dbInvoice.status);
+    expect(updatedInvoice.status).toEqual(newStatus);
+  });
+
+  it('throws when trying to mark an invoice as draft when it is approved', async () => {
+    const invoice = await createTestInvoice(
+      company.states[0].id,
+      client.states[0].id,
+      InvoiceStatus.SENT
+    );
+
+    await expect(
+      updateInvoice({
+        ctx: { session },
+        input: {
+          id: invoice.id,
+          status: InvoiceStatus.DRAFT,
+        },
+      })
+    ).rejects.toEqual(
+      new TRPCError({
+        code: 'PRECONDITION_FAILED',
+        message: 'Cannot update an approved invoice',
+      })
+    );
+  });
 });
