@@ -65,16 +65,10 @@ const CreateEditInvoiceForm = ({
   invoice,
 }: CreateEditInvoiceFormProps) => {
   const router = useRouter();
-  const handleSuccess = useCallback(
-    () => router.push(Routes.invoices),
-    [router]
-  );
   const { mutate: createInvoice, isLoading: isCreating } = useCreateInvoice({
-    onSuccess: handleSuccess,
+    onSuccess: (newInvoice) => router.push(Routes.invoice(newInvoice.id)),
   });
-  const { mutate: updateInvoice, isLoading: isUpdating } = useUpdateInvoice({
-    onSuccess: handleSuccess,
-  });
+  const { mutate: updateInvoice, isLoading: isUpdating } = useUpdateInvoice();
   const isLoading = isCreating || isUpdating;
   const today = useMemo(() => datePickerFormat(startOfDay(new Date())), []);
   const isSent = invoice && invoice?.status !== 'DRAFT';

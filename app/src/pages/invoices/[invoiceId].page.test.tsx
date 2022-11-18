@@ -3,7 +3,6 @@ import { setupServer } from 'msw/node';
 import type { Session } from 'next-auth';
 import { TRPCError } from '@trpc/server';
 import {
-  mockRouter,
   mockTrpcMutation,
   mockTrpcMutationError,
   render,
@@ -17,7 +16,6 @@ import type { Product } from '@server/products/types';
 import type { Company } from '@server/company/types';
 import type { Client } from '@server/clients/types';
 import type { Invoice } from '@server/invoices/types';
-import Routes from '@lib/routes';
 import EditInvoicePage from './[invoiceId].page';
 
 const server = setupServer();
@@ -147,10 +145,7 @@ describe('EditInvoicePage', () => {
       );
     });
 
-    await waitFor(() => {
-      screen.getByText('Successfully updated invoice!');
-      expect(mockRouter.push).toHaveBeenCalledWith(Routes.invoices);
-    });
+    await screen.findByText('Successfully updated invoice!');
   });
 
   it('prevents the user from editing a sent invoice', async () => {
