@@ -1,4 +1,4 @@
-import { createTRPCProxyClient, httpBatchLink } from '@trpc/client';
+import { createTRPCProxyClient, httpBatchLink, httpLink } from '@trpc/client';
 import type { AppRouter } from '@server/router';
 
 export const getBaseUrl = (): string => {
@@ -15,12 +15,18 @@ export const getBaseUrl = (): string => {
   return `http://localhost:${process.env.PORT ?? 3000}`;
 };
 
+const baseUrl = getBaseUrl();
+
 const client = createTRPCProxyClient<AppRouter>({
   links: [
-    httpBatchLink({
-      url: `${getBaseUrl()}/api/trpc`,
-      maxURLLength: 2083,
-    }),
+    process.env.TEST_ENVIRONMENT === 'true'
+      ? httpLink({
+          url: `${baseUrl}/api/trpc`,
+        })
+      : httpBatchLink({
+          url: `${baseUrl}/api/trpc`,
+          maxURLLength: 2083,
+        }),
   ],
 });
 

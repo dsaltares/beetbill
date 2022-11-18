@@ -87,41 +87,27 @@ export const mockRouter: NextRouter = {
 
 export const mockTrpcQuery = (name: string, result: unknown) =>
   rest.get(`http://localhost:3000/api/trpc/${name}`, (_req, res, ctx) =>
-    res(ctx.json([{ result: { data: result } }]))
-  );
-
-type Query = {
-  name: string;
-  result: unknown;
-};
-
-export const mockTrpcQueries = (queries: Query[]) =>
-  rest.get(
-    `http://localhost:3000/api/trpc/${queries
-      .map(({ name }) => name)
-      .join(',')}`,
-    (_req, res, ctx) =>
-      res(ctx.json(queries.map(({ result }) => ({ result: { data: result } }))))
+    res(ctx.json({ result: { data: result } }))
   );
 
 export const mockTrpcQueryError = (name: string, error: TRPCError) =>
   rest.get(`http://localhost:3000/api/trpc/${name}`, (_req, res, ctx) =>
     res(
       ctx.status(500),
-      ctx.json([{ error: { code: error.code, message: error.message } }])
+      ctx.json({ error: { code: error.code, message: error.message } })
     )
   );
 
 export const mockTrpcMutation = (name: string, result: unknown) =>
   rest.post(`http://localhost:3000/api/trpc/${name}`, (_req, res, ctx) =>
-    res(ctx.json([{ result: { data: result } }]))
+    res(ctx.json({ result: { data: result } }))
   );
 
 export const mockTrpcMutationError = (name: string, error: TRPCError) =>
   rest.post(`http://localhost:3000/api/trpc/${name}`, (_req, res, ctx) =>
     res(
       ctx.status(500),
-      ctx.json([{ error: { code: error.code, message: error.message } }])
+      ctx.json({ error: { code: error.code, message: error.message } })
     )
   );
 

@@ -78,3 +78,5 @@ jest.mock('@react-pdf/renderer', () => ({
   Text: ({ children }) => <div>{children}</div>,
   View: ({ children }) => <div>{children}</div>,
 }));
+
+process.env.TEST_ENVIRONMENT = 'true';

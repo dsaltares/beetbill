@@ -3,12 +3,12 @@ import { setupServer } from 'msw/node';
 import type { Session } from 'next-auth';
 import { TRPCError } from '@trpc/server';
 import {
+  mockTrpcQuery,
   mockTrpcMutation,
   mockTrpcMutationError,
   render,
   screen,
   fireEvent,
-  mockTrpcQueries,
   act,
   waitFor,
 } from '@lib/testing';
@@ -38,6 +38,7 @@ const company: Company = {
   name: 'company_name',
   number: 'company_number',
   vatNumber: 'vat_number',
+  contactName: 'contact_name',
   email: 'invoicing@company.com',
   website: 'https://company.com',
   country: 'United Kingdom',
@@ -110,13 +111,11 @@ describe('EditInvoicePage', () => {
 
   it('allows the user to edit the invoice', async () => {
     server.resetHandlers(
-      mockTrpcQueries([
-        { name: 'getInvoice', result: invoice },
-        { name: 'getClients', result: [client] },
-        { name: 'getProducts', result: [product] },
-        { name: 'getCompany', result: company },
-        { name: 'getInvoices', result: [invoice] },
-      ])
+      mockTrpcQuery('getInvoice', invoice),
+      mockTrpcQuery('getClients', [client]),
+      mockTrpcQuery('getProducts', [product]),
+      mockTrpcQuery('getCompany', company),
+      mockTrpcQuery('getInvoices', [invoice])
     );
 
     render(<EditInvoicePage />, { session, router });
@@ -132,10 +131,8 @@ describe('EditInvoicePage', () => {
     };
     server.resetHandlers(
       mockTrpcMutation('updateInvoice', updatedInvoice),
-      mockTrpcQueries([
-        { name: 'getInvoice', result: updatedInvoice },
-        { name: 'getInvoices', result: [updatedInvoice] },
-      ])
+      mockTrpcQuery('getInvoice', updatedInvoice),
+      mockTrpcQuery('getInvoices', [updatedInvoice])
     );
 
     await act(async () => {
@@ -154,13 +151,11 @@ describe('EditInvoicePage', () => {
       number: 1,
     };
     server.resetHandlers(
-      mockTrpcQueries([
-        { name: 'getInvoice', result: sentInvoice },
-        { name: 'getClients', result: [client] },
-        { name: 'getProducts', result: [product] },
-        { name: 'getCompany', result: company },
-        { name: 'getInvoices', result: [sentInvoice] },
-      ])
+      mockTrpcQuery('getInvoice', sentInvoice),
+      mockTrpcQuery('getClients', [client]),
+      mockTrpcQuery('getProducts', [product]),
+      mockTrpcQuery('getCompany', company),
+      mockTrpcQuery('getInvoices', [sentInvoice])
     );
 
     render(<EditInvoicePage />, { session, router });
@@ -174,13 +169,15 @@ describe('EditInvoicePage', () => {
 
   it('shows a message when failing to update the invoice', async () => {
     server.resetHandlers(
-      mockTrpcQueries([
-        { name: 'getInvoice', result: invoice },
-        { name: 'getClients', result: [client] },
-        { name: 'getProducts', result: [product] },
-        { name: 'getCompany', result: company },
-        { name: 'getInvoices', result: [invoice] },
-      ])
+      mockTrpcMutationError(
+        'updateInvoice',
+        new TRPCError({ code: 'INTERNAL_SERVER_ERROR' })
+      ),
+      mockTrpcQuery('getInvoice', invoice),
+      mockTrpcQuery('getClients', [client]),
+      mockTrpcQuery('getProducts', [product]),
+      mockTrpcQuery('getCompany', company),
+      mockTrpcQuery('getInvoices', [invoice])
     );
 
     render(<EditInvoicePage />, { session, router });
@@ -189,17 +186,6 @@ describe('EditInvoicePage', () => {
     await fireEvent.change(await screen.findByPlaceholderText('Prefix...'), {
       target: { value: newPrefix },
     });
-
-    server.resetHandlers(
-      mockTrpcMutationError(
-        'updateInvoice',
-        new TRPCError({ code: 'INTERNAL_SERVER_ERROR' })
-      ),
-      mockTrpcQueries([
-        { name: 'getInvoice', result: invoice },
-        { name: 'getInvoices', result: [invoice] },
-      ])
-    );
 
     await act(async () => {
       await fireEvent.click(
