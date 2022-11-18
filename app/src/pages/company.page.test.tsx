@@ -25,6 +25,7 @@ const company: Company = {
   name: 'company_name',
   number: 'company_number',
   vatNumber: 'vat_number',
+  contactName: 'contact_name',
   email: 'invoicing@company.com',
   website: 'https://company.com',
   country: 'United Kingdom',
@@ -33,7 +34,7 @@ const company: Company = {
   postCode: 'W1',
   iban: 'GB33BUKB20201555555555',
   userId: 'user_id',
-  createdAt: new Date(),
+  createdAt: new Date().toISOString(),
 };
 
 const session: Session = {
@@ -59,6 +60,7 @@ describe('CompanyPage', () => {
     await screen.findByDisplayValue(company.name);
     await screen.findByDisplayValue(company.number);
     await screen.findByDisplayValue(company.vatNumber!);
+    await screen.findByDisplayValue(company.contactName!);
     await screen.findByDisplayValue(company.email!);
     await screen.findByDisplayValue(company.website!);
     await screen.findByDisplayValue(company.country!);

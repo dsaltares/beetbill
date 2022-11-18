@@ -10,7 +10,6 @@ import {
   render,
   screen,
   fireEvent,
-  mockTrpcQueries,
   act,
   waitFor,
 } from '@lib/testing';
@@ -44,6 +43,7 @@ const company: Company = {
   name: 'company_name',
   number: 'company_number',
   vatNumber: 'vat_number',
+  contactName: 'contact_name',
   email: 'invoicing@company.com',
   website: 'https://company.com',
   country: 'United Kingdom',
@@ -94,6 +94,7 @@ describe('NewInvoicePage', () => {
       name: '',
       number: '',
       vatNumber: '',
+      contactName: '',
       email: '',
       website: '',
       country: '',
@@ -105,12 +106,10 @@ describe('NewInvoicePage', () => {
       createdAt: now,
     };
     server.resetHandlers(
-      mockTrpcQueries([
-        { name: 'getClients', result: [] },
-        { name: 'getProducts', result: [] },
-        { name: 'getCompany', result: incompleteCompany },
-        { name: 'getInvoices', result: [] },
-      ])
+      mockTrpcQuery('getClients', []),
+      mockTrpcQuery('getProducts', []),
+      mockTrpcQuery('getCompany', incompleteCompany),
+      mockTrpcQuery('getInvoices', [])
     );
 
     render(<NewInvoicePage />, { session, router });
@@ -127,12 +126,10 @@ describe('NewInvoicePage', () => {
 
   it('tells they user they need to create a client if there are no clients', async () => {
     server.resetHandlers(
-      mockTrpcQueries([
-        { name: 'getClients', result: [] },
-        { name: 'getProducts', result: [product] },
-        { name: 'getCompany', result: company },
-        { name: 'getInvoices', result: [] },
-      ])
+      mockTrpcQuery('getClients', []),
+      mockTrpcQuery('getProducts', [product]),
+      mockTrpcQuery('getCompany', company),
+      mockTrpcQuery('getInvoices', [])
     );
 
     render(<NewInvoicePage />, { session, router });
@@ -149,12 +146,10 @@ describe('NewInvoicePage', () => {
 
   it('tells they user they need to create a product if there are no products', async () => {
     server.resetHandlers(
-      mockTrpcQueries([
-        { name: 'getClients', result: [client] },
-        { name: 'getProducts', result: [] },
-        { name: 'getCompany', result: company },
-        { name: 'getInvoices', result: [] },
-      ])
+      mockTrpcQuery('getClients', [client]),
+      mockTrpcQuery('getProducts', []),
+      mockTrpcQuery('getCompany', company),
+      mockTrpcQuery('getInvoices', [])
     );
 
     render(<NewInvoicePage />, { session, router });
@@ -171,12 +166,10 @@ describe('NewInvoicePage', () => {
 
   it('allows the user to create an invoice', async () => {
     server.resetHandlers(
-      mockTrpcQueries([
-        { name: 'getClients', result: [client] },
-        { name: 'getProducts', result: [product] },
-        { name: 'getCompany', result: company },
-        { name: 'getInvoices', result: [] },
-      ])
+      mockTrpcQuery('getClients', [client]),
+      mockTrpcQuery('getProducts', [product]),
+      mockTrpcQuery('getCompany', company),
+      mockTrpcQuery('getInvoices', [])
     );
 
     render(<NewInvoicePage />, { session, router });
@@ -229,12 +222,14 @@ describe('NewInvoicePage', () => {
 
   it('shows a message when failing to create an invoice', async () => {
     server.resetHandlers(
-      mockTrpcQueries([
-        { name: 'getClients', result: [client] },
-        { name: 'getProducts', result: [product] },
-        { name: 'getCompany', result: company },
-        { name: 'getInvoices', result: [] },
-      ])
+      mockTrpcMutationError(
+        'createInvoice',
+        new TRPCError({ code: 'INTERNAL_SERVER_ERROR' })
+      ),
+      mockTrpcQuery('getClients', [client]),
+      mockTrpcQuery('getProducts', [product]),
+      mockTrpcQuery('getCompany', company),
+      mockTrpcQuery('getInvoices', [])
     );
 
     render(<NewInvoicePage />, { session, router });
@@ -249,14 +244,6 @@ describe('NewInvoicePage', () => {
     const saveButton = await screen.findByRole('button', {
       name: 'Save as draft',
     });
-
-    server.resetHandlers(
-      mockTrpcMutationError(
-        'createInvoice',
-        new TRPCError({ code: 'INTERNAL_SERVER_ERROR' })
-      ),
-      mockTrpcQuery('getInvoices', [])
-    );
 
     await act(async () => {
       await fireEvent.click(saveButton);

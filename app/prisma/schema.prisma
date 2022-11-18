@@ -68,19 +68,20 @@ model Company {
 }
 
 model CompanyState {
-  id        String   @id @default(cuid())
-  name      String
-  number    String
-  vatNumber String?
-  email     String?
-  website   String?
-  country   String?
-  address   String?
-  postCode  String?
-  city      String?
-  iban      String?
-  companyId String
-  createdAt DateTime @default(now())
+  id          String   @id @default(cuid())
+  name        String
+  number      String
+  vatNumber   String?
+  contactName String?
+  email       String?
+  website     String?
+  country     String?
+  address     String?
+  postCode    String?
+  city        String?
+  iban        String?
+  companyId   String
+  createdAt   DateTime @default(now())
 
   company  Company   @relation(fields: [companyId], references: [id], onDelete: Cascade)
   invoices Invoice[]

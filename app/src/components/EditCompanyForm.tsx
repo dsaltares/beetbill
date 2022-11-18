@@ -14,6 +14,7 @@ type EditCompanyFormValues = {
   number: Company['number'];
   email: Company['email'];
   vatNumber: Company['vatNumber'];
+  contactName: Company['contactName'];
   website: Company['website'];
   country: Company['country'];
   address: Company['address'];
@@ -78,6 +79,13 @@ const EditCompanyForm = ({ company }: EditCompanyFormProps) => {
           type="text"
           {...register('vatNumber')}
           label="VAT number"
+        />
+        <TextField
+          id="company-contact"
+          placeholder="Contact name..."
+          type="text"
+          {...register('contactName')}
+          label="Contact name"
         />
         <TextField
           id="company-email"

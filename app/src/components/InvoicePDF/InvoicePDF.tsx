@@ -56,6 +56,7 @@ const InvoicePDF = ({ invoice }: InvoicePDFProps) => {
               <Text style={{ fontSize: fontSizes.base, fontWeight: 'bold' }}>
                 {company.name}
               </Text>
+              {company.contactName && <Text>{company.contactName}</Text>}
               {company.address && <Text>{company.address}</Text>}
               {company.city && <Text>{company.city}</Text>}
               {company.postCode && <Text>{company.postCode}</Text>}
