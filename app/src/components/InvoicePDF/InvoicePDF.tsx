@@ -5,7 +5,6 @@ import formatDate from '@lib/formatDate';
 import getTitle from '@lib/invoices/getTitle';
 import type { Invoice } from '@server/invoices/types';
 import calculateTotal from '@lib/invoices/calculateTotal';
-import fullName from '@lib/fullName';
 import { Table, TableCell, TableHeader, TableRow } from './Table';
 import { sizes, fontSizes } from './styles';
 
@@ -67,9 +66,7 @@ const InvoicePDF = ({ invoice }: InvoicePDFProps) => {
               <Text style={{ fontSize: fontSizes.base, fontWeight: 'bold' }}>
                 {client.name}
               </Text>
-              {(client.firstName || client.lastName) && (
-                <Text>{fullName(client.firstName, client.lastName)}</Text>
-              )}
+              {client.contactName && <Text>{client.contactName}</Text>}
               {client.address && <Text>{client.address}</Text>}
               {client.city && <Text>{client.city}</Text>}
               {client.postCode && <Text>{client.postCode}</Text>}

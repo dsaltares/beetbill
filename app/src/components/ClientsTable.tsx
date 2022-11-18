@@ -18,7 +18,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import useDisclosureForId from '@lib/useDisclosureForId';
 import Routes from '@lib/routes';
 import type { Client } from '@server/clients/types';
-import fullName from '@lib/fullName';
 import {
   Body,
   BodyCell,
@@ -64,10 +63,7 @@ const ClientsTable = ({ clients, onDelete }: ClientsTableProps) => {
           <div className="flex flex-col gap-1">
             <div className="text-xl font-medium">{info.getValue()}</div>
             <div className="text-base font-normal">
-              {fullName(
-                info.row.original.firstName,
-                info.row.original.lastName
-              )}
+              {info.row.original.contactName}
             </div>
           </div>
         ),
