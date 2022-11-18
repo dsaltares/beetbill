@@ -5,6 +5,7 @@ export const Company = z.object({
   name: z.string(),
   number: z.string(),
   vatNumber: z.string().nullable(),
+  contactName: z.string().nullable(),
   email: z.string().nullable(),
   website: z.string().nullable(),
   country: z.string().nullable(),
