@@ -8,6 +8,7 @@ const getTitle = (invoice: Invoice) => {
   } else if (invoice.prefix) {
     return `${invoice.prefix} -`;
   }
+  return '';
 };
 
 export default getTitle;
