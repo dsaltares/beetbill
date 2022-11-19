@@ -5,6 +5,7 @@ import {
   faDownload,
 } from '@fortawesome/free-solid-svg-icons';
 import { useCallback } from 'react';
+import { BrowserView, MobileView } from 'react-device-detect';
 import type { Invoice } from '@server/invoices/types';
 import Routes from '@lib/routes';
 import getTitle from '@lib/invoices/getTitle';
@@ -72,9 +73,20 @@ const InvoicePreview = ({ invoice }: InvoicePreviewProps) => {
           height: `${height}px`,
         }}
       />
-      <PDFViewer className="w-full h-full" showToolbar={false}>
-        <InvoicePDF invoice={invoice} />
-      </PDFViewer>
+      <BrowserView className="w-full h-full">
+        <PDFViewer className="w-full h-full" showToolbar={false}>
+          <InvoicePDF invoice={invoice} />
+        </PDFViewer>
+      </BrowserView>
+      <MobileView className="flex flex-col w-full h-full items-center justify-center gap-3 p-5">
+        <p className="max-w-prose text-base text-zinc-900 text-center">
+          Mobile browsers do not support PDF previews. But you can still
+          download a copy.
+        </p>
+        <Button endIcon={faDownload} onClick={handleDownload}>
+          Download
+        </Button>
+      </MobileView>
     </div>
   );
 };
