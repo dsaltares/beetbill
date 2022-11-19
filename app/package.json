@@ -19,7 +19,7 @@
     "test:coverage": "./scripts/merge-coverage-report",
     "storybook": "start-storybook -p 6006 -s ./.storybook/public",
     "build-storybook": "build-storybook -s ./.storybook/public",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "prisma generate && tsc --noEmit"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.2.0",
