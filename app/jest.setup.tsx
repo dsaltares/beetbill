@@ -1,6 +1,6 @@
 import '@testing-library/jest-dom';
-
-import { TextEncoder, TextDecoder } from 'util';
+// https://github.com/inrupt/solid-client-authn-js/issues/1676
+import '@inrupt/jest-jsdom-polyfills';
 import type { PropsWithChildren } from 'react';
 import React from 'react';
 
@@ -48,10 +48,6 @@ jest.mock('next/link', () =>
     })
   )
 );
-
-// https://github.com/inrupt/solid-client-authn-js/issues/1676
-global.TextEncoder = TextEncoder;
-global.TextDecoder = TextDecoder;
 
 class FakeDOMRect {
   x: number;
