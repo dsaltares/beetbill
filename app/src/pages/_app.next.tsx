@@ -23,7 +23,17 @@ const App = ({ Component, pageProps: { session, ...pageProps } }: AppProps) => (
   <Providers session={session}>
     <Layout>
       <Head>
+        <meta charSet="utf-8" />
+        <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
+        <meta
+          name="viewport"
+          content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"
+        />
         <title>{AppName}</title>
+        <meta name="description" content="The invoicing app for freelancers" />
+        <link rel="manifest" href="/manifest.json" />
+        <link rel="apple-touch-icon" href="/icons/icon-152x152.png"></link>
+        <meta name="theme-color" content="#6B26D9" />
       </Head>
       <Component {...pageProps} />
     </Layout>

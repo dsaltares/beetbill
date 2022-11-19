@@ -114,3 +114,7 @@ database
 
 #storybook
 app/storybook-static
+
+#pwa
+app/public/sw.js*
+app/public/workbox-*
