@@ -19,6 +19,7 @@ export const Invoice = z.object({
   prefix: z.string(),
   number: z.number().nullish(),
   date: z.string(),
+  message: z.string(),
   createdAt: z.string(),
   updatedAt: z.string(),
   company: Company,
@@ -44,6 +45,7 @@ export const CreateInvoiceInput = z.object({
   status: InvoiceStatus.optional(),
   prefix: z.string().optional(),
   date: z.string().optional(),
+  message: z.string().optional(),
   clientId: z.string(),
   items: LineItemsInput.optional(),
 });
@@ -55,6 +57,7 @@ export const UpdateInvoiceInput = z.object({
   status: InvoiceStatus.optional(),
   prefix: z.string().optional(),
   date: z.string().optional(),
+  message: z.string().optional(),
   clientId: z.string().optional(),
   items: LineItemsInput.optional(),
 });

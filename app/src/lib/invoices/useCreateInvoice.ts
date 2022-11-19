@@ -32,6 +32,7 @@ const useCreateInvoice = ({ onSuccess }: UseCreateInvoicesArgs = {}) =>
         id: `new-invoice${cuid()}`,
         status: 'DRAFT',
         prefix: '',
+        message: '',
         number: 0,
         date: now,
         createdAt: now,

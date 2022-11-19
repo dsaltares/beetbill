@@ -26,11 +26,13 @@ import InvoiceTotalSection from './InvoiceTotalSection';
 import IconButton from './IconButton';
 import Button from './Button';
 import LinkButton from './LinkButton';
+import TextAreaField from './Fields/TextAreaField';
 
 type InvoiceFormValues = {
   status: Invoice['status'];
   prefix: Invoice['prefix'];
   date: string;
+  message: string;
   client: Invoice['client'];
   items: {
     product: Product;
@@ -86,6 +88,7 @@ const CreateEditInvoiceForm = ({
       status: invoice?.status ?? 'DRAFT',
       prefix: invoice?.prefix ?? '',
       date: invoice?.date ? datePickerFormat(new Date(invoice.date)) : today,
+      message: invoice?.message ?? '',
       items: (invoice?.items ?? []).map(({ product, date, quantity }) => ({
         product,
         date: datePickerFormat(new Date(date)),
@@ -212,6 +215,13 @@ const CreateEditInvoiceForm = ({
             <span className="font-medium">Due date</span>
             <span className="font-bold py-2">{formattedDueDate || ''}</span>
           </div>
+          <TextAreaField
+            id="invoice-message"
+            placeholder="Message..."
+            {...register('message')}
+            label="Message"
+            disabled={isSent}
+          />
         </div>
         <LineItemsTable>
           <>
