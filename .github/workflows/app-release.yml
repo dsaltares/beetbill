@@ -7,7 +7,7 @@ on:
 
 jobs:
   validate:
-    uses: dsaltares/invoicing/.github/workflows/app-shared.yml@main
+    uses: ./.github/workflows/app-shared.yml
 
   deployAppVercel:
     runs-on: ubuntu-latest

@@ -22,6 +22,12 @@ export const CreateProductInput = Product.omit({
   companyId: true,
   createdAt: true,
   updatedAt: true,
+}).partial({
+  includesVat: true,
+  price: true,
+  currency: true,
+  vat: true,
+  unit: true,
 });
 export const CreateProductOutput = Product;
 export const DeleteProductInput = z.object({ id: z.string() });

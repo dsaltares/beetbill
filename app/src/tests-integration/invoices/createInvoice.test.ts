@@ -10,6 +10,7 @@ import {
 } from '../testData';
 import { createInvoice } from '@server/invoices/createInvoice';
 
+const now = new Date().toISOString();
 let user: User;
 let company: Awaited<ReturnType<typeof createTestCompany>>;
 let client: Awaited<ReturnType<typeof createTestClient>>;
@@ -28,7 +29,7 @@ describe('createInvoice', () => {
     const input = {
       status: InvoiceStatus.DRAFT,
       prefix: 'INV',
-      date: new Date(),
+      date: now,
       clientId: client.id,
       items: [{ productId: product.id }],
     };
@@ -61,7 +62,7 @@ describe('createInvoice', () => {
     const input = {
       status: InvoiceStatus.SENT,
       prefix: 'INV',
-      date: new Date(),
+      date: now,
       clientId: client.id,
       items: [{ productId: product.id }],
     };
@@ -87,7 +88,7 @@ describe('createInvoice', () => {
         input: {
           status: InvoiceStatus.DRAFT,
           prefix: 'INV',
-          date: new Date(),
+          date: now,
           clientId: client.id,
         },
       })
@@ -101,7 +102,7 @@ describe('createInvoice', () => {
         input: {
           status: InvoiceStatus.DRAFT,
           prefix: 'INV',
-          date: new Date(),
+          date: now,
           clientId: client.id,
           items: [{ productId: 'invalid_product' }],
         },

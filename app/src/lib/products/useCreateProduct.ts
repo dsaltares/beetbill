@@ -25,6 +25,11 @@ const useCreateProduct = ({ onSuccess }: UseCreateProductArgs = {}) =>
         companyId: '',
         createdAt: now,
         updatedAt: now,
+        includesVat: false,
+        price: 0,
+        currency: 'EUR',
+        vat: 0,
+        unit: 'hours',
         ...input,
       });
     },

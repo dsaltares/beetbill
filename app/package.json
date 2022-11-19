@@ -18,7 +18,8 @@
     "test:integration": "dotenv -e .env.tests prisma migrate dev && jest -c jest.integration.config.js ",
     "test:coverage": "./scripts/merge-coverage-report",
     "storybook": "start-storybook -p 6006 -s ./.storybook/public",
-    "build-storybook": "build-storybook -s ./.storybook/public"
+    "build-storybook": "build-storybook -s ./.storybook/public",
+    "typecheck": "prisma generate && tsc --noEmit"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.2.0",
@@ -56,6 +57,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.19.3",
+    "@inrupt/jest-jsdom-polyfills": "^1.4.2",
     "@storybook/addon-actions": "^6.5.12",
     "@storybook/addon-essentials": "^6.5.12",
     "@storybook/addon-interactions": "^6.5.12",
@@ -77,6 +79,7 @@
     "@types/nodemailer": "^6.4.6",
     "@types/react": "18.0.21",
     "@types/react-dom": "18.0.6",
+    "@types/testing-library__jest-dom": "^5.14.5",
     "@typescript-eslint/eslint-plugin": "^5.41.0",
     "@typescript-eslint/parser": "^5.41.0",
     "autoprefixer": "^10.4.13",

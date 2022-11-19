@@ -41,6 +41,7 @@ const company: Company = {
   id: companyId,
   name: 'company_name',
   number: 'company_number',
+  contactName: 'contact_name',
   vatNumber: 'vat_number',
   email: 'invoicing@company.com',
   website: 'https://company.com',

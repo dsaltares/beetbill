@@ -1,5 +1,7 @@
 import '@testing-library/jest-dom';
-import { TextEncoder, TextDecoder } from 'util';
+// https://github.com/inrupt/solid-client-authn-js/issues/1676
+import '@inrupt/jest-jsdom-polyfills';
+import type { PropsWithChildren } from 'react';
 import React from 'react';
 
 // https://jestjs.io/docs/manual-mocks#mocking-methods-which-are-not-implemented-in-jsdom
@@ -22,6 +24,12 @@ class FakeInteractionObserver {
   observe() {}
   unobserve() {}
   disconnect() {}
+  takeRecords() {
+    return [];
+  }
+  readonly root = null;
+  readonly rootMargin = '';
+  readonly thresholds = [];
 }
 window.IntersectionObserver = FakeInteractionObserver;
 global.IntersectionObserver = FakeInteractionObserver;
@@ -29,20 +37,27 @@ global.IntersectionObserver = FakeInteractionObserver;
 const originalLink = jest.requireActual('next/link');
 
 jest.mock('next/link', () =>
-  React.forwardRef(({ children, ...props }, ref) =>
+  // eslint-disable-next-line react/display-name
+  React.forwardRef(({ children, ...props }: PropsWithChildren, ref) =>
+    // eslint-disable-next-line react/no-children-prop
     React.createElement(originalLink, {
       ...props,
       ref,
+      // eslint-disable-next-line react/no-children-prop
       children: React.createElement('a', { children, ...props }),
     })
   )
 );
 
-// https://github.com/inrupt/solid-client-authn-js/issues/1676
-global.TextEncoder = TextEncoder;
-global.TextDecoder = TextDecoder;
-
 class FakeDOMRect {
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+  top: number;
+  right: number;
+  bottom: number;
+  left: number;
   constructor() {
     this.x = 0;
     this.y = 0;
@@ -66,17 +81,28 @@ class FakeDOMRect {
       left: this.left,
     };
   }
+
+  static fromRect(other?: DOMRectInit | undefined): DOMRect {
+    const rect = new FakeDOMRect();
+    if (other) {
+      rect.x = other.x || 0;
+      rect.y = other.y || 0;
+      rect.width = other.width || 0;
+      rect.height = other.height || 0;
+    }
+    return rect;
+  }
 }
 global.DOMRect = FakeDOMRect;
 
 jest.mock('@react-pdf/renderer', () => ({
   Font: { register: jest.fn() },
-  Document: ({ children }) => <div>{children}</div>,
-  Image: ({ children }) => <div>{children}</div>,
-  Page: ({ children }) => <div>{children}</div>,
-  PDFViewer: ({ children }) => <div>{children}</div>,
-  Text: ({ children }) => <div>{children}</div>,
-  View: ({ children }) => <div>{children}</div>,
+  Document: ({ children }: PropsWithChildren) => <div>{children}</div>,
+  Image: ({ children }: PropsWithChildren) => <div>{children}</div>,
+  Page: ({ children }: PropsWithChildren) => <div>{children}</div>,
+  PDFViewer: ({ children }: PropsWithChildren) => <div>{children}</div>,
+  Text: ({ children }: PropsWithChildren) => <div>{children}</div>,
+  View: ({ children }: PropsWithChildren) => <div>{children}</div>,
 }));
 
 process.env.TEST_ENVIRONMENT = 'true';
