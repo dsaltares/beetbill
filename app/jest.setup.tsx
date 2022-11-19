@@ -1,5 +1,6 @@
 import '@testing-library/jest-dom';
 
+import { TextEncoder, TextDecoder } from 'util';
 import type { PropsWithChildren } from 'react';
 import React from 'react';
 
