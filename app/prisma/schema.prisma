@@ -150,11 +150,12 @@ enum InvoiceStatus {
 }
 
 model Invoice {
-  id     String        @id @default(cuid())
-  status InvoiceStatus @default(DRAFT)
-  prefix String        @default("")
-  number Int?
-  date   DateTime      @default(now())
+  id      String        @id @default(cuid())
+  status  InvoiceStatus @default(DRAFT)
+  prefix  String        @default("")
+  number  Int?
+  date    DateTime      @default(now())
+  message String        @default("")
 
   companyStateId String
   clientStateId  String

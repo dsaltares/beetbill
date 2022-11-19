@@ -33,6 +33,7 @@ const mapInvoiceEntity = ({
   prefix,
   number,
   date,
+  message,
   createdAt,
   updatedAt,
   companyState: { company, ...companyState },
@@ -44,6 +45,7 @@ const mapInvoiceEntity = ({
   prefix,
   number,
   date: date.toISOString(),
+  message,
   createdAt: createdAt.toISOString(),
   updatedAt: updatedAt.toISOString(),
   company: mapCompanyEntity({

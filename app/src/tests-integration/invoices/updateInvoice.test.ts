@@ -89,11 +89,13 @@ describe('updateInvoice', () => {
     );
 
     const newPrefix = '2022';
+    const newMessage = 'New message';
     const updatedInvoice = await updateInvoice({
       ctx: { session },
       input: {
         id: invoice.id,
         prefix: newPrefix,
+        message: newMessage,
       },
     });
     const dbInvoice = await prisma.invoice.findUniqueOrThrow({
@@ -102,6 +104,8 @@ describe('updateInvoice', () => {
 
     expect(updatedInvoice.prefix).toEqual(dbInvoice.prefix);
     expect(updatedInvoice.prefix).toEqual(newPrefix);
+    expect(updatedInvoice.message).toEqual(dbInvoice.message);
+    expect(updatedInvoice.message).toEqual(newMessage);
   });
 
   it('changes the client of the invoice', async () => {

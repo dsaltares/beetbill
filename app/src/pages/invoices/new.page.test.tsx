@@ -180,6 +180,9 @@ describe('NewInvoicePage', () => {
     await act(async () => {
       await fireEvent.click(await screen.findByText(product.name));
     });
+    await fireEvent.change(await screen.findByPlaceholderText('Message...'), {
+      target: { value: 'message' },
+    });
 
     const invoice: Invoice = {
       id: 'invoice_1',
@@ -188,6 +191,7 @@ describe('NewInvoicePage', () => {
       company,
       client,
       date: now,
+      message: '',
       items: [
         {
           id: 'item_1',

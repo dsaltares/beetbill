@@ -12,7 +12,7 @@ export const createInvoice: Procedure<
   CreateInvoiceOutput
 > = async ({
   ctx: { session },
-  input: { clientId, status, prefix, date, items },
+  input: { clientId, status, prefix, date, message, items },
 }) => {
   const companyId = session?.companyId as string;
   const [client, company] = await Promise.all([
@@ -54,6 +54,7 @@ export const createInvoice: Procedure<
           ? (await getLastInvoiceNumber({ companyId, prefix })) + 1
           : null,
       date,
+      message,
       companyStateId: company.states[0].id,
       clientStateId: client.states[0].id,
       items: {

@@ -13,7 +13,7 @@ type InvoicePDFProps = {
 };
 
 const InvoicePDF = ({ invoice }: InvoicePDFProps) => {
-  const { items, company, client, date } = invoice;
+  const { items, company, client, date, message } = invoice;
   const { total, currency, exclVat } = calculateTotal(items);
   const title = `Invoice ${getTitle(invoice)}`;
   return (
@@ -80,6 +80,17 @@ const InvoicePDF = ({ invoice }: InvoicePDFProps) => {
               )}
             </View>
           </View>
+          {message && (
+            <View
+              style={{
+                width: '50%',
+                marginBottom: sizes[4],
+                fontSize: fontSizes.sm,
+              }}
+            >
+              <Text>{message}</Text>
+            </View>
+          )}
           <View style={{ width: '100%', marginBottom: sizes[4] }}>
             <Table>
               <TableHeader>

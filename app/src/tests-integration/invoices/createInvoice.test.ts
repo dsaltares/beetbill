@@ -30,6 +30,7 @@ describe('createInvoice', () => {
       status: InvoiceStatus.DRAFT,
       prefix: 'INV',
       date: now,
+      message: 'nessage',
       clientId: client.id,
       items: [{ productId: product.id }],
     };
@@ -48,6 +49,7 @@ describe('createInvoice', () => {
     expect(invoice.status).toEqual(dbInvoice.status);
     expect(invoice.prefix).toEqual(dbInvoice.prefix);
     expect(invoice.date).toEqual(dbInvoice.date.toISOString());
+    expect(invoice.message).toEqual(dbInvoice.message);
     expect(invoice.client.id).toEqual(dbInvoice.clientState.clientId);
     expect(invoice.company.id).toEqual(dbInvoice.companyState.companyId);
     expect(invoice.items).toEqual([

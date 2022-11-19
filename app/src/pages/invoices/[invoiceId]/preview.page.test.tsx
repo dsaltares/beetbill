@@ -89,6 +89,7 @@ const invoice: Invoice = {
   company,
   client,
   date: now,
+  message: '',
   items: [
     {
       id: 'item_1',

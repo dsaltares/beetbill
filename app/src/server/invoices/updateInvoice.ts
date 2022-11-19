@@ -12,7 +12,7 @@ export const updateInvoice: Procedure<
   UpdateInvoiceInput,
   UpdateInvoiceOutput
 > = async ({ ctx: { session }, input }) => {
-  const { id, clientId, status, prefix, date, items } = input;
+  const { id, clientId, status, prefix, date, message, items } = input;
   const companyId = session?.companyId as string;
   const existingInvoice = await prisma.invoice.findFirst({
     where: {
@@ -136,6 +136,7 @@ export const updateInvoice: Procedure<
       status,
       prefix,
       date,
+      message,
       clientStateId,
     },
     include: {
