@@ -31,7 +31,7 @@ describe('createProduct', () => {
       },
     });
     expect(result).toMatchObject(input);
-    expect(result).toMatchObject(omit(dbClient.states[0], 'id', 'createdAt'));
+    expect(result).toMatchObject(omit(dbClient?.states[0], 'id', 'createdAt'));
   });
 
   it('throws when the company does not exist', async () => {

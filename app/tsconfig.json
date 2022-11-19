@@ -23,6 +23,6 @@
     },
     "types": ["@types/jest"]
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
+  "include": ["next-env.d.ts", "./jest-setup.tsx", "**/*.ts", "**/*.tsx"],
   "exclude": ["node_modules"]
 }

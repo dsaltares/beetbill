@@ -43,6 +43,7 @@ const company: Company = {
   name: 'Company',
   number: '1',
   vatNumber: '123456789',
+  contactName: 'contact_name',
   userId: userId,
   createdAt: now,
   email: null,

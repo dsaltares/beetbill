@@ -37,6 +37,7 @@ specifiers:
   '@types/nodemailer': ^6.4.6
   '@types/react': 18.0.21
   '@types/react-dom': 18.0.6
+  '@types/testing-library__jest-dom': ^5.14.5
   '@typescript-eslint/eslint-plugin': ^5.41.0
   '@typescript-eslint/parser': ^5.41.0
   autoprefixer: ^10.4.13
@@ -137,6 +138,7 @@ devDependencies:
   '@types/nodemailer': 6.4.6
   '@types/react': 18.0.21
   '@types/react-dom': 18.0.6
+  '@types/testing-library__jest-dom': 5.14.5
   '@typescript-eslint/eslint-plugin': 5.41.0_fypurpq5f6m3gqqbn4y6g7g424
   '@typescript-eslint/parser': 5.41.0_abkyjrvwkq25uefwggm6hc3u2a
   autoprefixer: 10.4.13_postcss@8.4.18
