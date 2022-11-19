@@ -33,12 +33,12 @@ const FormCard = ({
           </LinkButton>
         </div>
       )}
-      <div className="flex justify-between gap-8 mb-16 items-start">
+      <div className="grid grid-cols-1 md:grid-cols-2 justify-between gap-3 mb-16 items-start">
         <div className="flex flex-col gap-2">
           <h1 className="text-4xl font-bold text-zinc-900">{title}</h1>
           <p className="text-base text-zinc-900">{description}</p>
         </div>
-        <div className="flex items-center gap-4">{buttons}</div>
+        <div className="flex items-center justify-end gap-4">{buttons}</div>
       </div>
       {children}
     </form>

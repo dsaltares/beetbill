@@ -36,7 +36,7 @@ const InvoicePreview = ({ invoice }: InvoicePreviewProps) => {
     <div className="w-full h-full flex flex-col">
       <div
         ref={ref}
-        className="fixed top-0 z-10 flex w-full p-4 items-center justify-between bg-violet-800"
+        className="fixed top-0 z-10 flex flex-wrap w-full p-4 items-center justify-between bg-violet-800"
       >
         <div className="flex items-center gap-6">
           <LinkButton
