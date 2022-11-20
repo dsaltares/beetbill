@@ -14,9 +14,9 @@ const SidebarLayout = ({ children }: PropsWithChildren) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [router.asPath]);
   return (
-    <div className="flex flex-row min-h-full w-full">
+    <div className="flex flex-row min-h-full w-full bg-violet-50">
       <Sidebar isOpen={isOpen} onClose={onClose} />
-      <div className="flex flex-col w-full bg-violet-50 main-content">
+      <div className="flex flex-col h-full main-content">
         <MobileSidebarOpenControls onOpenSidebar={onOpen} />
         <main className="flex flex-col min-h-full w-full p-4 lg:p-12">
           {children}
