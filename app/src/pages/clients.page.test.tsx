@@ -48,6 +48,8 @@ const client1: Client = {
   companyId: 'company_1',
   createdAt: new Date().toISOString(),
   updatedAt: new Date().toISOString(),
+  toBePaid: { value: 100, currency: 'EUR' },
+  paid: { value: 150, currency: 'EUR' },
 };
 const client2: Client = {
   id: 'client_2',
@@ -64,6 +66,8 @@ const client2: Client = {
   companyId: 'company_1',
   createdAt: new Date().toISOString(),
   updatedAt: new Date().toISOString(),
+  toBePaid: { value: 0, currency: 'EUR' },
+  paid: { value: 200, currency: 'EUR' },
 };
 const client3: Client = {
   id: 'client_3',
@@ -80,6 +84,8 @@ const client3: Client = {
   companyId: 'company_1',
   createdAt: new Date().toISOString(),
   updatedAt: new Date().toISOString(),
+  toBePaid: { value: 300, currency: 'GBP' },
+  paid: { value: 0, currency: 'GBP' },
 };
 const clients: Client[] = [client1, client2, client3];
 
@@ -116,6 +122,14 @@ describe('ClientsPage', () => {
       expect(rows[0]).toContainHTML(clients[0].name);
       expect(rows[1]).toContainHTML(clients[1].name);
       expect(rows[2]).toContainHTML(clients[2].name);
+
+      expect(rows[0]).toContainHTML('100.00 EUR');
+      expect(rows[1]).toContainHTML('0.00 EUR');
+      expect(rows[2]).toContainHTML('300.00 GBP');
+
+      expect(rows[0]).toContainHTML('150.00 EUR');
+      expect(rows[1]).toContainHTML('200.00 EUR');
+      expect(rows[2]).toContainHTML('0.00 GBP');
     });
 
     await act(async () => {

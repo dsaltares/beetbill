@@ -1,5 +1,10 @@
 import { z } from 'zod';
 
+export const Amount = z.object({
+  value: z.number(),
+  currency: z.string(),
+});
+
 export const Client = z.object({
   id: z.string(),
   name: z.string(),
@@ -15,6 +20,8 @@ export const Client = z.object({
   companyId: z.string(),
   createdAt: z.string(),
   updatedAt: z.string(),
+  toBePaid: Amount.optional(),
+  paid: Amount.optional(),
 });
 
 export const GetClientInput = z.object({
@@ -27,6 +34,8 @@ export const CreateClientInput = Client.omit({
   companyId: true,
   createdAt: true,
   updatedAt: true,
+  toBePaid: true,
+  paid: true,
 }).partial({
   vatNumber: true,
   contactName: true,
@@ -44,11 +53,14 @@ export const UpdateClientInput = Client.omit({
   companyId: true,
   createdAt: true,
   updatedAt: true,
+  toBePaid: true,
+  paid: true,
 })
   .partial()
   .merge(z.object({ id: z.string() }));
 export const UpdateClientOutput = Client;
 
+export type Amount = z.infer<typeof Amount>;
 export type Client = z.infer<typeof Client>;
 export type GetClientInput = z.infer<typeof GetClientInput>;
 export type GetClientOutput = z.infer<typeof GetClientOutput>;
