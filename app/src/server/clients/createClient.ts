@@ -14,7 +14,7 @@ export const createClient: Procedure<
     },
     include: { states: true },
   });
-  return mapClientEntity(client);
+  return mapClientEntity(client, []);
 };
 
 export default procedure

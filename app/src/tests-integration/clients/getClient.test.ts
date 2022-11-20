@@ -7,8 +7,11 @@ import {
   createTestCompany,
   createTestClient,
   createTestUser,
+  createTestProduct,
+  createTestInvoice,
 } from '../testData';
 
+const now = new Date();
 let user1: User;
 let user2: User;
 let company1: Awaited<ReturnType<typeof createTestCompany>>;
@@ -27,12 +30,28 @@ describe('getClient', () => {
 
   it('returns the client', async () => {
     const dbClient = await createTestClient(company1.id);
+    const [product1, product2] = await Promise.all([
+      createTestProduct(company1.id, 'EUR', 1),
+      createTestProduct(company1.id, 'EUR', 2),
+    ]);
+    await Promise.all([
+      createTestInvoice(company1.states[0].id, dbClient.states[0].id, 'SENT', [
+        { productStateId: product1.states[0].id, quantity: 2, date: now },
+        { productStateId: product2.states[0].id, quantity: 3, date: now },
+      ]),
+      createTestInvoice(company1.states[0].id, dbClient.states[0].id, 'PAID', [
+        { productStateId: product1.states[0].id, quantity: 1, date: now },
+        { productStateId: product2.states[0].id, quantity: 1, date: now },
+      ]),
+    ]);
 
     const client = await getClient({
       ctx: { session },
       input: { id: dbClient.id },
     });
     expect(client).toMatchObject(omit(dbClient.states[0], 'id', 'createdAt'));
+    expect(client.toBePaid).toEqual({ value: 8, currency: 'EUR' });
+    expect(client.paid).toEqual({ value: 3, currency: 'EUR' });
   });
 
   it('throws a NOT_FOUND error when the client does not exist', async () => {
