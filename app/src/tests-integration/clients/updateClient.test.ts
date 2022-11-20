@@ -7,9 +7,12 @@ import {
   createTestCompany,
   createTestClient,
   createTestUser,
+  createTestProduct,
+  createTestInvoice,
 } from '../testData';
 import prisma from '@server/prisma';
 
+const now = new Date();
 let user: User;
 let company: Awaited<ReturnType<typeof createTestCompany>>;
 let session: Session;
@@ -35,6 +38,20 @@ describe('updateClient', () => {
 
   it('updates the client', async () => {
     const client = await createTestClient(company.id);
+    const [product1, product2] = await Promise.all([
+      createTestProduct(company.id, 'EUR', 1),
+      createTestProduct(company.id, 'EUR', 2),
+    ]);
+    await Promise.all([
+      createTestInvoice(company.states[0].id, client.states[0].id, 'SENT', [
+        { productStateId: product1.states[0].id, quantity: 2, date: now },
+        { productStateId: product2.states[0].id, quantity: 3, date: now },
+      ]),
+      createTestInvoice(company.states[0].id, client.states[0].id, 'PAID', [
+        { productStateId: product1.states[0].id, quantity: 1, date: now },
+        { productStateId: product2.states[0].id, quantity: 1, date: now },
+      ]),
+    ]);
     const newName = 'Updated Client';
     const updatedClient = await updateClient({
       ctx: { session },
@@ -57,5 +74,7 @@ describe('updateClient', () => {
     expect(updatedClient).toMatchObject(
       omit(dbClient.states[0], 'id', 'createdAt')
     );
+    expect(updatedClient.toBePaid).toEqual({ value: 8, currency: 'EUR' });
+    expect(updatedClient.paid).toEqual({ value: 3, currency: 'EUR' });
   });
 });
