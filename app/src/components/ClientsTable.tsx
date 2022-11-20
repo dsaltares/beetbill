@@ -34,9 +34,22 @@ import ConfirmationDialog from './ConfirmationDialog';
 import LinkIconButton from './LinkIconButton';
 import IconButton from './IconButton';
 
-const columnHelper = createColumnHelper<Client>();
+const toClientTableRow = (client: Client) => ({
+  ...client,
+  toBePaid: client.toBePaid?.value,
+  paid: client.paid?.value,
+  currency: client.toBePaid?.currency || client.paid?.currency,
+});
 
-const fuzzyFilter: FilterFn<Client> = (row, columnId, value, addMeta) => {
+type ClientTableRow = ReturnType<typeof toClientTableRow>;
+const columnHelper = createColumnHelper<ClientTableRow>();
+
+const fuzzyFilter: FilterFn<ClientTableRow> = (
+  row,
+  columnId,
+  value,
+  addMeta
+) => {
   const itemRank = rankItem(row.getValue(columnId), value);
   addMeta({ itemRank });
   return itemRank.passed;
@@ -67,6 +80,22 @@ const ClientsTable = ({ clients, onDelete }: ClientsTableProps) => {
             </div>
           </div>
         ),
+      }),
+      columnHelper.accessor('toBePaid', {
+        header: () => 'Open invoices',
+        cell: (info) => {
+          const value = info.getValue();
+          const currency = info.row.original.currency;
+          return value ? `${value.toFixed(2)} ${currency}` : '';
+        },
+      }),
+      columnHelper.accessor('paid', {
+        header: () => 'Paid invoices',
+        cell: (info) => {
+          const value = info.getValue();
+          const currency = info.row.original.currency;
+          return value ? `${value.toFixed(2)} ${currency}` : '';
+        },
       }),
       columnHelper.display({
         id: 'actions',
@@ -99,8 +128,9 @@ const ClientsTable = ({ clients, onDelete }: ClientsTableProps) => {
     [onOpen]
   );
 
+  const tableClients = useMemo(() => clients.map(toClientTableRow), [clients]);
   const table = useReactTable({
-    data: clients,
+    data: tableClients,
     columns,
     state: {
       globalFilter,

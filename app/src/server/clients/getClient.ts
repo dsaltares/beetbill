@@ -4,22 +4,26 @@ import { type Procedure, procedure } from '@server/trpc';
 import prisma from '@server/prisma';
 import { GetClientInput, GetClientOutput } from './types';
 import mapClientEntity from './mapClientEntity';
+import { getInvoicesForClient } from './utils';
 
 export const getClient: Procedure<GetClientInput, GetClientOutput> = async ({
   ctx: { session },
   input: { id },
 }) => {
   try {
-    const client = await prisma.client.findFirstOrThrow({
-      where: { id, companyId: session?.companyId, deletedAt: null },
-      include: {
-        states: {
-          orderBy: { createdAt: 'desc' },
-          take: 1,
+    const [client, invoices] = await Promise.all([
+      prisma.client.findFirstOrThrow({
+        where: { id, companyId: session?.companyId, deletedAt: null },
+        include: {
+          states: {
+            orderBy: { createdAt: 'desc' },
+            take: 1,
+          },
         },
-      },
-    });
-    return mapClientEntity(client);
+      }),
+      getInvoicesForClient(id),
+    ]);
+    return mapClientEntity(client, invoices);
   } catch (e) {
     if (e instanceof NotFoundError) {
       throw new TRPCError({ code: 'NOT_FOUND' });

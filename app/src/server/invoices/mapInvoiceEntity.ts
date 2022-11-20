@@ -52,10 +52,13 @@ const mapInvoiceEntity = ({
     ...company,
     states: [companyState],
   }),
-  client: mapClientEntity({
-    ...client,
-    states: [clientState],
-  }),
+  client: mapClientEntity(
+    {
+      ...client,
+      states: [clientState],
+    },
+    []
+  ),
   items: items.map(
     ({
       id,
