@@ -12,6 +12,7 @@ type IconButtonProps = PropsWithChildren<
     fullWidth?: boolean;
     icon: IconProp;
     loading?: boolean;
+    draggable?: boolean;
   }
 >;
 
@@ -24,6 +25,7 @@ const IconButton = ({
   icon,
   loading = false,
   onClick,
+  draggable,
   ...buttonProps
 }: IconButtonProps) => (
   <button
@@ -54,6 +56,7 @@ const IconButton = ({
         'p-2.5': size === 'md',
         'p-3': size === 'lg',
         'w-full': fullWidth,
+        'cursor-move text-zinc-400': !!draggable,
       }
     )}
     disabled={disabled}
@@ -69,7 +72,7 @@ const IconButton = ({
         <Spinner size="sm" />
       </div>
     )}
-    <Icon className="text-xl" icon={icon} />
+    <Icon className="text-xl w-5 h-5" icon={icon} />
   </button>
 );
 
