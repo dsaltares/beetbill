@@ -2,13 +2,7 @@ import startOfDay from 'date-fns/startOfDay';
 import format from 'date-fns/format';
 import addDays from 'date-fns/addDays';
 import { useRouter } from 'next/router';
-import {
-  type PropsWithChildren,
-  useCallback,
-  useMemo,
-  forwardRef,
-  useState,
-} from 'react';
+import { useCallback, useMemo, forwardRef, useState } from 'react';
 import {
   type SubmitHandler,
   type Control,
@@ -58,14 +52,15 @@ import type { Company } from '@server/company/types';
 import type { Product } from '@server/products/types';
 import { safeFormatDate } from '@lib/formatDate';
 import getTitle from '@lib/invoices/getTitle';
-import FormCard from './FormCard';
-import AutocompleteField from './Fields/AutocompleteField';
-import TextField from './Fields/TextField';
-import InvoiceTotalSection from './InvoiceTotalSection';
-import IconButton from './IconButton';
-import Button from './Button';
-import LinkButton from './LinkButton';
-import TextAreaField from './Fields/TextAreaField';
+import FormCard from '@components/FormCard';
+import AutocompleteField from '@components/Fields/AutocompleteField';
+import TextField from '@components/Fields/TextField';
+import InvoiceTotalSection from '@components/InvoiceTotalSection';
+import IconButton from '@components/IconButton';
+import Button from '@components/Button';
+import LinkButton from '@components/LinkButton';
+import TextAreaField from '@components/Fields/TextAreaField';
+import LineItemsTable, { BodyCell } from './LineItemsTable';
 
 type LineItemFormValue = {
   product: Product;
@@ -543,39 +538,6 @@ const LineItem = forwardRef<HTMLTableRowElement, LineItemProps>(
   )
 );
 LineItem.displayName = 'LineItem';
-
-const LineItemsTable = ({ children }: PropsWithChildren) => (
-  <div className="relative flex w-full h-full overflow-x-auto overflow-y-visible">
-    <table className="w-full whitespace-nowrap text-left text-base text-zinc-900 border-separate border-spacing-y-0 pb-4">
-      <thead className="text-sm font-medium">
-        <tr>
-          <HeaderCell></HeaderCell>
-          <HeaderCell>Product</HeaderCell>
-          <HeaderCell>Date</HeaderCell>
-          <HeaderCell>Quantity</HeaderCell>
-          <HeaderCell>Price</HeaderCell>
-          <HeaderCell>VAT</HeaderCell>
-          <HeaderCell>Total</HeaderCell>
-          <HeaderCell></HeaderCell>
-        </tr>
-      </thead>
-      <tbody>{children}</tbody>
-    </table>
-  </div>
-);
-
-const HeaderCell = ({ children }: PropsWithChildren) => (
-  <th
-    scope="col"
-    className="py-1 pr-0.5 pl-0.5 first:pl-0 last:pr-0 font-medium"
-  >
-    {children}
-  </th>
-);
-
-const BodyCell = ({ children }: PropsWithChildren) => (
-  <td className="py-1 pr-0.5 pl-0.5 first:pl-0 last:pr-0">{children}</td>
-);
 
 const clientToLabel = (client: Client) => client.name;
 const clientToKey = (client: Client) => client.id;
