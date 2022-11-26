@@ -103,7 +103,7 @@ export const updateInvoice: Procedure<
       {} as Record<string, ArrayElement<typeof dbProducts>>
     );
     await prisma.lineItem.createMany({
-      data: items.map(({ productId, quantity, date }) => {
+      data: items.map(({ productId, quantity, date }, index) => {
         const product = dbProductsById[productId];
         if (!product) {
           throw new TRPCError({
@@ -116,6 +116,7 @@ export const updateInvoice: Procedure<
           invoiceId: id,
           quantity,
           date,
+          order: index,
         };
       }),
     });
@@ -158,6 +159,7 @@ export const updateInvoice: Procedure<
             },
           },
         },
+        orderBy: { order: 'asc' },
       },
     },
   });
