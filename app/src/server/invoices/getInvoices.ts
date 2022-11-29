@@ -31,6 +31,7 @@ export const getInvoices: Procedure<
             },
           },
         },
+        orderBy: { order: 'asc' },
       },
     },
   });

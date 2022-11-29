@@ -1,15 +1,14 @@
 import startOfDay from 'date-fns/startOfDay';
-import format from 'date-fns/format';
 import addDays from 'date-fns/addDays';
 import { useRouter } from 'next/router';
-import { type PropsWithChildren, useCallback, useMemo } from 'react';
+import { useCallback, useMemo } from 'react';
 import {
   type SubmitHandler,
   useForm,
   Controller,
   useFieldArray,
 } from 'react-hook-form';
-import { faEye, faFile, faXmark } from '@fortawesome/free-solid-svg-icons';
+import { faEye, faFile } from '@fortawesome/free-solid-svg-icons';
 import useCreateInvoice from '@lib/invoices/useCreateInvoice';
 import useUpdateInvoice from '@lib/invoices/useUpdateInvoice';
 import Routes from '@lib/routes';
@@ -17,29 +16,17 @@ import type { Client } from '@server/clients/types';
 import type { Invoice } from '@server/invoices/types';
 import type { Company } from '@server/company/types';
 import type { Product } from '@server/products/types';
-import { safeFormatDate } from '@lib/formatDate';
+import { datePickerFormat, safeFormatDate } from '@lib/formatDate';
 import getTitle from '@lib/invoices/getTitle';
-import FormCard from './FormCard';
-import AutocompleteField from './Fields/AutocompleteField';
-import TextField from './Fields/TextField';
-import InvoiceTotalSection from './InvoiceTotalSection';
-import IconButton from './IconButton';
-import Button from './Button';
-import LinkButton from './LinkButton';
-import TextAreaField from './Fields/TextAreaField';
-
-type InvoiceFormValues = {
-  status: Invoice['status'];
-  prefix: Invoice['prefix'];
-  date: string;
-  message: string;
-  client: Invoice['client'];
-  items: {
-    product: Product;
-    date: string;
-    quantity: string;
-  }[];
-};
+import FormCard from '@components/FormCard';
+import AutocompleteField from '@components/Fields/AutocompleteField';
+import TextField from '@components/Fields/TextField';
+import InvoiceTotalSection from '@components/InvoiceTotalSection';
+import Button from '@components/Button';
+import LinkButton from '@components/LinkButton';
+import TextAreaField from '@components/Fields/TextAreaField';
+import LineItemsTable from './LineItemsTable';
+import type { InvoiceFormValues } from './InvoiceFormValues';
 
 type CreateEditInvoiceFormProps = {
   company: Company;
@@ -57,8 +44,6 @@ const getInvoiceNumber = (
   return number + 1;
 };
 
-const datePickerFormat = (date: Date) => format(date, 'yyyy-MM-dd');
-
 const CreateEditInvoiceForm = ({
   company,
   products,
@@ -73,7 +58,7 @@ const CreateEditInvoiceForm = ({
   const { mutate: updateInvoice, isLoading: isUpdating } = useUpdateInvoice();
   const isLoading = isCreating || isUpdating;
   const today = useMemo(() => datePickerFormat(startOfDay(new Date())), []);
-  const isSent = invoice && invoice?.status !== 'DRAFT';
+  const isSent = !!invoice?.status && invoice?.status !== 'DRAFT';
 
   const {
     register,
@@ -100,6 +85,7 @@ const CreateEditInvoiceForm = ({
     fields: itemFields,
     append: appendItem,
     remove: removeItem,
+    move: moveItem,
   } = useFieldArray({
     control,
     name: 'items',
@@ -223,108 +209,17 @@ const CreateEditInvoiceForm = ({
             disabled={isSent}
           />
         </div>
-        <LineItemsTable>
-          <>
-            {itemFields.map((item, index) => (
-              <tr key={item.id}>
-                <BodyCell>
-                  <div className="min-w-[200px]">
-                    <Controller
-                      control={control}
-                      name={`items.${index}.product`}
-                      render={({ field: { value, onChange } }) => (
-                        <AutocompleteField
-                          id={`${item.id}-product`}
-                          value={value}
-                          placeholder="Product..."
-                          options={products}
-                          optionToKey={(product) => product.id}
-                          optionToLabel={(product) => product.name}
-                          onChange={onChange}
-                          disabled={isSent}
-                        />
-                      )}
-                    />
-                  </div>
-                </BodyCell>
-                <BodyCell>
-                  <TextField
-                    id={`${item.id}-date`}
-                    placeholder="Date..."
-                    type="date"
-                    {...register(`items.${index}.date`, { required: true })}
-                    required
-                    defaultValue={today}
-                    disabled={isSent}
-                  />
-                </BodyCell>
-                <BodyCell>
-                  <div className="w-[84px]">
-                    <TextField
-                      id={`${item.id}-quantity`}
-                      placeholder="Quantity..."
-                      type="number"
-                      {...register(`items.${index}.quantity`, {
-                        required: true,
-                      })}
-                      required
-                      defaultValue="1"
-                      endAdornment={item.product.unit}
-                      disabled={isSent}
-                    />
-                  </div>
-                </BodyCell>
-                <BodyCell>
-                  {`${item.product.price} ${item.product.currency}`}
-                </BodyCell>
-                <BodyCell>{`${item.product.vat}%`}</BodyCell>
-                <BodyCell>
-                  {`${lineItemTotal(
-                    item.product,
-                    parseInt(watchItems[index].quantity, 10)
-                  )} ${item.product.currency}`}
-                </BodyCell>
-                <BodyCell>
-                  <IconButton
-                    aria-label="Remove"
-                    icon={faXmark}
-                    color="secondary"
-                    variant="borderless"
-                    size="sm"
-                    onClick={() => removeItem(index)}
-                    disabled={isSent}
-                  />
-                </BodyCell>
-              </tr>
-            ))}
-          </>
-          {!isSent && (
-            <tr>
-              <BodyCell>
-                <div className="min-w-[200px]">
-                  <AutocompleteField
-                    id="lineitem-add-product"
-                    placeholder="Product..."
-                    options={products}
-                    optionToKey={(product) => product.id}
-                    optionToLabel={(product) => product.name}
-                    onChange={(product) => {
-                      if (product) {
-                        appendItem({ product, date: today, quantity: '1' });
-                      }
-                    }}
-                  />
-                </div>
-              </BodyCell>
-              <BodyCell />
-              <BodyCell />
-              <BodyCell />
-              <BodyCell />
-              <BodyCell />
-              <BodyCell />
-            </tr>
-          )}
-        </LineItemsTable>
+        <LineItemsTable
+          itemFields={itemFields}
+          watchItems={watchItems}
+          isSent={isSent}
+          control={control}
+          register={register}
+          moveItem={moveItem}
+          removeItem={removeItem}
+          appendItem={appendItem}
+          products={products}
+        />
         <div className="grid grid-cols-2 gap-8">
           <div></div>
           <InvoiceTotalSection items={watchItems} />
@@ -334,40 +229,7 @@ const CreateEditInvoiceForm = ({
   );
 };
 
-const LineItemsTable = ({ children }: PropsWithChildren) => (
-  <div className="relative flex w-full h-full overflow-x-auto overflow-y-visible">
-    <table className="w-full whitespace-nowrap text-left text-base text-zinc-900 border-separate border-spacing-y-0 pb-4">
-      <thead className="text-sm font-medium">
-        <tr>
-          <HeaderCell>Product</HeaderCell>
-          <HeaderCell>Date</HeaderCell>
-          <HeaderCell>Quantity</HeaderCell>
-          <HeaderCell>Price</HeaderCell>
-          <HeaderCell>VAT</HeaderCell>
-          <HeaderCell>Total</HeaderCell>
-          <HeaderCell></HeaderCell>
-        </tr>
-      </thead>
-      <tbody>{children}</tbody>
-    </table>
-  </div>
-);
-
-const HeaderCell = ({ children }: PropsWithChildren) => (
-  <th scope="col" className="py-1 pr-1 pl-1 first:pl-0 last:pr-0 font-medium">
-    {children}
-  </th>
-);
-
-const BodyCell = ({ children }: PropsWithChildren) => (
-  <td className="py-1 pr-1 pl-1 first:pl-0 last:pr-0">{children}</td>
-);
-
 const clientToLabel = (client: Client) => client.name;
 const clientToKey = (client: Client) => client.id;
-const lineItemTotal = (product: Product, quantity: number) =>
-  product.includesVat
-    ? product.price * quantity
-    : product.price * quantity * (1 + product.vat / 100);
 
 export default CreateEditInvoiceForm;

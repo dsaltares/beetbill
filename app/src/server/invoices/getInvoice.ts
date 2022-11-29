@@ -36,6 +36,7 @@ export const getInvoice: Procedure<GetInvoiceInput, GetInvoiceOutput> = async ({
               },
             },
           },
+          orderBy: { order: 'asc' },
         },
       },
     });

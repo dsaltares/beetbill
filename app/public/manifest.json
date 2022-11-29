@@ -3,7 +3,6 @@
   "theme_color": "#6B26D9",
   "background_color": "#F7F5FF",
   "display": "fullscreen",
-  "orientation": "portrait",
   "scope": "/",
   "start_url": "/",
   "icons": [

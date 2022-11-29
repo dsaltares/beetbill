@@ -176,6 +176,7 @@ model LineItem {
   productStateId String
   quantity       Float    @default(1)
   date           DateTime @default(now())
+  order          Int      @default(0)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

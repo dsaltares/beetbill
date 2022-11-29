@@ -82,6 +82,7 @@ export const createInvoice: Procedure<
             },
           },
         },
+        orderBy: { order: 'asc' },
       },
     },
   });
@@ -110,7 +111,7 @@ const buildItemsData = async (items: CreateInvoiceInput['items'] = []) => {
     {} as Record<string, ArrayElement<typeof products>>
   );
 
-  return items.map(({ productId, quantity, date }) => {
+  return items.map(({ productId, quantity, date }, index) => {
     const product = productsById[productId];
     if (!product) {
       throw new TRPCError({ code: 'NOT_FOUND' });
@@ -120,6 +121,7 @@ const buildItemsData = async (items: CreateInvoiceInput['items'] = []) => {
       productStateId: product.states[0].id,
       quantity,
       date,
+      order: index,
     };
   });
 };

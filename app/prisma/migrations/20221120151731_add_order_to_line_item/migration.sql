@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "LineItem" ADD COLUMN     "order" INTEGER NOT NULL DEFAULT 0;

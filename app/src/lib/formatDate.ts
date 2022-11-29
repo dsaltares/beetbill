@@ -9,4 +9,6 @@ export const safeFormatDate = (date: Date | string) => {
   } catch (e) {}
 };
 
+export const datePickerFormat = (date: Date) => format(date, 'yyyy-MM-dd');
+
 export default formatDate;
