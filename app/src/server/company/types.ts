@@ -13,6 +13,7 @@ export const Company = z.object({
   postCode: z.string().nullable(),
   city: z.string().nullable(),
   iban: z.string().nullable(),
+  message: z.string().nullable(),
   userId: z.string(),
   createdAt: z.string(),
 });

@@ -73,7 +73,7 @@ const CreateEditInvoiceForm = ({
       status: invoice?.status ?? 'DRAFT',
       prefix: invoice?.prefix ?? '',
       date: invoice?.date ? datePickerFormat(new Date(invoice.date)) : today,
-      message: invoice?.message ?? '',
+      message: invoice?.message ?? company.message ?? '',
       items: (invoice?.items ?? []).map(({ product, date, quantity }) => ({
         product,
         date: datePickerFormat(new Date(date)),
