@@ -33,6 +33,7 @@ const company: Company = {
   city: 'London',
   postCode: 'W1',
   iban: 'GB33BUKB20201555555555',
+  message: 'company_message',
   userId: 'user_id',
   createdAt: new Date().toISOString(),
 };
@@ -68,6 +69,7 @@ describe('CompanyPage', () => {
     await screen.findByDisplayValue(company.city!);
     await screen.findByDisplayValue(company.postCode!);
     await screen.findByDisplayValue(company.iban!);
+    await screen.findByDisplayValue(company.message!);
   });
 
   it('allows the user to update company details', async () => {

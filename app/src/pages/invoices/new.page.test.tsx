@@ -51,6 +51,7 @@ const company: Company = {
   city: 'London',
   postCode: 'W1',
   iban: 'GB33BUKB20201555555555',
+  message: '',
   userId,
   createdAt: now,
 };
@@ -102,6 +103,7 @@ describe('NewInvoicePage', () => {
       city: '',
       postCode: '',
       iban: '',
+      message: '',
       userId: 'user_id',
       createdAt: now,
     };

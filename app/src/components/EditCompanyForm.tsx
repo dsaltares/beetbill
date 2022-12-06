@@ -8,6 +8,7 @@ import EmailRegexp from '@lib/emailRegexp';
 import TextField from './Fields/TextField';
 import FormCard from './FormCard';
 import Button from './Button';
+import TextAreaField from './Fields/TextAreaField';
 
 type EditCompanyFormValues = {
   name: Company['name'];
@@ -21,6 +22,7 @@ type EditCompanyFormValues = {
   city: Company['city'];
   postCode: Company['postCode'];
   iban: Company['iban'];
+  message: Company['message'];
 };
 
 type EditCompanyFormProps = {
@@ -50,7 +52,7 @@ const EditCompanyForm = ({ company }: EditCompanyFormProps) => {
         </Button>
       }
     >
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         <TextField
           id="company-number"
           placeholder="Registration number..."
@@ -144,6 +146,12 @@ const EditCompanyForm = ({ company }: EditCompanyFormProps) => {
           })}
           label="IBAN"
           error={errors.iban && 'Invalid IBAN'}
+        />
+        <TextAreaField
+          id="company-message"
+          placeholder="Message..."
+          {...register('message')}
+          label="Default message for invoices"
         />
       </div>
     </FormCard>

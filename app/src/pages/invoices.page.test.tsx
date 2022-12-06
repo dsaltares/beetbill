@@ -51,6 +51,7 @@ const company: Company = {
   address: null,
   country: null,
   city: null,
+  message: '',
   postCode: null,
   iban: null,
 };
