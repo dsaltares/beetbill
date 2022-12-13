@@ -129,7 +129,7 @@ model Client {
 model ClientState {
   id           String   @id @default(cuid())
   name         String
-  number       String
+  number       String?
   vatNumber    String?
   contactName  String?
   email        String?

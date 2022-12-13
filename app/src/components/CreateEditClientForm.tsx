@@ -100,10 +100,7 @@ const CreateEditClientForm = ({ client }: CreateEditClientFormProps) => {
           id="client-number"
           placeholder="Company registration number..."
           type="text"
-          {...register('number', {
-            required: true,
-          })}
-          required
+          {...register('number')}
           label="Number"
           error={errors.name && 'Registration number is required'}
         />
