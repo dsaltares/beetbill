@@ -23,28 +23,6 @@ export const updateProduct: Procedure<
     throw new TRPCError({ code: 'NOT_FOUND' });
   }
 
-  const productInNonDraftInvoice = await prisma.product.findFirst({
-    where: {
-      id,
-      companyId: session?.companyId as string,
-      states: {
-        some: {
-          lineItems: {
-            some: {
-              invoice: { status: { not: InvoiceStatus.DRAFT } },
-            },
-          },
-        },
-      },
-    },
-  });
-  if (productInNonDraftInvoice) {
-    throw new TRPCError({
-      code: 'PRECONDITION_FAILED',
-      message: 'Product is associated to approved invoices',
-    });
-  }
-
   const stateData = {
     ...omit(existingProduct.states[0], 'id', 'createdAt'),
     ...data,
