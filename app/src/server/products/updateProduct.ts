@@ -1,5 +1,4 @@
 import { TRPCError } from '@trpc/server';
-import { InvoiceStatus } from '@prisma/client';
 import omit from 'lodash.omit';
 import { type Procedure, procedure } from '@server/trpc';
 import prisma from '@server/prisma';
