@@ -5,7 +5,6 @@ import omit from 'lodash.omit';
 import { updateProduct } from '@server/products/updateProduct';
 import {
   createTestCompany,
-  createTestClient,
   createTestProduct,
   createTestUser,
 } from '../testData';
@@ -32,35 +31,6 @@ describe('updateProduct', () => {
         },
       })
     ).rejects.toEqual(new TRPCError({ code: 'NOT_FOUND' }));
-  });
-
-  it('throws when trying to update an invoice product of a non draft invoice', async () => {
-    const [client, product] = await Promise.all([
-      createTestClient(company.id),
-      createTestProduct(company.id),
-    ]);
-    await prisma.invoice.create({
-      data: {
-        number: 1,
-        status: 'SENT',
-        clientStateId: client.states[0].id,
-        companyStateId: company.states[0].id,
-        items: {
-          create: {
-            productStateId: product.states[0].id,
-          },
-        },
-      },
-    });
-    await expect(
-      updateProduct({
-        ctx: { session },
-        input: {
-          id: product.id,
-          name: 'New Product Name',
-        },
-      })
-    ).rejects.toThrowError();
   });
 
   it('updates the product', async () => {

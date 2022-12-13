@@ -1,5 +1,4 @@
 import { TRPCError } from '@trpc/server';
-import { InvoiceStatus } from '@prisma/client';
 import omit from 'lodash.omit';
 import { type Procedure, procedure } from '@server/trpc';
 import prisma from '@server/prisma';
@@ -21,28 +20,6 @@ export const updateProduct: Procedure<
   });
   if (!existingProduct) {
     throw new TRPCError({ code: 'NOT_FOUND' });
-  }
-
-  const productInNonDraftInvoice = await prisma.product.findFirst({
-    where: {
-      id,
-      companyId: session?.companyId as string,
-      states: {
-        some: {
-          lineItems: {
-            some: {
-              invoice: { status: { not: InvoiceStatus.DRAFT } },
-            },
-          },
-        },
-      },
-    },
-  });
-  if (productInNonDraftInvoice) {
-    throw new TRPCError({
-      code: 'PRECONDITION_FAILED',
-      message: 'Product is associated to approved invoices',
-    });
   }
 
   const stateData = {
