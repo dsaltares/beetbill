@@ -99,7 +99,7 @@ const LineItem = forwardRef<HTMLTableRowElement, LineItemProps>(
         />
       </BodyCell>
       <BodyCell>
-        <div className="w-[84px]">
+        <div className="w-[115px]">
           <TextField
             id={`${item.id}-quantity`}
             placeholder="Quantity..."
