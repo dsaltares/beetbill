@@ -8,7 +8,7 @@ export const Amount = z.object({
 export const Client = z.object({
   id: z.string(),
   name: z.string(),
-  number: z.string(),
+  number: z.string().nullable(),
   vatNumber: z.string().nullable(),
   contactName: z.string().nullable(),
   email: z.string().nullable(),
@@ -37,6 +37,7 @@ export const CreateClientInput = Client.omit({
   toBePaid: true,
   paid: true,
 }).partial({
+  number: true,
   vatNumber: true,
   contactName: true,
   email: true,

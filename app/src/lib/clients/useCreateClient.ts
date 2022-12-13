@@ -23,6 +23,7 @@ const useCreateClient = ({ onSuccess }: UseCreateClientArgs = {}) =>
       clients.push({
         id: `new-client${cuid()}`,
         companyId: '',
+        number: null,
         createdAt: now,
         updatedAt: now,
         vatNumber: null,
