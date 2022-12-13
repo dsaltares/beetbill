@@ -104,6 +104,7 @@ const LineItem = forwardRef<HTMLTableRowElement, LineItemProps>(
             id={`${item.id}-quantity`}
             placeholder="Quantity..."
             type="number"
+            step="0.01"
             {...(register
               ? register(`items.${index}.quantity`, {
                   required: true,

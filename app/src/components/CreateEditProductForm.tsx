@@ -114,6 +114,7 @@ const CreateEditProductForm = ({ product }: CreateEditProductFormProps) => {
           id="product-price"
           placeholder="Price..."
           type="number"
+          step="0.01"
           {...register('price')}
           label="Price"
         />
@@ -138,6 +139,7 @@ const CreateEditProductForm = ({ product }: CreateEditProductFormProps) => {
           id="product-vat"
           placeholder="VAT..."
           type="number"
+          step="0.01"
           {...register('vat')}
           label="VAT"
           endAdornment="%"
