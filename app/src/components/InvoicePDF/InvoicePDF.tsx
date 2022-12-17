@@ -94,31 +94,31 @@ const InvoicePDF = ({ invoice }: InvoicePDFProps) => {
           <View style={{ width: '100%', marginBottom: sizes[4] }}>
             <Table>
               <TableHeader>
-                <TableCell weight={0.35}>Product</TableCell>
-                <TableCell weight={0.2}>Date</TableCell>
+                <TableCell weight={0.3}>Product</TableCell>
+                <TableCell weight={0.15}>Date</TableCell>
                 <TableCell weight={0.15} textAlign="right">
                   Quantity
                 </TableCell>
-                <TableCell weight={0.2} textAlign="right">
+                <TableCell weight={0.15} textAlign="right">
                   Unit price
                 </TableCell>
-                <TableCell weight={0.2} textAlign="right">
+                <TableCell weight={0.1} textAlign="right">
                   VAT
                 </TableCell>
-                <TableCell weight={0.2} textAlign="right">
+                <TableCell weight={0.15} textAlign="right">
                   Total
                 </TableCell>
               </TableHeader>
               {items.map(({ id, product, quantity, date }) => (
                 <TableRow key={id}>
-                  <TableCell weight={0.35}>{product.name}</TableCell>
-                  <TableCell weight={0.2}>
+                  <TableCell weight={0.3}>{product.name}</TableCell>
+                  <TableCell weight={0.15}>
                     {format(new Date(date), 'dd MMM yyyy')}
                   </TableCell>
                   <TableCell weight={0.15} textAlign="right">
                     {`${quantity} ${product.unit}`}
                   </TableCell>
-                  <TableCell weight={0.2} textAlign="right">
+                  <TableCell weight={0.15} textAlign="right">
                     {formatAmount(
                       product.includesVat
                         ? product.price / (1 + product.vat / 100.0)
@@ -126,10 +126,10 @@ const InvoicePDF = ({ invoice }: InvoicePDFProps) => {
                       product.currency
                     )}
                   </TableCell>
-                  <TableCell weight={0.2} textAlign="right">
+                  <TableCell weight={0.1} textAlign="right">
                     {formatPercentage(product.vat)}
                   </TableCell>
-                  <TableCell weight={0.2} textAlign="right">
+                  <TableCell weight={0.15} textAlign="right">
                     {formatAmount(
                       (product.includesVat
                         ? product.price
