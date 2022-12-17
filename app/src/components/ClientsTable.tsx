@@ -19,6 +19,7 @@ import useDisclosureForId from '@lib/useDisclosureForId';
 import Routes from '@lib/routes';
 import type { Client } from '@server/clients/types';
 import { formatAmount } from '@lib/format';
+import useSortFromUrl from '@lib/useSortFromUrl';
 import {
   Body,
   BodyCell,
@@ -69,6 +70,7 @@ const ClientsTable = ({ clients, onDelete }: ClientsTableProps) => {
     }
   }, [onDelete, openFor]);
   const [globalFilter, setGlobalFilter] = useState('');
+  const { sorting, toggleSort } = useSortFromUrl();
   const columns = useMemo(
     () => [
       columnHelper.accessor('name', {
@@ -135,6 +137,7 @@ const ClientsTable = ({ clients, onDelete }: ClientsTableProps) => {
     columns,
     state: {
       globalFilter,
+      sorting,
     },
     globalFilterFn: fuzzyFilter,
     onGlobalFilterChange: setGlobalFilter,
@@ -165,7 +168,7 @@ const ClientsTable = ({ clients, onDelete }: ClientsTableProps) => {
                       variant="borderless"
                       size="sm"
                       endIcon={getSortingIcon(header.column.getIsSorted())}
-                      onClick={header.column.getToggleSortingHandler()}
+                      onClick={() => toggleSort(header.column.id)}
                     >
                       {flexRender(
                         header.column.columnDef.header,

@@ -176,7 +176,7 @@ describe('InvoicesPage', () => {
     );
   });
 
-  it('renders the list of invoices, can sort and can filter', async () => {
+  it('renders the list of invoices', async () => {
     server.resetHandlers(mockTrpcQuery('getInvoices', invoices));
 
     render(<InvoicesPage />, { session, router });
@@ -188,15 +188,33 @@ describe('InvoicesPage', () => {
       expect(rows[1]).toContainHTML('Sent');
       expect(rows[2]).toContainHTML('Paid');
     });
+  });
+
+  it('renders the list of invoices with sorting driven by the URL', async () => {
+    server.resetHandlers(mockTrpcQuery('getInvoices', invoices));
+
+    render(<InvoicesPage />, {
+      session,
+      router: { ...router, query: { sortBy: 'total', sortDir: 'desc' } },
+    });
+
+    await waitFor(() => {
+      const byTotal = screen.getAllByRole('row').slice(1);
+      expect(byTotal).toHaveLength(invoices.length);
+      expect(byTotal[0]).toContainHTML('€10.00');
+      expect(byTotal[1]).toContainHTML('€6.00');
+      expect(byTotal[2]).toContainHTML('€4.00');
+    });
 
     await act(async () => {
-      await fireEvent.click(screen.getByRole('button', { name: 'Total' }));
+      await fireEvent.click(screen.getByRole('button', { name: 'Due date' }));
     });
-    const byPrice = screen.getAllByRole('row').slice(1);
-    expect(byPrice).toHaveLength(invoices.length);
-    expect(byPrice[0]).toContainHTML('€10.00');
-    expect(byPrice[1]).toContainHTML('€6.00');
-    expect(byPrice[2]).toContainHTML('€4.00');
+
+    expect(mockRouter.push).toHaveBeenCalledWith(
+      { query: { sortBy: 'dueDate', sortDir: 'desc' } },
+      undefined,
+      expect.anything()
+    );
   });
 
   it('redirects to invoice page clicking edit', async () => {

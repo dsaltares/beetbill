@@ -19,6 +19,7 @@ import type { Product } from '@server/products/types';
 import useDisclosureForId from '@lib/useDisclosureForId';
 import Routes from '@lib/routes';
 import { formatAmount, formatPercentage } from '@lib/format';
+import useSortFromUrl from '@lib/useSortFromUrl';
 import {
   Body,
   BodyCell,
@@ -55,6 +56,7 @@ const ProductsTable = ({ products, onDelete }: ProductsTableProps) => {
       onDelete(openFor);
     }
   }, [onDelete, openFor]);
+  const { sorting, toggleSort } = useSortFromUrl();
   const [globalFilter, setGlobalFilter] = useState('');
   const columns = useMemo(
     () => [
@@ -117,6 +119,7 @@ const ProductsTable = ({ products, onDelete }: ProductsTableProps) => {
     columns,
     state: {
       globalFilter,
+      sorting,
     },
     globalFilterFn: fuzzyFilter,
     onGlobalFilterChange: setGlobalFilter,
@@ -147,7 +150,7 @@ const ProductsTable = ({ products, onDelete }: ProductsTableProps) => {
                       variant="borderless"
                       size="sm"
                       endIcon={getSortingIcon(header.column.getIsSorted())}
-                      onClick={header.column.getToggleSortingHandler()}
+                      onClick={() => toggleSort(header.column.id)}
                     >
                       {flexRender(
                         header.column.columnDef.header,
