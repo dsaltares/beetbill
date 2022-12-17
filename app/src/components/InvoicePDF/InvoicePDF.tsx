@@ -94,9 +94,9 @@ const InvoicePDF = ({ invoice }: InvoicePDFProps) => {
           <View style={{ width: '100%', marginBottom: sizes[4] }}>
             <Table>
               <TableHeader>
-                <TableCell weight={0.3}>Product</TableCell>
+                <TableCell weight={0.33}>Product</TableCell>
                 <TableCell weight={0.15}>Date</TableCell>
-                <TableCell weight={0.15} textAlign="right">
+                <TableCell weight={0.12} textAlign="right">
                   Quantity
                 </TableCell>
                 <TableCell weight={0.15} textAlign="right">
@@ -105,17 +105,17 @@ const InvoicePDF = ({ invoice }: InvoicePDFProps) => {
                 <TableCell weight={0.1} textAlign="right">
                   VAT
                 </TableCell>
-                <TableCell weight={0.15} textAlign="right">
+                <TableCell weight={0.12} textAlign="right">
                   Total
                 </TableCell>
               </TableHeader>
               {items.map(({ id, product, quantity, date }) => (
                 <TableRow key={id}>
-                  <TableCell weight={0.3}>{product.name}</TableCell>
+                  <TableCell weight={0.33}>{product.name}</TableCell>
                   <TableCell weight={0.15}>
-                    {format(new Date(date), 'dd MMM yyyy')}
+                    {format(new Date(date), 'dd/MM/yyyy')}
                   </TableCell>
-                  <TableCell weight={0.15} textAlign="right">
+                  <TableCell weight={0.12} textAlign="right">
                     {`${quantity} ${product.unit}`}
                   </TableCell>
                   <TableCell weight={0.15} textAlign="right">
