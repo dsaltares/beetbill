@@ -123,13 +123,13 @@ describe('ClientsPage', () => {
       expect(rows[1]).toContainHTML(clients[1].name);
       expect(rows[2]).toContainHTML(clients[2].name);
 
-      expect(rows[0]).toContainHTML('100.00 EUR');
-      expect(rows[1]).toContainHTML('0.00 EUR');
-      expect(rows[2]).toContainHTML('300.00 GBP');
+      expect(rows[0]).toContainHTML('€100.00');
+      expect(rows[1]).toContainHTML('€0.00');
+      expect(rows[2]).toContainHTML('£300.00');
 
-      expect(rows[0]).toContainHTML('150.00 EUR');
-      expect(rows[1]).toContainHTML('200.00 EUR');
-      expect(rows[2]).toContainHTML('0.00 GBP');
+      expect(rows[0]).toContainHTML('€150.00');
+      expect(rows[1]).toContainHTML('€200.00');
+      expect(rows[2]).toContainHTML('£0.00');
     });
 
     await act(async () => {

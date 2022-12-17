@@ -10,3 +10,17 @@ export const safeFormatDate = (date: Date | string) => {
 };
 
 export const datePickerFormat = (date: Date) => format(date, 'yyyy-MM-dd');
+
+export const formatNumber = (value: number) => DecimalFormatter.format(value);
+
+export const formatPercentage = (value: number) =>
+  PercentFormatter.format(value);
+
+export const formatAmount = (amount: number, currency: string | undefined) =>
+  new Intl.NumberFormat('en-UK', {
+    style: 'currency',
+    currency: currency || 'EUR',
+  }).format(amount);
+
+const DecimalFormatter = new Intl.NumberFormat('en-UK', { style: 'decimal' });
+const PercentFormatter = new Intl.NumberFormat('en-UK', { style: 'percent' });

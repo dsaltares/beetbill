@@ -1,7 +1,7 @@
 import addDays from 'date-fns/addDays';
 import { Page, Text, View, Document } from '@react-pdf/renderer';
 import format from 'date-fns/format';
-import { formatDate } from '@lib/format';
+import { formatAmount, formatDate, formatPercentage } from '@lib/format';
 import getTitle from '@lib/invoices/getTitle';
 import type { Invoice } from '@server/invoices/types';
 import calculateTotal from '@lib/invoices/calculateTotal';
@@ -119,20 +119,23 @@ const InvoicePDF = ({ invoice }: InvoicePDFProps) => {
                     {`${quantity} ${product.unit}`}
                   </TableCell>
                   <TableCell weight={0.2} textAlign="right">
-                    {`${(product.includesVat
-                      ? product.price / (1 + product.vat / 100.0)
-                      : product.price
-                    ).toFixed(2)} ${product.currency}`}
+                    {formatAmount(
+                      product.includesVat
+                        ? product.price / (1 + product.vat / 100.0)
+                        : product.price,
+                      product.currency
+                    )}
                   </TableCell>
                   <TableCell weight={0.2} textAlign="right">
-                    {`${product.vat.toFixed(2)}%`}
+                    {formatPercentage(product.vat)}
                   </TableCell>
                   <TableCell weight={0.2} textAlign="right">
-                    {`${(
+                    {formatAmount(
                       (product.includesVat
                         ? product.price
-                        : product.price * (1 + product.vat / 100.0)) * quantity
-                    ).toFixed(2)} ${product.currency}`}
+                        : product.price * (1 + product.vat / 100.0)) * quantity,
+                      product.currency
+                    )}
                   </TableCell>
                 </TableRow>
               ))}
@@ -149,13 +152,15 @@ const InvoicePDF = ({ invoice }: InvoicePDFProps) => {
           >
             <Text
               style={{ fontSize: fontSizes.sm }}
-            >{`Total excl. VAT: ${exclVat.toFixed(2)} ${currency}`}</Text>
-            <Text style={{ fontSize: fontSizes.sm }}>{`VAT: ${(
-              total - exclVat
-            ).toFixed(2)} ${currency}`}</Text>
-            <Text style={{ fontWeight: 'bold' }}>{`Total due: ${total.toFixed(
-              2
-            )} ${currency}`}</Text>
+            >{`Total excl. VAT: ${formatAmount(exclVat, currency)}`}</Text>
+            <Text style={{ fontSize: fontSizes.sm }}>{`VAT: ${formatAmount(
+              total - exclVat,
+              currency
+            )}`}</Text>
+            <Text style={{ fontWeight: 'bold' }}>{`Total due: ${formatAmount(
+              total,
+              currency
+            )}`}</Text>
           </View>
           <View>
             <View style={{ flexDirection: 'row' }}>

@@ -16,7 +16,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import addDays from 'date-fns/addDays';
-import { formatDate } from '@lib/format';
+import { formatAmount, formatDate } from '@lib/format';
 import useDisclosureForId from '@lib/useDisclosureForId';
 import Routes from '@lib/routes';
 import calculateTotal from '@lib/invoices/calculateTotal';
@@ -118,7 +118,7 @@ const InvoicesTable = ({ invoices, onDelete }: InvoicesTableProps) => {
           row: {
             original: { currency },
           },
-        }) => `${getValue().toFixed(2)} ${currency}`,
+        }) => formatAmount(getValue(), currency),
       }),
       columnHelper.display({
         id: 'actions',

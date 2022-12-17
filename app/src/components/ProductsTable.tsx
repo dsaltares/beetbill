@@ -18,6 +18,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import type { Product } from '@server/products/types';
 import useDisclosureForId from '@lib/useDisclosureForId';
 import Routes from '@lib/routes';
+import { formatAmount, formatPercentage } from '@lib/format';
 import {
   Body,
   BodyCell,
@@ -64,11 +65,11 @@ const ProductsTable = ({ products, onDelete }: ProductsTableProps) => {
       columnHelper.accessor('price', {
         header: () => 'Price',
         cell: (info) =>
-          `${info.getValue().toFixed(2)} ${info.row.original.currency}`,
+          formatAmount(info.getValue(), info.row.original.currency),
       }),
       columnHelper.accessor('vat', {
         header: () => 'VAT',
-        cell: (info) => `${info.getValue().toFixed(2)}%`,
+        cell: (info) => formatPercentage(info.getValue()),
       }),
       columnHelper.accessor(
         (row) =>
@@ -77,7 +78,7 @@ const ProductsTable = ({ products, onDelete }: ProductsTableProps) => {
           id: 'includingVAT',
           header: () => 'Including VAT',
           cell: (info) =>
-            `${info.getValue().toFixed(2)} ${info.row.original.currency}`,
+            formatAmount(info.getValue(), info.row.original.currency),
         }
       ),
       columnHelper.display({

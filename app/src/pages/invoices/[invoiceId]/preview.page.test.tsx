@@ -146,11 +146,11 @@ describe('PreviewInvoicePage', () => {
         screen.queryAllByText(invoice.company.name).length
       ).toBeGreaterThanOrEqual(1);
     });
-    screen.getByText('17.25 GBP');
-    screen.getByText('5.00 GBP');
-    screen.getByText('Total excl. VAT: 20.00 GBP');
-    screen.getByText('VAT: 2.25 GBP');
-    screen.getByText('Total due: 22.25 GBP');
+    screen.getByText('£17.25');
+    screen.getByText('£5.00');
+    screen.getByText('Total excl. VAT: £20.00');
+    screen.getByText('VAT: £2.25');
+    screen.getByText('Total due: £22.25');
   });
 
   it('allows the user to send and download the invoice', async () => {

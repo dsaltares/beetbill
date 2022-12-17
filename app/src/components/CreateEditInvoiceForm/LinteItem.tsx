@@ -12,6 +12,7 @@ import AutocompleteField from '@components/Fields/AutocompleteField';
 import TextField from '@components/Fields/TextField';
 import IconButton from '@components/IconButton';
 import type { Product } from '@server/products/types';
+import { formatAmount, formatPercentage } from '@lib/format';
 import type { InvoiceFormValues, LineItemFormValue } from './InvoiceFormValues';
 import { BodyCell } from './Table';
 
@@ -117,12 +118,15 @@ const LineItem = forwardRef<HTMLTableRowElement, LineItemProps>(
           />
         </div>
       </BodyCell>
-      <BodyCell>{`${item.product.price} ${item.product.currency}`}</BodyCell>
-      <BodyCell>{`${item.product.vat}%`}</BodyCell>
       <BodyCell>
-        {`${lineItemTotal(watchItem.product, parseFloat(watchItem.quantity))} ${
+        {formatAmount(watchItem.product.price, watchItem.product.currency)}
+      </BodyCell>
+      <BodyCell>{formatPercentage(watchItem.product.vat)}</BodyCell>
+      <BodyCell>
+        {formatAmount(
+          lineItemTotal(watchItem.product, parseFloat(watchItem.quantity)),
           watchItem.product.currency
-        }`}
+        )}
       </BodyCell>
       <BodyCell>
         <IconButton
