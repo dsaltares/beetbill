@@ -45,6 +45,7 @@ const toClientTableRow = (client: Client) => ({
 
 type ClientTableRow = ReturnType<typeof toClientTableRow>;
 const columnHelper = createColumnHelper<ClientTableRow>();
+const DefaultSort = { id: 'name', desc: true };
 
 const fuzzyFilter: FilterFn<ClientTableRow> = (
   row,
@@ -70,7 +71,7 @@ const ClientsTable = ({ clients, onDelete }: ClientsTableProps) => {
     }
   }, [onDelete, openFor]);
   const [globalFilter, setGlobalFilter] = useState('');
-  const { sorting, toggleSort } = useSortFromUrl();
+  const { sorting, toggleSort } = useSortFromUrl(DefaultSort);
   const columns = useMemo(
     () => [
       columnHelper.accessor('name', {

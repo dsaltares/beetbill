@@ -70,6 +70,8 @@ const fuzzyFilter: FilterFn<InvoiceTableRow> = (
   return itemRank.passed;
 };
 
+const DefaultSort = { id: 'number', desc: true };
+
 type InvoicesTableProps = {
   invoices: Invoice[];
   onDelete: (id: string) => void;
@@ -82,7 +84,7 @@ const InvoicesTable = ({ invoices, onDelete }: InvoicesTableProps) => {
       onDelete(openFor);
     }
   }, [onDelete, openFor]);
-  const { sorting, toggleSort } = useSortFromUrl();
+  const { sorting, toggleSort } = useSortFromUrl(DefaultSort);
   const [globalFilter, setGlobalFilter] = useState('');
   const tableInvoices = useMemo(
     () => invoices.map(toInvoiceTableRow),

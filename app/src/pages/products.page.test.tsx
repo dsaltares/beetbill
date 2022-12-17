@@ -94,7 +94,7 @@ describe('ProductsPage', () => {
     );
   });
 
-  it('renders the list of products', async () => {
+  it('renders the list of products sorted by name desc', async () => {
     server.resetHandlers(mockTrpcQuery('getProducts', products));
 
     render(<ProductsPage />, { session, router });
@@ -102,9 +102,9 @@ describe('ProductsPage', () => {
     await waitFor(() => {
       const rows = screen.getAllByRole('row').slice(1);
       expect(rows).toHaveLength(products.length);
-      expect(rows[0]).toContainHTML(products[0].name);
+      expect(rows[0]).toContainHTML(products[2].name);
       expect(rows[1]).toContainHTML(products[1].name);
-      expect(rows[2]).toContainHTML(products[2].name);
+      expect(rows[2]).toContainHTML(products[0].name);
     });
   });
 

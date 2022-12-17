@@ -44,6 +44,8 @@ const fuzzyFilter: FilterFn<Product> = (row, columnId, value, addMeta) => {
   return itemRank.passed;
 };
 
+const DefaultSort = { id: 'name', desc: true };
+
 type ProductsTableProps = {
   products: Product[];
   onDelete: (id: string) => void;
@@ -56,7 +58,7 @@ const ProductsTable = ({ products, onDelete }: ProductsTableProps) => {
       onDelete(openFor);
     }
   }, [onDelete, openFor]);
-  const { sorting, toggleSort } = useSortFromUrl();
+  const { sorting, toggleSort } = useSortFromUrl(DefaultSort);
   const [globalFilter, setGlobalFilter] = useState('');
   const columns = useMemo(
     () => [
