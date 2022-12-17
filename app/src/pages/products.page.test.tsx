@@ -94,7 +94,7 @@ describe('ProductsPage', () => {
     );
   });
 
-  it('renders the list of products, can sort and can filter', async () => {
+  it('renders the list of products', async () => {
     server.resetHandlers(mockTrpcQuery('getProducts', products));
 
     render(<ProductsPage />, { session, router });
@@ -106,24 +106,43 @@ describe('ProductsPage', () => {
       expect(rows[1]).toContainHTML(products[1].name);
       expect(rows[2]).toContainHTML(products[2].name);
     });
+  });
 
-    await act(async () => {
-      await fireEvent.click(screen.getByRole('button', { name: 'Price' }));
+  it('renders the list of products with sorting driven by the URL', async () => {
+    server.resetHandlers(mockTrpcQuery('getProducts', products));
+
+    render(<ProductsPage />, {
+      session,
+      router: { ...router, query: { sortBy: 'price', sortDir: 'desc' } },
     });
-    const byPrice = screen.getAllByRole('row').slice(1);
-    expect(byPrice).toHaveLength(products.length);
-    expect(byPrice[0]).toContainHTML(products[2].name);
-    expect(byPrice[1]).toContainHTML(products[1].name);
-    expect(byPrice[2]).toContainHTML(products[0].name);
+
+    await waitFor(() => {
+      const byPrice = screen.getAllByRole('row').slice(1);
+      expect(byPrice).toHaveLength(products.length);
+      expect(byPrice[0]).toContainHTML(products[2].name);
+      expect(byPrice[1]).toContainHTML(products[1].name);
+      expect(byPrice[2]).toContainHTML(products[0].name);
+    });
 
     await act(async () => {
       await fireEvent.click(screen.getByRole('button', { name: 'VAT' }));
     });
-    const byVAT = screen.getAllByRole('row').slice(1);
-    expect(byVAT).toHaveLength(products.length);
-    expect(byVAT[0]).toContainHTML(products[1].name);
-    expect(byVAT[1]).toContainHTML(products[0].name);
-    expect(byVAT[2]).toContainHTML(products[2].name);
+
+    expect(mockRouter.push).toHaveBeenCalledWith(
+      { query: { sortBy: 'vat', sortDir: 'desc' } },
+      undefined,
+      expect.anything()
+    );
+  });
+
+  it('can filter', async () => {
+    server.resetHandlers(mockTrpcQuery('getProducts', products));
+
+    render(<ProductsPage />, { session, router });
+
+    await waitFor(() => {
+      expect(screen.getAllByRole('row')).toHaveLength(products.length + 1);
+    });
 
     await act(async () => {
       await userEvent.type(
@@ -131,7 +150,6 @@ describe('ProductsPage', () => {
         product1.name
       );
     });
-
     const filtered = screen.getAllByRole('row').slice(1);
     expect(filtered).toHaveLength(1);
   });

@@ -22,6 +22,7 @@ import Routes from '@lib/routes';
 import calculateTotal from '@lib/invoices/calculateTotal';
 import type { Invoice } from '@server/invoices/types';
 import getTitle from '@lib/invoices/getTitle';
+import useSortFromUrl from '@lib/useSortFromUrl';
 import {
   Body,
   BodyCell,
@@ -81,6 +82,7 @@ const InvoicesTable = ({ invoices, onDelete }: InvoicesTableProps) => {
       onDelete(openFor);
     }
   }, [onDelete, openFor]);
+  const { sorting, toggleSort } = useSortFromUrl();
   const [globalFilter, setGlobalFilter] = useState('');
   const tableInvoices = useMemo(
     () => invoices.map(toInvoiceTableRow),
@@ -155,6 +157,7 @@ const InvoicesTable = ({ invoices, onDelete }: InvoicesTableProps) => {
     columns,
     state: {
       globalFilter,
+      sorting,
     },
     globalFilterFn: fuzzyFilter,
     onGlobalFilterChange: setGlobalFilter,
@@ -185,7 +188,7 @@ const InvoicesTable = ({ invoices, onDelete }: InvoicesTableProps) => {
                       variant="borderless"
                       size="sm"
                       endIcon={getSortingIcon(header.column.getIsSorted())}
-                      onClick={header.column.getToggleSortingHandler()}
+                      onClick={() => toggleSort(header.column.id)}
                     >
                       {flexRender(
                         header.column.columnDef.header,

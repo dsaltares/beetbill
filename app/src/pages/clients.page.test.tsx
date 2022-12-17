@@ -111,7 +111,7 @@ describe('ClientsPage', () => {
     );
   });
 
-  it('renders the list of clients, can sort and can filter', async () => {
+  it('renders the list of clients', async () => {
     server.resetHandlers(mockTrpcQuery('getClients', clients));
 
     render(<ClientsPage />, { session, router });
@@ -131,18 +131,45 @@ describe('ClientsPage', () => {
       expect(rows[1]).toContainHTML('€200.00');
       expect(rows[2]).toContainHTML('£0.00');
     });
+  });
+
+  it('renders the list of clients with sorting driven by the URL', async () => {
+    server.resetHandlers(mockTrpcQuery('getClients', clients));
+
+    render(<ClientsPage />, {
+      session,
+      router: { ...router, query: { sortBy: 'name', sortDir: 'desc' } },
+    });
+
+    await waitFor(() => {
+      const byNameDesc = screen.getAllByRole('row').slice(1);
+      expect(byNameDesc).toHaveLength(clients.length);
+      expect(byNameDesc[0]).toContainHTML(clients[2].name);
+      expect(byNameDesc[1]).toContainHTML(clients[1].name);
+      expect(byNameDesc[2]).toContainHTML(clients[0].name);
+    });
 
     await act(async () => {
-      await fireEvent.click(screen.getByRole('button', { name: 'Name' }));
+      await fireEvent.click(
+        screen.getByRole('button', { name: 'Open invoices' })
+      );
     });
-    await act(async () => {
-      await fireEvent.click(screen.getByRole('button', { name: 'Name' }));
+
+    expect(mockRouter.push).toHaveBeenCalledWith(
+      { query: { sortBy: 'toBePaid', sortDir: 'desc' } },
+      undefined,
+      expect.anything()
+    );
+  });
+
+  it('can filter', async () => {
+    server.resetHandlers(mockTrpcQuery('getClients', clients));
+
+    render(<ClientsPage />, { session, router });
+
+    await waitFor(() => {
+      expect(screen.getAllByRole('row')).toHaveLength(clients.length + 1);
     });
-    const byNameDesc = screen.getAllByRole('row').slice(1);
-    expect(byNameDesc).toHaveLength(clients.length);
-    expect(byNameDesc[0]).toContainHTML(clients[2].name);
-    expect(byNameDesc[1]).toContainHTML(clients[1].name);
-    expect(byNameDesc[2]).toContainHTML(clients[0].name);
 
     await act(async () => {
       await userEvent.type(screen.getByPlaceholderText('Search'), client1.name);
