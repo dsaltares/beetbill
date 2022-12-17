@@ -120,8 +120,8 @@ const LineItem = forwardRef<HTMLTableRowElement, LineItemProps>(
       <BodyCell>{`${item.product.price} ${item.product.currency}`}</BodyCell>
       <BodyCell>{`${item.product.vat}%`}</BodyCell>
       <BodyCell>
-        {`${lineItemTotal(item.product, parseInt(watchItem.quantity, 10))} ${
-          item.product.currency
+        {`${lineItemTotal(watchItem.product, parseFloat(watchItem.quantity))} ${
+          watchItem.product.currency
         }`}
       </BodyCell>
       <BodyCell>

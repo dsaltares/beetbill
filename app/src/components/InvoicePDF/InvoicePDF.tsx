@@ -128,9 +128,10 @@ const InvoicePDF = ({ invoice }: InvoicePDFProps) => {
                     {`${product.vat.toFixed(2)}%`}
                   </TableCell>
                   <TableCell weight={0.2} textAlign="right">
-                    {`${(product.includesVat
-                      ? product.price
-                      : product.price * (1 + product.vat / 100.0)
+                    {`${(
+                      (product.includesVat
+                        ? product.price
+                        : product.price * (1 + product.vat / 100.0)) * quantity
                     ).toFixed(2)} ${product.currency}`}
                   </TableCell>
                 </TableRow>
