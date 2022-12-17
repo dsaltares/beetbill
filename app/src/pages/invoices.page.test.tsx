@@ -194,9 +194,9 @@ describe('InvoicesPage', () => {
     });
     const byPrice = screen.getAllByRole('row').slice(1);
     expect(byPrice).toHaveLength(invoices.length);
-    expect(byPrice[0]).toContainHTML('10.00 EUR');
-    expect(byPrice[1]).toContainHTML('6.00 EUR');
-    expect(byPrice[2]).toContainHTML('4.00 EUR');
+    expect(byPrice[0]).toContainHTML('€10.00');
+    expect(byPrice[1]).toContainHTML('€6.00');
+    expect(byPrice[2]).toContainHTML('€4.00');
   });
 
   it('redirects to invoice page clicking edit', async () => {

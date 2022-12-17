@@ -31,7 +31,7 @@ import type {
 import startOfDay from 'date-fns/startOfDay';
 import AutocompleteField from '@components/Fields/AutocompleteField';
 import type { Product } from '@server/products/types';
-import { datePickerFormat } from '@lib/formatDate';
+import { datePickerFormat } from '@lib/format';
 import LineItemOverlay from './LineItemOverlay';
 import SortableLineItem from './SortableLineItem';
 import Table, { Body, BodyCell, Head, HeaderCell } from './Table';

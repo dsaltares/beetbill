@@ -18,6 +18,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import useDisclosureForId from '@lib/useDisclosureForId';
 import Routes from '@lib/routes';
 import type { Client } from '@server/clients/types';
+import { formatAmount } from '@lib/format';
 import {
   Body,
   BodyCell,
@@ -86,7 +87,7 @@ const ClientsTable = ({ clients, onDelete }: ClientsTableProps) => {
         cell: (info) => {
           const value = info.getValue();
           const currency = info.row.original.currency;
-          return value ? `${value.toFixed(2)} ${currency}` : '';
+          return value !== undefined ? formatAmount(value, currency) : '';
         },
       }),
       columnHelper.accessor('paid', {
@@ -94,7 +95,7 @@ const ClientsTable = ({ clients, onDelete }: ClientsTableProps) => {
         cell: (info) => {
           const value = info.getValue();
           const currency = info.row.original.currency;
-          return value ? `${value.toFixed(2)} ${currency}` : '';
+          return value !== undefined ? formatAmount(value, currency) : '';
         },
       }),
       columnHelper.display({

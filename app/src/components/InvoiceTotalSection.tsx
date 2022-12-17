@@ -1,3 +1,4 @@
+import { formatAmount } from '@lib/format';
 import calculateTotal from '@lib/invoices/calculateTotal';
 import type { Product } from '@server/products/types';
 
@@ -16,13 +17,13 @@ const InvoiceTotalSection = ({ items }: InvoiceTotalSectionProps) => {
   return (
     <div className="grid grid-cols-2 w-full items-center">
       <div className="flex text-sm font-medium">Total excl. VAT</div>
-      <div className="flex text-sm font-medium justify-end">{`${exclVat.toFixed(
-        2
-      )} ${currency}`}</div>
+      <div className="flex text-sm font-medium justify-end">
+        {formatAmount(exclVat, currency)}
+      </div>
       <div className="flex text-lg font-bold">Total amount due</div>
-      <div className="flex text-lg font-bold justify-end">{`${total.toFixed(
-        2
-      )} ${currency}`}</div>
+      <div className="flex text-lg font-bold justify-end">
+        {formatAmount(total, currency)}
+      </div>
     </div>
   );
 };
