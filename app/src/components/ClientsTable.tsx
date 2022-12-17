@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useMemo } from 'react';
 import {
   createColumnHelper,
   flexRender,
@@ -20,6 +20,7 @@ import Routes from '@lib/routes';
 import type { Client } from '@server/clients/types';
 import { formatAmount } from '@lib/format';
 import useSortFromUrl from '@lib/useSortFromUrl';
+import useFilterFromUrl from '@lib/useFilterFromUrl';
 import {
   Body,
   BodyCell,
@@ -70,7 +71,7 @@ const ClientsTable = ({ clients, onDelete }: ClientsTableProps) => {
       onDelete(openFor);
     }
   }, [onDelete, openFor]);
-  const [globalFilter, setGlobalFilter] = useState('');
+  const [globalFilter, setGlobalFilter] = useFilterFromUrl();
   const { sorting, toggleSort } = useSortFromUrl(DefaultSort);
   const columns = useMemo(
     () => [

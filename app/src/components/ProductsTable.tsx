@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useMemo } from 'react';
 import {
   createColumnHelper,
   flexRender,
@@ -20,6 +20,7 @@ import useDisclosureForId from '@lib/useDisclosureForId';
 import Routes from '@lib/routes';
 import { formatAmount, formatPercentage } from '@lib/format';
 import useSortFromUrl from '@lib/useSortFromUrl';
+import useFilterFromUrl from '@lib/useFilterFromUrl';
 import {
   Body,
   BodyCell,
@@ -59,7 +60,7 @@ const ProductsTable = ({ products, onDelete }: ProductsTableProps) => {
     }
   }, [onDelete, openFor]);
   const { sorting, toggleSort } = useSortFromUrl(DefaultSort);
-  const [globalFilter, setGlobalFilter] = useState('');
+  const [globalFilter, setGlobalFilter] = useFilterFromUrl();
   const columns = useMemo(
     () => [
       columnHelper.accessor('name', {

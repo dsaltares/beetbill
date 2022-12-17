@@ -2,7 +2,6 @@ import 'next';
 import { setupServer } from 'msw/node';
 import type { Session } from 'next-auth';
 import { TRPCError } from '@trpc/server';
-import userEvent from '@testing-library/user-event';
 import {
   act,
   fireEvent,
@@ -135,23 +134,29 @@ describe('ProductsPage', () => {
     );
   });
 
-  it('can filter', async () => {
+  it('has filtering driven by the URL', async () => {
     server.resetHandlers(mockTrpcQuery('getProducts', products));
 
-    render(<ProductsPage />, { session, router });
+    render(<ProductsPage />, {
+      session,
+      router: { ...router, query: { filter: product1.name } },
+    });
 
     await waitFor(() => {
-      expect(screen.getAllByRole('row')).toHaveLength(products.length + 1);
+      expect(screen.getAllByRole('row')).toHaveLength(2);
     });
 
     await act(async () => {
-      await userEvent.type(
-        screen.getByPlaceholderText('Search'),
-        product1.name
-      );
+      await fireEvent.change(screen.getByPlaceholderText('Search'), {
+        target: { value: product2.name },
+      });
     });
-    const filtered = screen.getAllByRole('row').slice(1);
-    expect(filtered).toHaveLength(1);
+
+    expect(mockRouter.replace).toHaveBeenCalledWith(
+      { query: { filter: product2.name } },
+      undefined,
+      expect.anything()
+    );
   });
 
   it('redirects to product page clicking edit', async () => {
