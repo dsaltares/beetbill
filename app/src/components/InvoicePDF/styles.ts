@@ -31,7 +31,7 @@ export const sizes = {
 export const fontSizes = {
   sm: 10,
   base: 12,
-  lg: 24,
+  lg: 20,
 };
 
 export const colors = {

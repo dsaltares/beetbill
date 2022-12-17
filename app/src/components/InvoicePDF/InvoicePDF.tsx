@@ -36,8 +36,10 @@ const InvoicePDF = ({ invoice }: InvoicePDFProps) => {
             <Text style={{ fontSize: fontSizes.lg, fontWeight: 'bold' }}>
               {title}
             </Text>
-            <Text>{`Invoice date: ${formatDate(date)}`}</Text>
-            <Text>
+            <Text
+              style={{ fontSize: fontSizes.sm }}
+            >{`Invoice date: ${formatDate(date)}`}</Text>
+            <Text style={{ fontSize: fontSizes.sm }}>
               {`Due date: ${formatDate(
                 addDays(new Date(date), client.paymentTerms)
               )}`}
