@@ -54,13 +54,25 @@ const company: Company = {
   userId,
   createdAt: now,
 };
-const product: Product = {
-  id: 'product_id',
-  name: 'product_name',
+const product1: Product = {
+  id: 'product_1',
+  name: 'product_1',
   includesVat: false,
   price: 10,
   currency: 'GBP',
   vat: 15,
+  unit: 'm',
+  companyId,
+  createdAt: now,
+  updatedAt: now,
+};
+const product2: Product = {
+  id: 'product_2',
+  name: 'product_2',
+  includesVat: false,
+  price: 2,
+  currency: 'GBP',
+  vat: 0,
   unit: 'm',
   companyId,
   createdAt: now,
@@ -95,8 +107,17 @@ const invoice: Invoice = {
     {
       id: 'item_1',
       invoiceId: 'invoice_1',
-      product,
-      quantity: 1,
+      product: product1,
+      quantity: 1.5,
+      date: now,
+      createdAt: now,
+      updatedAt: now,
+    },
+    {
+      id: 'item_2',
+      invoiceId: 'invoice_1',
+      product: product2,
+      quantity: 2.5,
       date: now,
       createdAt: now,
       updatedAt: now,
@@ -125,6 +146,11 @@ describe('PreviewInvoicePage', () => {
         screen.queryAllByText(invoice.company.name).length
       ).toBeGreaterThanOrEqual(1);
     });
+    screen.getByText('17.25 GBP');
+    screen.getByText('5.00 GBP');
+    screen.getByText('Total excl. VAT: 20.00 GBP');
+    screen.getByText('VAT: 2.25 GBP');
+    screen.getByText('Total due: 22.25 GBP');
   });
 
   it('allows the user to send and download the invoice', async () => {

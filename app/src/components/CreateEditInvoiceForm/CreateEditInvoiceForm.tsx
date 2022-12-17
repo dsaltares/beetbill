@@ -106,7 +106,7 @@ const CreateEditInvoiceForm = ({
         date: new Date(values.date).toISOString(),
         items: values.items.map((item) => ({
           productId: item.product.id,
-          quantity: parseInt(item.quantity, 10),
+          quantity: parseFloat(item.quantity),
           date: new Date(item.date).toISOString(),
         })),
       };
