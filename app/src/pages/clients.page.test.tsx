@@ -111,7 +111,7 @@ describe('ClientsPage', () => {
     );
   });
 
-  it('renders the list of clients', async () => {
+  it('renders the list of clients sorted by name desc', async () => {
     server.resetHandlers(mockTrpcQuery('getClients', clients));
 
     render(<ClientsPage />, { session, router });
@@ -119,17 +119,17 @@ describe('ClientsPage', () => {
     await waitFor(() => {
       const rows = screen.getAllByRole('row').slice(1);
       expect(rows).toHaveLength(clients.length);
-      expect(rows[0]).toContainHTML(clients[0].name);
+      expect(rows[0]).toContainHTML(clients[2].name);
       expect(rows[1]).toContainHTML(clients[1].name);
-      expect(rows[2]).toContainHTML(clients[2].name);
+      expect(rows[2]).toContainHTML(clients[0].name);
 
-      expect(rows[0]).toContainHTML('€100.00');
+      expect(rows[0]).toContainHTML('£300.00');
       expect(rows[1]).toContainHTML('€0.00');
-      expect(rows[2]).toContainHTML('£300.00');
+      expect(rows[2]).toContainHTML('€100.00');
 
-      expect(rows[0]).toContainHTML('€150.00');
+      expect(rows[0]).toContainHTML('£0.00');
       expect(rows[1]).toContainHTML('€200.00');
-      expect(rows[2]).toContainHTML('£0.00');
+      expect(rows[2]).toContainHTML('€150.00');
     });
   });
 
