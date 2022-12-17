@@ -112,7 +112,7 @@ const LineItem = forwardRef<HTMLTableRowElement, LineItemProps>(
               : {})}
             required
             defaultValue={watchItem.quantity}
-            endAdornment={item.product.unit}
+            endAdornment={watchItem.product.unit}
             disabled={disabled}
           />
         </div>
