@@ -17,10 +17,12 @@ export const formatPercentage = (value: number) =>
   PercentFormatter.format(value);
 
 export const formatAmount = (amount: number, currency: string | undefined) =>
-  new Intl.NumberFormat('en-UK', {
-    style: 'currency',
-    currency: currency || 'EUR',
-  }).format(amount);
+  isNaN(amount)
+    ? '-'
+    : new Intl.NumberFormat('en-UK', {
+        style: 'currency',
+        currency: currency || 'EUR',
+      }).format(amount);
 
 const DecimalFormatter = new Intl.NumberFormat('en-UK', { style: 'decimal' });
 const PercentFormatter = new Intl.NumberFormat('en-UK', { style: 'percent' });
