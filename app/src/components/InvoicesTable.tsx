@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useMemo } from 'react';
 import {
   createColumnHelper,
   flexRender,
@@ -23,6 +23,7 @@ import calculateTotal from '@lib/invoices/calculateTotal';
 import type { Invoice } from '@server/invoices/types';
 import getTitle from '@lib/invoices/getTitle';
 import useSortFromUrl from '@lib/useSortFromUrl';
+import useFilterFromUrl from '@lib/useFilterFromUrl';
 import {
   Body,
   BodyCell,
@@ -85,7 +86,7 @@ const InvoicesTable = ({ invoices, onDelete }: InvoicesTableProps) => {
     }
   }, [onDelete, openFor]);
   const { sorting, toggleSort } = useSortFromUrl(DefaultSort);
-  const [globalFilter, setGlobalFilter] = useState('');
+  const [globalFilter, setGlobalFilter] = useFilterFromUrl();
   const tableInvoices = useMemo(
     () => invoices.map(toInvoiceTableRow),
     [invoices]
