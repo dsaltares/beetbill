@@ -16,7 +16,7 @@ import type { Client } from '@server/clients/types';
 import type { Invoice } from '@server/invoices/types';
 import type { Company } from '@server/company/types';
 import type { Product } from '@server/products/types';
-import { datePickerFormat, safeFormatDate } from '@lib/formatDate';
+import { datePickerFormat, safeFormatDate } from '@lib/format';
 import getTitle from '@lib/invoices/getTitle';
 import FormCard from '@components/FormCard';
 import AutocompleteField from '@components/Fields/AutocompleteField';

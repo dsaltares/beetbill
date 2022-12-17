@@ -1,7 +1,7 @@
 import addDays from 'date-fns/addDays';
 import { Page, Text, View, Document } from '@react-pdf/renderer';
 import format from 'date-fns/format';
-import formatDate from '@lib/formatDate';
+import { formatDate } from '@lib/format';
 import getTitle from '@lib/invoices/getTitle';
 import type { Invoice } from '@server/invoices/types';
 import calculateTotal from '@lib/invoices/calculateTotal';

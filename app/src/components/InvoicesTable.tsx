@@ -16,11 +16,11 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import addDays from 'date-fns/addDays';
+import { formatDate } from '@lib/format';
 import useDisclosureForId from '@lib/useDisclosureForId';
 import Routes from '@lib/routes';
 import calculateTotal from '@lib/invoices/calculateTotal';
 import type { Invoice } from '@server/invoices/types';
-import formatDate from '@lib/formatDate';
 import getTitle from '@lib/invoices/getTitle';
 import {
   Body,
