@@ -208,7 +208,11 @@ const InvoicesTable = ({ invoices, onDelete }: InvoicesTableProps) => {
           {table.getRowModel().rows.map((row) => (
             <BodyRow key={row.id}>
               {row.getVisibleCells().map((cell, index) => (
-                <BodyCell key={cell.id} header={index === 0}>
+                <BodyCell
+                  key={cell.id}
+                  header={index === 0}
+                  wrap={cell.column.id === 'clientName'}
+                >
                   {flexRender(cell.column.columnDef.cell, cell.getContext())}
                 </BodyCell>
               ))}

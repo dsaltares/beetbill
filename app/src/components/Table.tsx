@@ -4,7 +4,7 @@ import {
   faSortUp,
 } from '@fortawesome/free-solid-svg-icons';
 import type { SortDirection } from '@tanstack/react-table';
-import classNames from 'classnames';
+import cn from 'classnames';
 import type { PropsWithChildren } from 'react';
 
 export const Table = ({ children }: PropsWithChildren) => (
@@ -39,17 +39,28 @@ export const HeaderCell = ({ children }: PropsWithChildren) => (
 
 type BodyCellProps = PropsWithChildren<{
   header?: boolean;
+  wrap?: boolean;
 }>;
 
-export const BodyCell = ({ header, children }: BodyCellProps) => {
+export const BodyCell = ({ header, children, wrap }: BodyCellProps) => {
   const baseClass =
     'py-4 px-6 first:rounded-l-md last:rounded-r-md border-y first:border-l last:border-r border-zinc-300 min-w-[86px]';
+  const conditionalClass = {
+    'whitespace-normal max-w-[300px]': !!wrap,
+  };
   return header ? (
-    <th scope="row" className={classNames('text-xl font-medium', baseClass)}>
+    <th
+      scope="row"
+      className={cn(
+        'text-xl font-medium whitespace-normal',
+        baseClass,
+        conditionalClass
+      )}
+    >
       {children}
     </th>
   ) : (
-    <td className={baseClass}>{children}</td>
+    <td className={cn(baseClass, conditionalClass)}>{children}</td>
   );
 };
 
