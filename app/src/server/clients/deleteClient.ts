@@ -25,7 +25,7 @@ export const deleteClient: Procedure<
   if (clientInNonDraftInvoice) {
     throw new TRPCError({
       code: 'PRECONDITION_FAILED',
-      message: 'Client is associated to approved invoices',
+      message: 'Clients associated to approved invoices cannot be deleted.',
     });
   }
 

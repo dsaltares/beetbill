@@ -19,7 +19,10 @@ export const updateCompany: Procedure<
     },
   });
   if (!existingCompany) {
-    throw new TRPCError({ code: 'NOT_FOUND' });
+    throw new TRPCError({
+      code: 'NOT_FOUND',
+      message: 'The company does not exist.',
+    });
   }
   const stateData = {
     ...omit(existingCompany.states[0], 'id', 'createdAt'),

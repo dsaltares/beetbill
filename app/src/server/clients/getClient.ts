@@ -26,7 +26,10 @@ export const getClient: Procedure<GetClientInput, GetClientOutput> = async ({
     return mapClientEntity(client, invoices);
   } catch (e) {
     if (e instanceof NotFoundError) {
-      throw new TRPCError({ code: 'NOT_FOUND' });
+      throw new TRPCError({
+        code: 'NOT_FOUND',
+        message: 'The client does not exist.',
+      });
     }
     throw e;
   }

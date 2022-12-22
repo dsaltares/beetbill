@@ -30,7 +30,12 @@ describe('updateProduct', () => {
           name: 'Test Product',
         },
       })
-    ).rejects.toEqual(new TRPCError({ code: 'NOT_FOUND' }));
+    ).rejects.toEqual(
+      new TRPCError({
+        code: 'NOT_FOUND',
+        message: 'The product does not exist.',
+      })
+    );
   });
 
   it('updates the product', async () => {

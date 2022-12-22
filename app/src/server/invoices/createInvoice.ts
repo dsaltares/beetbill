@@ -41,8 +41,17 @@ export const createInvoice: Procedure<
     }),
   ]);
 
-  if (!client || !company) {
-    throw new TRPCError({ code: 'NOT_FOUND' });
+  if (!client) {
+    throw new TRPCError({
+      code: 'NOT_FOUND',
+      message: 'The client does not exist.',
+    });
+  }
+  if (!company) {
+    throw new TRPCError({
+      code: 'NOT_FOUND',
+      message: 'The company does not exist.',
+    });
   }
 
   const invoice = await prisma.invoice.create({
@@ -114,7 +123,10 @@ const buildItemsData = async (items: CreateInvoiceInput['items'] = []) => {
   return items.map(({ productId, quantity, date }, index) => {
     const product = productsById[productId];
     if (!product) {
-      throw new TRPCError({ code: 'NOT_FOUND' });
+      throw new TRPCError({
+        code: 'NOT_FOUND',
+        message: 'Some products do not exist.',
+      });
     }
 
     return {

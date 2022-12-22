@@ -24,7 +24,7 @@ export const deleteInvoice: Procedure<
   if (invoice.status !== 'DRAFT') {
     throw new TRPCError({
       code: 'PRECONDITION_FAILED',
-      message: 'Cannot delete an approved invoice',
+      message: 'Appoved invoices cannot be deleted.',
     });
   }
 

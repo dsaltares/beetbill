@@ -25,7 +25,7 @@ export const deleteProduct: Procedure<
   if (productInNonDraftInvoice) {
     throw new TRPCError({
       code: 'PRECONDITION_FAILED',
-      message: 'Product is associated to an approved invoice',
+      message: 'Products associated to approve invoices cannot be deleted.',
     });
   }
 

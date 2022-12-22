@@ -23,7 +23,10 @@ export const updateClient: Procedure<
     getInvoicesForClient(id),
   ]);
   if (!existingClient) {
-    throw new TRPCError({ code: 'NOT_FOUND' });
+    throw new TRPCError({
+      code: 'NOT_FOUND',
+      message: 'The client does not exist.',
+    });
   }
 
   const stateData = {

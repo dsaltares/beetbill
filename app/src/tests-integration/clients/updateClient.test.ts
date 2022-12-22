@@ -33,7 +33,12 @@ describe('updateClient', () => {
           name: 'Test Client',
         },
       })
-    ).rejects.toEqual(new TRPCError({ code: 'NOT_FOUND' }));
+    ).rejects.toEqual(
+      new TRPCError({
+        code: 'NOT_FOUND',
+        message: 'The client does not exist.',
+      })
+    );
   });
 
   it('updates the client', async () => {

@@ -33,12 +33,15 @@ export const updateInvoice: Procedure<
     },
   });
   if (!existingInvoice) {
-    throw new TRPCError({ code: 'NOT_FOUND' });
+    throw new TRPCError({
+      code: 'NOT_FOUND',
+      message: 'The invoice does not exist.',
+    });
   }
   if (!canUpdateInvice(existingInvoice.status, input)) {
     throw new TRPCError({
       code: 'PRECONDITION_FAILED',
-      message: 'Cannot update an approved invoice',
+      message: 'Appoved invoices cannot be updated.',
     });
   }
   let clientStateId: string | undefined;
@@ -56,7 +59,10 @@ export const updateInvoice: Procedure<
       },
     });
     if (!client) {
-      throw new TRPCError({ code: 'NOT_FOUND' });
+      throw new TRPCError({
+        code: 'NOT_FOUND',
+        message: 'The client does not exist.',
+      });
     }
     clientStateId = client.states[0].id;
   }
@@ -108,7 +114,7 @@ export const updateInvoice: Procedure<
         if (!product) {
           throw new TRPCError({
             code: 'NOT_FOUND',
-            message: `Product not found, id: ${productId}`,
+            message: 'Some products do not exist.',
           });
         }
         return {

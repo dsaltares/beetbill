@@ -35,7 +35,12 @@ describe('updateInvoice', () => {
           date: new Date().toISOString(),
         },
       })
-    ).rejects.toEqual(new TRPCError({ code: 'NOT_FOUND' }));
+    ).rejects.toEqual(
+      new TRPCError({
+        code: 'NOT_FOUND',
+        message: 'The invoice does not exist.',
+      })
+    );
   });
 
   it('throws when trying to update an approved invoice', async () => {
@@ -56,7 +61,7 @@ describe('updateInvoice', () => {
     ).rejects.toEqual(
       new TRPCError({
         code: 'PRECONDITION_FAILED',
-        message: 'Cannot update an approved invoice',
+        message: 'Appoved invoices cannot be updated.',
       })
     );
   });
@@ -78,6 +83,7 @@ describe('updateInvoice', () => {
     ).rejects.toEqual(
       new TRPCError({
         code: 'NOT_FOUND',
+        message: 'The client does not exist.',
       })
     );
   });
@@ -440,7 +446,7 @@ describe('updateInvoice', () => {
     ).rejects.toEqual(
       new TRPCError({
         code: 'PRECONDITION_FAILED',
-        message: 'Cannot update an approved invoice',
+        message: 'Appoved invoices cannot be updated.',
       })
     );
   });

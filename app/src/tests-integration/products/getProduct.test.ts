@@ -38,7 +38,12 @@ describe('getProduct', () => {
   it('throws a NOT_FOUND error when the product does not exist', async () => {
     await expect(
       getProduct({ ctx: { session }, input: { id: 'invalid' } })
-    ).rejects.toEqual(new TRPCError({ code: 'NOT_FOUND' }));
+    ).rejects.toEqual(
+      new TRPCError({
+        code: 'NOT_FOUND',
+        message: 'The product does not exist.',
+      })
+    );
   });
 
   it('throws a NOT_FOUND error when the product belongs to a different user', async () => {
@@ -46,6 +51,11 @@ describe('getProduct', () => {
 
     await expect(
       getProduct({ ctx: { session }, input: { id: dbProduct.id } })
-    ).rejects.toEqual(new TRPCError({ code: 'NOT_FOUND' }));
+    ).rejects.toEqual(
+      new TRPCError({
+        code: 'NOT_FOUND',
+        message: 'The product does not exist.',
+      })
+    );
   });
 });

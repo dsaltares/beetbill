@@ -19,7 +19,10 @@ export const updateProduct: Procedure<
     },
   });
   if (!existingProduct) {
-    throw new TRPCError({ code: 'NOT_FOUND' });
+    throw new TRPCError({
+      code: 'NOT_FOUND',
+      message: 'The product does not exist.',
+    });
   }
 
   const stateData = {

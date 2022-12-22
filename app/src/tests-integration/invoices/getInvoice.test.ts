@@ -58,7 +58,12 @@ describe('getInvoice', () => {
   it('throws a NOT_FOUND error when the invoice does not exist', async () => {
     await expect(
       getInvoice({ ctx: { session }, input: { id: 'invalid' } })
-    ).rejects.toEqual(new TRPCError({ code: 'NOT_FOUND' }));
+    ).rejects.toEqual(
+      new TRPCError({
+        code: 'NOT_FOUND',
+        message: 'The invoice does not exist.',
+      })
+    );
   });
 
   it('throws a NOT_FOUND error when the invoice belongs to a different user', async () => {
@@ -69,6 +74,11 @@ describe('getInvoice', () => {
 
     await expect(
       getInvoice({ ctx: { session }, input: { id } })
-    ).rejects.toEqual(new TRPCError({ code: 'NOT_FOUND' }));
+    ).rejects.toEqual(
+      new TRPCError({
+        code: 'NOT_FOUND',
+        message: 'The invoice does not exist.',
+      })
+    );
   });
 });

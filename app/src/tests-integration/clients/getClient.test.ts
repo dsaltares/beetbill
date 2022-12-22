@@ -57,7 +57,12 @@ describe('getClient', () => {
   it('throws a NOT_FOUND error when the client does not exist', async () => {
     await expect(
       getClient({ ctx: { session }, input: { id: 'invalid' } })
-    ).rejects.toEqual(new TRPCError({ code: 'NOT_FOUND' }));
+    ).rejects.toEqual(
+      new TRPCError({
+        code: 'NOT_FOUND',
+        message: 'The client does not exist.',
+      })
+    );
   });
 
   it('throws a NOT_FOUND error when the client belongs to a different user', async () => {
@@ -65,6 +70,11 @@ describe('getClient', () => {
 
     await expect(
       getClient({ ctx: { session }, input: { id: dbClient.id } })
-    ).rejects.toEqual(new TRPCError({ code: 'NOT_FOUND' }));
+    ).rejects.toEqual(
+      new TRPCError({
+        code: 'NOT_FOUND',
+        message: 'The client does not exist.',
+      })
+    );
   });
 });

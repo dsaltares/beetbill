@@ -45,7 +45,7 @@ describe('deleteInvoice', () => {
     ).rejects.toEqual(
       new TRPCError({
         code: 'PRECONDITION_FAILED',
-        message: 'Cannot delete an approved invoice',
+        message: 'Appoved invoices cannot be deleted.',
       })
     );
   });

@@ -22,7 +22,10 @@ const trpc = initTRPC.context<Context>().meta<Meta>().create();
 
 const isAuthed = trpc.middleware(async ({ meta, next, ctx }) => {
   if (!meta?.withoutAuth && !ctx.session) {
-    throw new TRPCError({ code: 'UNAUTHORIZED' });
+    throw new TRPCError({
+      code: 'UNAUTHORIZED',
+      message: 'You are not logged in.',
+    });
   }
   return next({ ctx });
 });

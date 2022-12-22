@@ -22,7 +22,10 @@ export const getProduct: Procedure<GetProductInput, GetProductOutput> = async ({
     return mapProductEntity(product);
   } catch (e) {
     if (e instanceof NotFoundError) {
-      throw new TRPCError({ code: 'NOT_FOUND' });
+      throw new TRPCError({
+        code: 'NOT_FOUND',
+        message: 'The product does not exist.',
+      });
     }
     throw e;
   }

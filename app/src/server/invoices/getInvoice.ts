@@ -43,7 +43,10 @@ export const getInvoice: Procedure<GetInvoiceInput, GetInvoiceOutput> = async ({
     return mapInvoiceEntity(invoice);
   } catch (e) {
     if (e instanceof NotFoundError) {
-      throw new TRPCError({ code: 'NOT_FOUND' });
+      throw new TRPCError({
+        code: 'NOT_FOUND',
+        message: 'The invoice does not exist.',
+      });
     }
     throw e;
   }

@@ -50,6 +50,11 @@ describe('updateCompany', () => {
           name: newName,
         },
       })
-    ).rejects.toEqual(new TRPCError({ code: 'NOT_FOUND' }));
+    ).rejects.toEqual(
+      new TRPCError({
+        code: 'NOT_FOUND',
+        message: 'The company does not exist.',
+      })
+    );
   });
 });
