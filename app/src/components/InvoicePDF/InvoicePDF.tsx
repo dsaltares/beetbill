@@ -49,12 +49,11 @@ const InvoicePDF = ({ invoice }: InvoicePDFProps) => {
             style={{
               width: '100%',
               flexDirection: 'row',
-              justifyContent: 'space-between',
               marginBottom: sizes[8],
               fontSize: fontSizes.sm,
             }}
           >
-            <View>
+            <View style={{ flex: 1, marginRight: sizes[4] }}>
               <Text style={{ fontSize: fontSizes.base, fontWeight: 'bold' }}>
                 {company.name}
               </Text>
@@ -65,21 +64,23 @@ const InvoicePDF = ({ invoice }: InvoicePDFProps) => {
               {company.country && <Text>{company.country}</Text>}
               {company.email && <Text>{company.email}</Text>}
             </View>
-            <View>
-              <Text style={{ fontSize: fontSizes.base, fontWeight: 'bold' }}>
-                {client.name}
-              </Text>
-              {client.contactName && <Text>{client.contactName}</Text>}
-              {client.address && <Text>{client.address}</Text>}
-              {client.city && <Text>{client.city}</Text>}
-              {client.postCode && <Text>{client.postCode}</Text>}
-              {client.country && <Text>{client.country}</Text>}
-              {client.number && (
-                <Text>{`Registration number: ${client.number}`}</Text>
-              )}
-              {client.vatNumber && (
-                <Text>{`VAT number: ${client.vatNumber}`}</Text>
-              )}
+            <View style={{ flex: 1, alignItems: 'flex-end' }}>
+              <View>
+                <Text style={{ fontSize: fontSizes.base, fontWeight: 'bold' }}>
+                  {client.name}
+                </Text>
+                {client.contactName && <Text>{client.contactName}</Text>}
+                {client.address && <Text>{client.address}</Text>}
+                {client.city && <Text>{client.city}</Text>}
+                {client.postCode && <Text>{client.postCode}</Text>}
+                {client.country && <Text>{client.country}</Text>}
+                {client.number && (
+                  <Text>{`Registration number: ${client.number}`}</Text>
+                )}
+                {client.vatNumber && (
+                  <Text>{`VAT number: ${client.vatNumber}`}</Text>
+                )}
+              </View>
             </View>
           </View>
           {message && (
