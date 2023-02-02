@@ -54,7 +54,12 @@ const InvoicePDF = ({ invoice }: InvoicePDFProps) => {
               fontSize: fontSizes.sm,
             }}
           >
-            <View>
+            <View
+              style={{
+                width: '50%',
+                paddingRight: sizes[4],
+              }}
+            >
               <Text style={{ fontSize: fontSizes.base, fontWeight: 'bold' }}>
                 {company.name}
               </Text>
@@ -65,7 +70,12 @@ const InvoicePDF = ({ invoice }: InvoicePDFProps) => {
               {company.country && <Text>{company.country}</Text>}
               {company.email && <Text>{company.email}</Text>}
             </View>
-            <View>
+            <View
+              style={{
+                width: '50%',
+                paddingLeft: sizes[4],
+              }}
+            >
               <Text style={{ fontSize: fontSizes.base, fontWeight: 'bold' }}>
                 {client.name}
               </Text>
