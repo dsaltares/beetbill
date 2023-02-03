@@ -28,10 +28,8 @@ import type {
   UseFieldArrayRemove,
   UseFormRegister,
 } from 'react-hook-form';
-import startOfDay from 'date-fns/startOfDay';
 import AutocompleteField from '@components/Fields/AutocompleteField';
 import type { Product } from '@server/products/types';
-import { datePickerFormat } from '@lib/format';
 import LineItemOverlay from './LineItemOverlay';
 import SortableLineItem from './SortableLineItem';
 import Table, { Body, BodyCell, Head, HeaderCell } from './Table';
@@ -47,6 +45,7 @@ type LineItemsTableProps = {
   removeItem: UseFieldArrayRemove;
   appendItem: UseFieldArrayAppend<InvoiceFormValues, 'items'>;
   products: Product[];
+  defaultDate: string;
 };
 
 const LineItemsTable = ({
@@ -59,8 +58,8 @@ const LineItemsTable = ({
   removeItem,
   appendItem,
   products,
+  defaultDate,
 }: LineItemsTableProps) => {
-  const today = useMemo(() => datePickerFormat(startOfDay(new Date())), []);
   const sensors = useSensors(
     useSensor(PointerSensor),
     useSensor(KeyboardSensor, {
@@ -149,7 +148,11 @@ const LineItemsTable = ({
                       optionToLabel={(product) => product.name}
                       onChange={(product) => {
                         if (product) {
-                          appendItem({ product, date: today, quantity: '1' });
+                          appendItem({
+                            product,
+                            date: defaultDate,
+                            quantity: '1',
+                          });
                         }
                       }}
                     />
