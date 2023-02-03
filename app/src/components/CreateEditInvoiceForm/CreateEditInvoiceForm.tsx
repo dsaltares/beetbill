@@ -219,6 +219,7 @@ const CreateEditInvoiceForm = ({
           removeItem={removeItem}
           appendItem={appendItem}
           products={products}
+          defaultDate={watchDate}
         />
         <div className="grid grid-cols-2 gap-8">
           <div></div>
