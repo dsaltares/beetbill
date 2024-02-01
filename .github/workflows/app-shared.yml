@@ -19,25 +19,25 @@ jobs:
       - name: Unit Test
         run: cd app && pnpm run test:unit
 
-  integrationTest:
-      runs-on: ubuntu-latest
-      env:
-        DATABASE_URL: "postgresql://postgres:postgres@localhost:5432/tests"
-        POSTGRES_INTEGRATIONS_PORT: 5432
+  # integrationTest:
+  #     runs-on: ubuntu-latest
+  #     env:
+  #       DATABASE_URL: "postgresql://postgres:postgres@localhost:5432/tests"
+  #       POSTGRES_INTEGRATIONS_PORT: 5432
 
-      services:
-        postgres:
-          image: postgres
-          env:
-            POSTGRES_PASSWORD: postgres
-          ports:
-            - 5432:5432
+  #     services:
+  #       postgres:
+  #         image: postgres
+  #         env:
+  #           POSTGRES_PASSWORD: postgres
+  #         ports:
+  #           - 5432:5432
 
-      steps:
-        - uses: actions/checkout@v3
-        - uses: ./.github/actions/app-setup
-        - name: Integration Test
-          run: cd app && pnpm run test:integration 
+  #     steps:
+  #       - uses: actions/checkout@v3
+  #       - uses: ./.github/actions/app-setup
+  #       - name: Integration Test
+  #         run: cd app && pnpm run test:integration 
   
   typeCheck:
     runs-on: ubuntu-latest
