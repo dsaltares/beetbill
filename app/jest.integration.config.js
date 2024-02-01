@@ -7,4 +7,5 @@ module.exports = nextJest()({
   testPathIgnorePatterns: ['<rootDir>/node_modules/', '<rootDir>/.next/'],
   coverageDirectory: 'coverage/integration',
   globalSetup: '<rootDir>/src/tests-integration/setup.ts',
+  testEnvironment: 'node',
 });
