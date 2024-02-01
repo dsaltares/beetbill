@@ -1,5 +1,5 @@
 import { TRPCError } from '@trpc/server';
-import { NotFoundError } from '@prisma/client/runtime';
+import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
 import { type Procedure, procedure } from '@server/trpc';
 import prisma from '@server/prisma';
 import { GetProductInput, GetProductOutput } from './types';
@@ -21,7 +21,7 @@ export const getProduct: Procedure<GetProductInput, GetProductOutput> = async ({
     });
     return mapProductEntity(product);
   } catch (e) {
-    if (e instanceof NotFoundError) {
+    if (e instanceof PrismaClientKnownRequestError && e.code === 'P2025') {
       throw new TRPCError({
         code: 'NOT_FOUND',
         message: 'The product does not exist.',
