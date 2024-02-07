@@ -1,7 +1,6 @@
 import { TRPCError } from '@trpc/server';
-import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
 import { type Procedure, procedure } from '@server/trpc';
-import prisma from '@server/prisma';
+import prisma, { Prisma } from '@server/prisma';
 import { GetInvoiceInput, GetInvoiceOutput } from './types';
 import mapInvoiceEntity from './mapInvoiceEntity';
 
@@ -42,7 +41,10 @@ export const getInvoice: Procedure<GetInvoiceInput, GetInvoiceOutput> = async ({
     });
     return mapInvoiceEntity(invoice);
   } catch (e) {
-    if (e instanceof PrismaClientKnownRequestError && e.code === 'P2025') {
+    if (
+      e instanceof Prisma.PrismaClientKnownRequestError &&
+      e.code === 'P2025'
+    ) {
       throw new TRPCError({
         code: 'NOT_FOUND',
         message: 'The invoice does not exist.',
