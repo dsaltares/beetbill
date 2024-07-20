@@ -3,7 +3,7 @@ Invoicing app built using Next.js
 
 ## Requirements
 
-- Node 16, fnm recommended
+- Node 20, fnm recommended
 - pnpm
 - Docker
 

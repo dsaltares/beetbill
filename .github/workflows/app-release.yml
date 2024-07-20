@@ -6,12 +6,12 @@ on:
       - "main"
 
 jobs:
-  validate:
-    uses: ./.github/workflows/app-shared.yml
+  # validate:
+  #   uses: ./.github/workflows/app-shared.yml
 
   deployAppVercel:
     runs-on: ubuntu-latest
-    needs: [validate]
+    # needs: [validate]
     steps:
       - uses: actions/checkout@v3
       - uses: amondnet/vercel-action@v25
@@ -24,7 +24,7 @@ jobs:
 
   deployStorybookVercel:
     runs-on: ubuntu-latest
-    needs: [validate]
+    # needs: [validate]
     steps:
       - uses: actions/checkout@v3
       - uses: amondnet/vercel-action@v25

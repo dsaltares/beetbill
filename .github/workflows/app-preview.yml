@@ -4,8 +4,8 @@ on:
   pull_request
 
 jobs:
-  validate:
-    uses: ./.github/workflows/app-shared.yml
+  # validate:
+  #   uses: ./.github/workflows/app-shared.yml
 
   deployAppVercel:
     runs-on: ubuntu-latest

@@ -2,15 +2,15 @@ name: Setup app
 runs:
   using: composite
   steps:
-    - uses: actions/setup-node@v3
+    - uses: actions/setup-node@v4
       with:
-        node-version: "16"
+        node-version-file: 'app/.nvmrc'
 
-    - uses: pnpm/action-setup@v2.2.4
+    - uses: pnpm/action-setup@v4
       name: Install pnpm
       id: pnpm-install
       with:
-        version: 7
+        version: 9
         run_install: false
 
     - name: Get pnpm store directory

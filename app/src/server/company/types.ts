@@ -21,7 +21,6 @@ export const Company = z.object({
 export const GetCompanyOutput = Company.nullish();
 export const UpdateCompanyInput = Company.omit({
   createdAt: true,
-  updatedAt: true,
   userId: true,
 }).partial();
 export const UpdateCompanyOutput = Company;
