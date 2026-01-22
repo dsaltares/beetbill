@@ -7,7 +7,7 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: davidsaltares/beetbill
+  IMAGE_NAME: dsaltares/beetbill
 
 jobs:
   build-and-push:
