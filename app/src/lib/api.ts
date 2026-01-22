@@ -2,6 +2,12 @@ import { createTRPCProxyClient, httpBatchLink, httpLink } from '@trpc/client';
 import type { AppRouter } from '@server/router';
 
 export const getBaseUrl = (): string => {
+  // Browser should use relative URL (same origin)
+  if (typeof window !== 'undefined') {
+    return '';
+  }
+
+  // Server-side: use explicit URL if provided
   if (process.env.NEXT_PUBLIC_BASE_URL) {
     return process.env.NEXT_PUBLIC_BASE_URL;
   }
