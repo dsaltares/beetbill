@@ -9,6 +9,7 @@ const withPWA = require('next-pwa')({
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
+  output: 'standalone',
   pageExtensions: ['page.ts', 'page.tsx', 'next.tsx', 'route.ts'],
   eslint: {
     dirs: ['src'],
